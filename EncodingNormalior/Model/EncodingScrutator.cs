@@ -18,20 +18,20 @@ namespace EncodingNormalior.Model
         {
             //打开流
             Stream stream = file.OpenRead();
-            byte[] headByte = ReadFileHeadbyte(stream);
+            var headByte = ReadFileHeadbyte(stream);
 
             //从文件获取编码
-            Encoding encoding= AutoEncoding(headByte);
+            var encoding = AutoEncoding(headByte);
+            stream.Position = 0;
 
             //gbk utf7 uft8无签名
             if (encoding.Equals(Encoding.ASCII))
             {
                 if (IsGBK(stream))
                 {
-                    return Encoding.GetEncoding("GBK");
+                    encoding = Encoding.GetEncoding("GBK");
                 }
             }
-
 
             stream.Dispose();
             //return Encoding.Default;
@@ -40,23 +40,66 @@ namespace EncodingNormalior.Model
 
         private bool IsGBK(Stream stream)
         {
-            return true;
+            long length = 0;
+            bool isGBK = false;//如果所有的byte都是不大于127那么是ascii，这时是什么都好
+            var buffer = new byte[1024];
+            var n = 0;
+            while ((n = stream.Read(buffer, 0, 1024)) > 0)
+            {
+                for (var i = 0; i < n; i++)
+                {
+                    var temp = buffer[i];
+                    if (temp < 128)
+                    {
+                        length++;
+                        continue;
+                    }
+                    if (i + 1 == n)
+                    {
+                        break;
+                    }
+                    var temp2 = buffer[i + 1];//http://en.wikipedia.org/wiki/GBK
+                    if ((temp >= 0xA1 && temp <= 0xA9 && temp2 >= 0xA1 && temp2 <= 0xFE) ||
+                        (temp >= 0xB0 && temp <= 0xF7 && temp2 >= 0xA1 && temp2 <= 0xFE) ||
+                        (temp >= 0x81 && temp <= 0xA0 && temp2 >= 0x40 && temp2 <= 0xFE && temp2 != 0x7F) ||
+                        (temp >= 0xAA && temp <= 0xFE && temp2 >= 0x40 && temp2 <= 0xA0 && temp2 != 0x7F) ||
+                        (temp >= 0xA8 && temp <= 0xA9 && temp2 >= 0x40 && temp2 <= 0xA0 && temp2 != 0x7F) ||
+                        (temp >= 0xAA && temp <= 0xAF && temp2 >= 0xA1 && temp2 <= 0xFE) ||
+                        (temp >= 0xF8 && temp <= 0xFE && temp2 >= 0xA1 && temp2 <= 0xFE) ||
+                        (temp >= 0xA1 && temp <= 0xA7 && temp2 >= 0x40 && temp2 <= 0xA0 && temp2 != 0x7F))
+                    {
+                        length += 2;
+                        i++;
+                        isGBK = true;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            stream.Position = 0;
+            if (!isGBK)
+            {
+                return false;
+            }
+            return length == stream.Length;
         }
 
         /// <summary>
-        /// 读取文件的头4个byte
+        ///     读取文件的头4个byte
         /// </summary>
         /// <param name="stream">文件流</param>
+        /// <param name="headAmount">读取长度</param>
         /// <returns>文件头4个byte</returns>
-        private byte[] ReadFileHeadbyte(Stream stream)
+        private byte[] ReadFileHeadbyte(Stream stream, int headAmount = 4)
         {
-            int headAmount = 4;
-            byte[] buffer = new byte[headAmount];
+            //var headAmount = 4;
+            var buffer = new byte[headAmount];
             stream.Read(buffer, 0, headAmount);
             stream.Position = 0;
             return buffer;
         }
-
 
 
         private static Encoding AutoEncoding(byte[] bom)
@@ -75,12 +118,12 @@ namespace EncodingNormalior.Model
             //gbk aa文三 97 97 206 196 200 253
 
             if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76)
-                return Encoding.UTF7;//85 116 102 55    //utf7 aa 97 97 0 0
+                return Encoding.UTF7; //85 116 102 55    //utf7 aa 97 97 0 0
             //utf7 编码 = 43 102 120 90
 
             if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf)
-                return Encoding.UTF8;//无签名 117 116 102 56
-                                          // 130 151 160 231
+                return Encoding.UTF8; //无签名 117 116 102 56
+            // 130 151 160 231
             if (bom[0] == 0xff && bom[1] == 0xfe)
                 return Encoding.Unicode; //UTF-16LE
 
@@ -89,7 +132,7 @@ namespace EncodingNormalior.Model
 
             if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
 
-            return Encoding.ASCII;//ascii 116 104 105 115
+            return Encoding.ASCII; //ascii 116 104 105 115
         }
     }
 }
