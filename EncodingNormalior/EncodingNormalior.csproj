@@ -43,11 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\EncodingScrutator.cs" />
+    <Compile Include="Model\InspectFileWhiteListSetting.cs" />
+    <Compile Include="Model\ISetting.cs" />
+    <Compile Include="Model\SitpulationEncodingSetting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="textFile\GBK 1.txt" />
+    <Content Include="textFile\GBK 2.txt" />
+    <Content Include="textFile\GBK 3.txt" />
+    <Content Include="textFile\utf7 1.txt" />
+    <Content Include="textFile\utf7 2.txt" />
+    <Content Include="textFile\utf8 无签名1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
