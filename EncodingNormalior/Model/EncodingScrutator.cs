@@ -24,8 +24,8 @@ namespace EncodingNormalior.Model
             var encoding = AutoEncoding(headByte);
             stream.Position = 0;
 
-            //gbk utf7 uft8无签名
-            if (encoding.Equals(Encoding.ASCII))
+            // uft8无签名
+            if (encoding.Equals(Encoding.ASCII))//GBK utf8
             {
                 if (IsGBK(stream))
                 {
@@ -34,11 +34,14 @@ namespace EncodingNormalior.Model
             }
 
             stream.Dispose();
-            //return Encoding.Default;
             return encoding;
         }
-
-        private bool IsGBK(Stream stream)
+        /// <summary>
+        /// 输入文件是不是GBK编码
+        /// </summary>
+        /// <param name="stream">文件</param>
+        /// <returns>true 是GBK编码，false不是GBK编码</returns>
+        private static bool IsGBK(Stream stream)
         {
             long length = 0;
             bool isGBK = false;//如果所有的byte都是不大于127那么是ascii，这时是什么都好
@@ -79,7 +82,7 @@ namespace EncodingNormalior.Model
                 }
             }
             stream.Position = 0;
-            if (!isGBK)
+            if (!isGBK)//如果没有中文或GBK的在ascii外字符，判断ASCII
             {
                 return false;
             }
@@ -111,11 +114,6 @@ namespace EncodingNormalior.Model
 
             // Analyze the BOM
 
-            //gbk 71 66 75 32
-            //gbk 编码 177 224 194 235
-            //gbk aa  97 97 0 0
-            //gbk aa文 97 97 206 196
-            //gbk aa文三 97 97 206 196 200 253
 
             if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76)
                 return Encoding.UTF7; //85 116 102 55    //utf7 aa 97 97 0 0
@@ -132,7 +130,7 @@ namespace EncodingNormalior.Model
 
             if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
 
-            return Encoding.ASCII; //ascii 116 104 105 115
+            return Encoding.ASCII; //如果返回ASCII可能是GBK
         }
     }
 }
