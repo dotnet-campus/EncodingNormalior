@@ -1,30 +1,30 @@
-using System;
+ï»¿using System;
 using System.IO;
 using System.Text;
 
 namespace EncodingNormalior.Model
 {
     /// <summary>
-    ///     ¼ì²â±àÂë
+    ///     æ£€æµ‹ç¼–ç 
     /// </summary>
     public class EncodingScrutator
     {
         /// <summary>
-        ///     ¼ì²âÎÄ¼ş±àÂë
+        ///     æ£€æµ‹æ–‡ä»¶ç¼–ç 
         /// </summary>
-        /// <param name="file">ÎÄ¼ş</param>
-        /// <returns>ÎÄ¼ş±àÂë</returns>
+        /// <param name="file">æ–‡ä»¶</param>
+        /// <returns>æ–‡ä»¶ç¼–ç </returns>
         public Encoding InspectFileEncoding(FileInfo file)
         {
-            //´ò¿ªÁ÷
+            //æ‰“å¼€æµ
             Stream stream = file.OpenRead();
             var headByte = ReadFileHeadbyte(stream);
 
-            //´ÓÎÄ¼ş»ñÈ¡±àÂë
+            //ä»æ–‡ä»¶è·å–ç¼–ç 
             var encoding = AutoEncoding(headByte);
             stream.Position = 0;
 
-            // uft8ÎŞÇ©Ãû
+            // uft8æ— ç­¾å
             if (encoding.Equals(Encoding.ASCII))//GBK utf8
             {
                 if (IsGBK(stream))
@@ -37,14 +37,14 @@ namespace EncodingNormalior.Model
             return encoding;
         }
         /// <summary>
-        /// ÊäÈëÎÄ¼şÊÇ²»ÊÇGBK±àÂë
+        /// è¾“å…¥æ–‡ä»¶æ˜¯ä¸æ˜¯GBKç¼–ç 
         /// </summary>
-        /// <param name="stream">ÎÄ¼ş</param>
-        /// <returns>true ÊÇGBK±àÂë£¬false²»ÊÇGBK±àÂë</returns>
+        /// <param name="stream">æ–‡ä»¶</param>
+        /// <returns>true æ˜¯GBKç¼–ç ï¼Œfalseä¸æ˜¯GBKç¼–ç </returns>
         private static bool IsGBK(Stream stream)
         {
             long length = 0;
-            bool isGBK = false;//Èç¹ûËùÓĞµÄbyte¶¼ÊÇ²»´óÓÚ127ÄÇÃ´ÊÇascii£¬ÕâÊ±ÊÇÊ²Ã´¶¼ºÃ
+            bool isGBK = false;//å¦‚æœæ‰€æœ‰çš„byteéƒ½æ˜¯ä¸å¤§äº127é‚£ä¹ˆæ˜¯asciiï¼Œè¿™æ—¶æ˜¯ä»€ä¹ˆéƒ½å¥½
             var buffer = new byte[1024];
             var n = 0;
             while ((n = stream.Read(buffer, 0, 1024)) > 0)
@@ -82,7 +82,7 @@ namespace EncodingNormalior.Model
                 }
             }
             stream.Position = 0;
-            if (!isGBK)//Èç¹ûÃ»ÓĞÖĞÎÄ»òGBKµÄÔÚasciiÍâ×Ö·û£¬ÅĞ¶ÏASCII
+            if (!isGBK)//å¦‚æœæ²¡æœ‰ä¸­æ–‡æˆ–GBKçš„åœ¨asciiå¤–å­—ç¬¦ï¼Œåˆ¤æ–­ASCII
             {
                 return false;
             }
@@ -90,11 +90,11 @@ namespace EncodingNormalior.Model
         }
 
         /// <summary>
-        ///     ¶ÁÈ¡ÎÄ¼şµÄÍ·4¸öbyte
+        ///     è¯»å–æ–‡ä»¶çš„å¤´4ä¸ªbyte
         /// </summary>
-        /// <param name="stream">ÎÄ¼şÁ÷</param>
-        /// <param name="headAmount">¶ÁÈ¡³¤¶È</param>
-        /// <returns>ÎÄ¼şÍ·4¸öbyte</returns>
+        /// <param name="stream">æ–‡ä»¶æµ</param>
+        /// <param name="headAmount">è¯»å–é•¿åº¦</param>
+        /// <returns>æ–‡ä»¶å¤´4ä¸ªbyte</returns>
         private byte[] ReadFileHeadbyte(Stream stream, int headAmount = 4)
         {
             //var headAmount = 4;
@@ -109,18 +109,17 @@ namespace EncodingNormalior.Model
         {
             if (bom.Length != 4)
             {
-                throw new ArgumentException("EncodingScrutator.AutoEncoding ²ÎÊı´óĞ¡²»µÈÓÚ4");
+                throw new ArgumentException("EncodingScrutator.AutoEncoding å‚æ•°å¤§å°ä¸ç­‰äº4");
             }
 
             // Analyze the BOM
 
-
             if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76)
                 return Encoding.UTF7; //85 116 102 55    //utf7 aa 97 97 0 0
-            //utf7 ±àÂë = 43 102 120 90
+            //utf7 ç¼–ç  = 43 102 120 90
 
             if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf)
-                return Encoding.UTF8; //ÎŞÇ©Ãû 117 116 102 56
+                return Encoding.UTF8; //æ— ç­¾å 117 116 102 56
             // 130 151 160 231
             if (bom[0] == 0xff && bom[1] == 0xfe)
                 return Encoding.Unicode; //UTF-16LE
@@ -130,7 +129,7 @@ namespace EncodingNormalior.Model
 
             if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
 
-            return Encoding.ASCII; //Èç¹û·µ»ØASCII¿ÉÄÜÊÇGBK
+            return Encoding.ASCII; //å¦‚æœè¿”å›ASCIIå¯èƒ½æ˜¯GBK
         }
     }
 }

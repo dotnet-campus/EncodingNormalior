@@ -1,14 +1,14 @@
-using System.Collections.Generic;
+锘縰sing System.Collections.Generic;
 
 namespace EncodingNormalior.Model
 {
     /// <summary>
-    ///     文件检测白名单设置
+    ///     鏂囦欢妫�娴嬬櫧鍚嶅崟璁剧疆
     /// </summary>
     public class InspectFileWhiteListSetting : ISetting
     {
         /// <summary>
-        ///     设置或获取白名单
+        ///     璁剧疆鎴栬幏鍙栫櫧鍚嶅崟
         /// </summary>
         public List<string> WhiteList { set; get; } = new List<string>();
     }

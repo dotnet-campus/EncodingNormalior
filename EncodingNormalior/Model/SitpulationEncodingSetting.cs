@@ -1,14 +1,14 @@
-using System.Text;
+ï»¿using System.Text;
 
 namespace EncodingNormalior.Model
 {
     /// <summary>
-    ///     ÓÃ»§ÉèÖÃµÄ¹æ¶¨±àÂë
+    ///     ç”¨æˆ·è®¾ç½®çš„è§„å®šç¼–ç 
     /// </summary>
     public class SitpulationEncodingSetting : ISetting
     {
         /// <summary>
-        ///     ÉèÖÃ»ò»ñÈ¡ÓÃ»§¹æ¶¨µÄ±àÂë£¬Ä¬ÈÏ±àÂëÎª <see cref="Encoding.UTF8" />
+        ///     è®¾ç½®æˆ–è·å–ç”¨æˆ·è§„å®šçš„ç¼–ç ï¼Œé»˜è®¤ç¼–ç ä¸º <see cref="Encoding.UTF8" />
         /// </summary>
         public Encoding SitpulationEncoding { set; get; } = Encoding.UTF8;
     }
