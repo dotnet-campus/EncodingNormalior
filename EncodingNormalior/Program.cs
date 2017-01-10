@@ -23,8 +23,25 @@ namespace EncodingNormalior
                 EncodingScrutator encodingScrutator = new EncodingScrutator(file);
                 var encoding = encodingScrutator.InspectFileEncoding();
                 Console.WriteLine(file.Name + " " + encoding.Encoding.EncodingName + " 置信度 " + encoding.ConfidenceCount + "\r\n");
+                //if (encoding.ConfidenceCount == 0.5)
+                //{
+                //    ReadFile(encoding);
+                //}
             }
         }
+
+        //private static void ReadFile(EncodingScrutatorFile encoding)
+        //{
+        //    using (StreamReader stream=new StreamReader(encoding.File.Open(FileMode.Open),Encoding.UTF8))
+        //    {
+        //        string str = stream.ReadToEnd();
+        //    }
+
+        //    using (StreamReader stream = new StreamReader(encoding.File.Open(FileMode.Open), Encoding.GetEncoding("GBK")))
+        //    {
+        //        string str = stream.ReadToEnd();
+        //    }
+        //}
 
         //private static void ReadByte()
         //{

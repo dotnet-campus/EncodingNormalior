@@ -54,14 +54,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="textFile\GBK 1.txt" />
-    <Content Include="textFile\GBK 2.txt" />
-    <Content Include="textFile\GBK 3.txt" />
-    <Content Include="textFile\utf7 1.txt" />
-    <Content Include="textFile\utf7 2.txt" />
-    <Content Include="textFile\utf8 无签名1.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

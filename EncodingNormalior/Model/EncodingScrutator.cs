@@ -52,6 +52,10 @@ namespace EncodingNormalior.Model
                 //    encoding = Encoding.GetEncoding("GBK");
                 //}
 
+                //如果都是ASCII，那么无法知道编码
+                //如果属于 Utf8的byte数大于 GBK byte数，那么编码是 utf8，否则是GBK
+                //如果两个数相同，那么不知道是哪个
+
                 var countUtf8 = CountUtf8();
                 if (countUtf8 == 0)
                 {
@@ -82,6 +86,10 @@ namespace EncodingNormalior.Model
             return EncodingScrutatorFile;
         }
 
+        /// <summary>
+        ///     统计文件属于 GBK 的 byte数
+        /// </summary>
+        /// <returns></returns>
         private int CountGbk()
         {
             var count = 0; //存在GBK的byte
@@ -112,17 +120,15 @@ namespace EncodingNormalior.Model
                     count += 2;
                     i++;
                 }
-                //if (IsGbk(firstByte, secondByte))
-                //{
-                //    count += 2;
-                //    i++;
-                //}
             }
             return count;
         }
 
-
-        private int CountUtf8() //(Stream stream)
+        /// <summary>
+        ///     属于 UTF8 的 byte 数
+        /// </summary>
+        /// <returns></returns>
+        private int CountUtf8()
         {
             var count = 0;
             if (CountBuffer == null)
