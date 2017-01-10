@@ -18,10 +18,7 @@ namespace EncodingNormalior.Model
 
         public EncodingScrutator(FileInfo file)
         {
-            EncodingScrutatorFile = new EncodingScrutatorFile
-            {
-                File = file
-            };
+            EncodingScrutatorFile = new EncodingScrutatorFile(file);
         }
 
         private byte[] CountBuffer { set; get; }

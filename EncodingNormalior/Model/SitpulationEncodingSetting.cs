@@ -11,5 +11,10 @@ namespace EncodingNormalior.Model
         ///     设置或获取用户规定的编码，默认编码为 <see cref="Encoding.UTF8" />
         /// </summary>
         public Encoding SitpulationEncoding { set; get; } = Encoding.UTF8;
+
+        public static SitpulationEncodingSetting DefaultSitpulationEncodingSetting { set; get; } = new SitpulationEncodingSetting
+        {
+            SitpulationEncoding = Encoding.UTF8
+        };
     }
 }

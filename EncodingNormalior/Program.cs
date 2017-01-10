@@ -13,6 +13,16 @@ namespace EncodingNormalior
     {
         public static void Main(string[] args)
         {
+            EncodingScrutatorFolder encodingScrutatorFolder=new EncodingScrutatorFolder(new DirectoryInfo("E:\\程序\\公司\\EncodingNormalior"));
+            encodingScrutatorFolder.InspectFolderEncoding();
+            using (StreamWriter stream=new StreamWriter(
+                new FileStream("E:\\1.txt",FileMode.Create)))
+            {
+                stream.Write(Print(encodingScrutatorFolder));
+            }
+
+
+            //2017年1月10日16:09:17
             //测试
             //ReadByte();
             //EncodingWrite();
@@ -28,6 +38,43 @@ namespace EncodingNormalior
                 //    ReadFile(encoding);
                 //}
             }
+        }
+
+        private static string Print(EncodingScrutatorFolder encodingScrutatorFolder,string white="",StringBuilder str=null)
+        {
+            if (str == null)
+            {
+                str = new StringBuilder();
+            }
+            foreach (var temp in encodingScrutatorFolder.Folder)
+            {
+                Print(temp,white+temp.Name+"/",str);
+            }
+            //StringBuilder str=new StringBuilder();
+           
+            str.Append(white);
+            foreach (var temp in encodingScrutatorFolder.File)
+            {
+                str.Append(temp.File.Name+" ");
+                if (temp.Ignore)
+                {
+                    str.Append("文件忽略");
+                }
+                else
+                {
+                    str.Append("编码 " + temp.Encoding.EncodingName + " 置信度 " + temp.ConfidenceCount);
+                }
+                str.Append("\r\n");
+            }
+
+            //using (StreamWriter stream=new StreamWriter(
+            //    new FileStream("E:\\1.txt",FileMode.Create)))
+            //{
+            //    stream.Write(str.ToString());
+            //}
+
+            //Console.WriteLine(str.ToString());
+            return str.ToString();
         }
 
         //private static void ReadFile(EncodingScrutatorFile encoding)

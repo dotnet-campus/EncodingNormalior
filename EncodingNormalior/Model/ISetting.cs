@@ -8,7 +8,7 @@ namespace EncodingNormalior.Model
     /// <summary>
     /// 用户设置接口
     /// </summary>
-    interface ISetting
+    public interface ISetting
     {
 
     }

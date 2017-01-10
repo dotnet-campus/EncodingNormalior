@@ -8,6 +8,20 @@ namespace EncodingNormalior.Model
     /// </summary>
     public class EncodingScrutatorFile
     {
+        public EncodingScrutatorFile()
+        {
+        }
+
+        public EncodingScrutatorFile(FileInfo file)
+        {
+            File = file;
+        }
+
+        /// <summary>
+        /// 设置或获取是否忽略
+        /// </summary>
+        public bool Ignore { set; get; }
+
         /// <summary>
         ///     文件
         /// </summary>
