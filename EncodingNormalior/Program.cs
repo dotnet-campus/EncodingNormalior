@@ -15,14 +15,14 @@ namespace EncodingNormalior
         {
             //测试
             //ReadByte();
-            
+            //EncodingWrite();
             string folder = "E:\\程序\\公司\\EncodingNormalior\\EncodingNormalior\\textFile";
-            EncodingScrutator encodingScrutator=new EncodingScrutator();
             foreach (var temp in Directory.GetFiles(folder))
             {
                 var file = new FileInfo(temp);
-                Encoding encoding = encodingScrutator.InspectFileEncoding(file);
-                Console.WriteLine(file.Name+" "+encoding.EncodingName+"\r\n");
+                EncodingScrutator encodingScrutator = new EncodingScrutator(file);
+                var encoding = encodingScrutator.InspectFileEncoding();
+                Console.WriteLine(file.Name + " " + encoding.Encoding.EncodingName + " 置信度 " + encoding.ConfidenceCount + "\r\n");
             }
         }
 
@@ -35,6 +35,32 @@ namespace EncodingNormalior
         //    stream.Read(buffer, 0, n);
         //    //aa 文206 196
         //    //aa文三 97 97 206 196 200 253
+        //}
+
+        ///// <summary>
+        ///// 写入编码各种
+        ///// </summary>
+        //private static void EncodingWrite()
+        //{
+        //    string str = "这是{0}编码";
+        //    List<Encoding> encoding=new List<Encoding>()
+        //    {
+        //        Encoding.ASCII,
+        //        Encoding.BigEndianUnicode,
+        //        Encoding.UTF8,
+        //        Encoding.GetEncoding("gbk"),
+
+        //    };
+
+        //    string file = "E:\\程序\\公司\\EncodingNormalior\\EncodingNormalior\\textFile\\";
+        //    foreach (var temp in encoding)
+        //    {
+        //        using (StreamWriter stream =new StreamWriter(
+        //            new FileStream(file+temp.EncodingName+".txt",FileMode.OpenOrCreate),temp))
+        //        {
+        //            stream.Write(str, temp);
+        //        }
+        //    }
         //}
     }
 

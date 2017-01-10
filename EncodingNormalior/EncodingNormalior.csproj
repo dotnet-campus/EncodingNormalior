@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\EncodingScrutator.cs" />
+    <Compile Include="Model\EncodingScrutatorFile.cs" />
     <Compile Include="Model\InspectFileWhiteListSetting.cs" />
     <Compile Include="Model\ISetting.cs" />
     <Compile Include="Model\SitpulationEncodingSetting.cs" />

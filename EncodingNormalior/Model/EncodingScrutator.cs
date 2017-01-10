@@ -9,42 +9,205 @@ namespace EncodingNormalior.Model
     /// </summary>
     public class EncodingScrutator
     {
+        private Stream _stream;
+
+        public EncodingScrutator(EncodingScrutatorFile encodingScrutatorFile)
+        {
+            EncodingScrutatorFile = encodingScrutatorFile;
+        }
+
+        public EncodingScrutator(FileInfo file)
+        {
+            EncodingScrutatorFile = new EncodingScrutatorFile
+            {
+                File = file
+            };
+        }
+
+        private byte[] CountBuffer { set; get; }
+
+        public EncodingScrutatorFile EncodingScrutatorFile { set; get; }
+
         /// <summary>
         ///     检测文件编码
         /// </summary>
         /// <param name="file">文件</param>
         /// <returns>文件编码</returns>
-        public Encoding InspectFileEncoding(FileInfo file)
+        public EncodingScrutatorFile InspectFileEncoding() //(FileInfo file)
         {
+            var file = EncodingScrutatorFile.File;
             //打开流
             Stream stream = file.OpenRead();
+            _stream = stream;
             var headByte = ReadFileHeadbyte(stream);
+            stream.Position = 0;
 
             //从文件获取编码
             var encoding = AutoEncoding(headByte);
-            stream.Position = 0;
-
             // uft8无签名
-            if (encoding.Equals(Encoding.ASCII))//GBK utf8
+            if (encoding.Equals(Encoding.ASCII)) //GBK utf8
             {
-                if (IsGBK(stream))
+                //if (IsGBK(stream))
+                //{
+                //    encoding = Encoding.GetEncoding("GBK");
+                //}
+
+                var countUtf8 = CountUtf8();
+                if (countUtf8 == 0)
                 {
-                    encoding = Encoding.GetEncoding("GBK");
+                    encoding = Encoding.ASCII;
+                }
+                else
+                {
+                    var countGbk = CountGbk();
+                    if (countUtf8 > countGbk)
+                    {
+                        encoding = Encoding.UTF8;
+                        EncodingScrutatorFile.ConfidenceCount = (double) countUtf8/(countUtf8 + countGbk);
+                    }
+                    else
+                    {
+                        encoding = Encoding.GetEncoding("GBK");
+                        EncodingScrutatorFile.ConfidenceCount = (double) countGbk/(countUtf8 + countGbk);
+                    }
                 }
             }
-
+            else
+            {
+                //EncodingScrutatorFile.Encoding = encoding;//不需要
+                EncodingScrutatorFile.ConfidenceCount = 1;
+            }
             stream.Dispose();
-            return encoding;
+            EncodingScrutatorFile.Encoding = encoding;
+            return EncodingScrutatorFile;
         }
+
+        private int CountGbk()
+        {
+            var count = 0; //存在GBK的byte
+            if (CountBuffer == null)
+            {
+                ReadStream();
+            }
+            var length = CountBuffer.Length; //总长度
+
+            var buffer = CountBuffer;
+            const char head = (char) 0x80; //小于127 通过 &head==0
+
+            for (var i = 0; i < length; i++)
+            {
+                var firstByte = buffer[i]; //第一个byte，GBK有两个
+                if ((firstByte & head) == 0) //如果是127以下，那么就是英文等字符，不确定是不是GBK
+                {
+                    continue; //文件全部都是127以下字符，可能是Utf-8 或ASCII
+                }
+                if (i + 1 >= length) //如果是大于127，需要两字符，如果只有一个，那么文件错了，但是我也没法做什么
+                {
+                    break;
+                }
+                var secondByte = buffer[i + 1]; //如果是GBK，那么添加GBK byte 2
+                if (firstByte >= 161 && firstByte <= 247 &&
+                    secondByte >= 161 && secondByte <= 254)
+                {
+                    count += 2;
+                    i++;
+                }
+                //if (IsGbk(firstByte, secondByte))
+                //{
+                //    count += 2;
+                //    i++;
+                //}
+            }
+            return count;
+        }
+
+
+        private int CountUtf8() //(Stream stream)
+        {
+            var count = 0;
+            if (CountBuffer == null)
+            {
+                ReadStream();
+            }
+
+            var length = CountBuffer.Length;
+
+
+            var buffer = CountBuffer; // new byte[length];
+            const char head = (char) 0x80;
+            //while ((n = stream.Read(buffer, 0, n)) > 0)
+            {
+                for (var i = 0; i < length; i++)
+                {
+                    var temp = buffer[i];
+                    if (temp < 128) //  !(temp&head)
+                    {
+                        //utf8 一开始如果byte大小在 0-127 表示英文等，使用一byte
+                        //length++; 我们记录的是和CountGBK比较
+                        continue;
+                    }
+                    var tempHead = head;
+                    var wordLength = 0; //单词长度，一个字使用多少个byte
+
+                    while ((temp & tempHead) != 0) //存在多少个byte
+                    {
+                        wordLength++;
+                        tempHead >>= 1;
+                    }
+
+                    if (wordLength <= 1)
+                    {
+                        //utf8最小长度为2
+                        continue;
+                    }
+
+                    wordLength--; //去掉最后一个，可以让后面的 point大于wordLength
+                    if (wordLength + i >= length)
+                    {
+                        break;
+                    }
+                    var point = 1; //utf8的这个word 是多少 byte
+                    //utf8在两字节和三字节的编码，除了最后一个 byte 
+                    //其他byte 大于127 
+                    //所以 除了最后一个byte，其他的byte &head >0
+                    for (; point <= wordLength; point++)
+                    {
+                        var secondChar = buffer[i + point];
+                        if ((secondChar & head) == 0)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (point > wordLength)
+                    {
+                        count += wordLength + 1;
+                        i += wordLength;
+                    }
+                }
+            }
+            return count;
+        }
+
+        private void ReadStream()
+        {
+            var stream = _stream;
+            stream.Position = 0;
+            var length = (int) stream.Length;
+            CountBuffer = new byte[length];
+            stream.Read(CountBuffer, 0, length);
+        }
+
         /// <summary>
-        /// 输入文件是不是GBK编码
+        ///     输入文件是不是GBK编码
         /// </summary>
         /// <param name="stream">文件</param>
         /// <returns>true 是GBK编码，false不是GBK编码</returns>
-        private static bool IsGBK(Stream stream)
+        private bool IsGBK(Stream stream)
         {
+            //无签名 utf8 判断为 GBK
             long length = 0;
-            bool isGBK = false;//如果所有的byte都是不大于127那么是ascii，这时是什么都好
+            var isGBK = false; //如果所有的byte都是不大于127那么是ascii，这时是什么都好
             var buffer = new byte[1024];
             var n = 0;
             while ((n = stream.Read(buffer, 0, 1024)) > 0)
@@ -61,15 +224,8 @@ namespace EncodingNormalior.Model
                     {
                         break;
                     }
-                    var temp2 = buffer[i + 1];//http://en.wikipedia.org/wiki/GBK
-                    if ((temp >= 0xA1 && temp <= 0xA9 && temp2 >= 0xA1 && temp2 <= 0xFE) ||
-                        (temp >= 0xB0 && temp <= 0xF7 && temp2 >= 0xA1 && temp2 <= 0xFE) ||
-                        (temp >= 0x81 && temp <= 0xA0 && temp2 >= 0x40 && temp2 <= 0xFE && temp2 != 0x7F) ||
-                        (temp >= 0xAA && temp <= 0xFE && temp2 >= 0x40 && temp2 <= 0xA0 && temp2 != 0x7F) ||
-                        (temp >= 0xA8 && temp <= 0xA9 && temp2 >= 0x40 && temp2 <= 0xA0 && temp2 != 0x7F) ||
-                        (temp >= 0xAA && temp <= 0xAF && temp2 >= 0xA1 && temp2 <= 0xFE) ||
-                        (temp >= 0xF8 && temp <= 0xFE && temp2 >= 0xA1 && temp2 <= 0xFE) ||
-                        (temp >= 0xA1 && temp <= 0xA7 && temp2 >= 0x40 && temp2 <= 0xA0 && temp2 != 0x7F))
+                    var temp2 = buffer[i + 1]; //http://en.wikipedia.org/wiki/GBK
+                    if (IsGbk(temp, temp2))
                     {
                         length += 2;
                         i++;
@@ -82,11 +238,35 @@ namespace EncodingNormalior.Model
                 }
             }
             stream.Position = 0;
-            if (!isGBK)//如果没有中文或GBK的在ascii外字符，判断ASCII
+            if (!isGBK) //如果没有中文或GBK的在ascii外字符，判断ASCII
             {
                 return false;
             }
             return length == stream.Length;
+        }
+
+        /// <summary>
+        ///     判断输入的两byte是不是GBK
+        /// </summary>
+        /// <param name="firstByte">第一个字符</param>
+        /// <param name="secondByte">第二个</param>
+        /// <returns>true 是GBK</returns>
+        private static bool IsGbk(byte firstByte, byte secondByte)
+        {
+            //firstByte >= 161 && firstByte <= 247 &&
+            //secondByte >= 161 && secondByte <= 254
+            return (firstByte >= 0xA1 && firstByte <= 0xA9 && secondByte >= 0xA1 && secondByte <= 0xFE) ||
+                   (firstByte >= 0xB0 && firstByte <= 0xF7 && secondByte >= 0xA1 && secondByte <= 0xFE) ||
+                   (firstByte >= 0x81 && firstByte <= 0xA0 && secondByte >= 0x40 && secondByte <= 0xFE &&
+                    secondByte != 0x7F) ||
+                   (firstByte >= 0xAA && firstByte <= 0xFE && secondByte >= 0x40 && secondByte <= 0xA0 &&
+                    secondByte != 0x7F) ||
+                   (firstByte >= 0xA8 && firstByte <= 0xA9 && secondByte >= 0x40 && secondByte <= 0xA0 &&
+                    secondByte != 0x7F) ||
+                   (firstByte >= 0xAA && firstByte <= 0xAF && secondByte >= 0xA1 && secondByte <= 0xFE) ||
+                   (firstByte >= 0xF8 && firstByte <= 0xFE && secondByte >= 0xA1 && secondByte <= 0xFE) ||
+                   (firstByte >= 0xA1 && firstByte <= 0xA7 && secondByte >= 0x40 && secondByte <= 0xA0 &&
+                    secondByte != 0x7F);
         }
 
         /// <summary>
@@ -129,7 +309,7 @@ namespace EncodingNormalior.Model
 
             if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
 
-            return Encoding.ASCII; //如果返回ASCII可能是GBK
+            return Encoding.ASCII; //如果返回ASCII可能是GBK 无签名utf8
         }
     }
 }
