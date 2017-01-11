@@ -38,6 +38,7 @@ namespace EncodingNormalior
             //}
 
             EncodingScrutatorFolder encodingScrutatorFolder=new EncodingScrutatorFolder(new DirectoryInfo("E:\\程序\\公司\\EncodingNormalior"));
+            Print(encodingScrutatorFolder);
             encodingScrutatorFolder.InspectFolderEncoding();
             using (StreamWriter stream=new StreamWriter(
                 new FileStream("E:\\1.txt",FileMode.Create)))
@@ -66,6 +67,23 @@ namespace EncodingNormalior
 
         private static string Print(EncodingScrutatorFolder encodingScrutatorFolder,string white="",StringBuilder str=null)
         {
+            //Console.WriteLine("包含文件");
+            //foreach (var temp in encodingScrutatorFolder.IncludeFileSetting.IncludeWildcardFile)
+            //{
+            //    Console.WriteLine(temp);
+            //}
+
+            //Console.WriteLine("不包含文件");
+            //foreach (var temp in encodingScrutatorFolder.InspectFileWhiteListSetting.FileWhiteList)
+            //{
+            //    Console.WriteLine(temp);
+            //}
+
+            //foreach (var temp in encodingScrutatorFolder.InspectFileWhiteListSetting.FolderWhiteList)
+            //{
+            //    Console.WriteLine(temp);
+            //}
+
             if (str == null)
             {
                 str = new StringBuilder();

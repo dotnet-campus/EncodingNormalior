@@ -60,6 +60,11 @@ namespace EncodingNormalior.Model
             }
         }
 
+        public IncludeFileSetting(List<string> includeWildcardFile)
+        {
+            IncludeWildcardFile = includeWildcardFile;
+        }
+
         /// <summary>
         /// 包含的文件的通配符
         /// </summary>

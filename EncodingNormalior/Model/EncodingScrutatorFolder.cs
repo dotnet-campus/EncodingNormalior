@@ -13,28 +13,33 @@ namespace EncodingNormalior.Model
         //private List<string> _includeRegexFile;
         private List<Regex> _includeRegexFile;
 
-        /// <summary>
-        ///     设置或获取文件检测白名单
-        /// </summary>
-        public InspectFileWhiteListSetting InspectFileWhiteListSetting =
-            new InspectFileWhiteListSetting(new List<string>
-            {
-                @"bin\",
-                "*.png"
-            });
-
-
         public EncodingScrutatorFolder(DirectoryInfo folder)
+            : this(folder, new InspectFileWhiteListSetting(InspectFileWhiteListSetting.DefaultWhiteList),
+                new IncludeFileSetting(IncludeFileSetting.TextFileSuffix))
+        {
+        }
+
+        public EncodingScrutatorFolder(DirectoryInfo folder, InspectFileWhiteListSetting inspectFileWhiteListSetting,
+            IncludeFileSetting includeFileSetting)
         {
             FaceFolder = folder;
             Name = folder.Name;
+            InspectFileWhiteListSetting = inspectFileWhiteListSetting;
+            IncludeFileSetting = includeFileSetting;
         }
+
         /// <summary>
-        /// 获取文件夹名
+        ///     设置或获取文件检测白名单
         /// </summary>
-        public string Name {  get; }
+        public InspectFileWhiteListSetting InspectFileWhiteListSetting { set; get; }
+
         /// <summary>
-        /// 文件夹是否被忽略
+        ///     获取文件夹名
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        ///     文件夹是否被忽略
         /// </summary>
         public bool Ignore { set; get; }
 
@@ -46,22 +51,21 @@ namespace EncodingNormalior.Model
         /// <summary>
         ///     设置或获取编码规范
         /// </summary>
-        public ISetting SitpulationEncodingSetting { set; get; } =
-            Model.SitpulationEncodingSetting.DefaultSitpulationEncodingSetting;
+        public SitpulationEncodingSetting SitpulationEncodingSetting { set; get; } =
+            SitpulationEncodingSetting.DefaultSitpulationEncodingSetting;
 
         /// <summary>
         ///     设置或获取要包含文件
         /// </summary>
-        public IncludeFileSetting IncludeFileSetting { set; get; } = new IncludeFileSetting
-        {
-            IncludeWildcardFile = new List<string> {"*"}
-        };
+        public IncludeFileSetting IncludeFileSetting { set; get; }
+
         /// <summary>
-        /// 设置或获取文件夹包含文件夹
+        ///     设置或获取文件夹包含文件夹
         /// </summary>
         public List<EncodingScrutatorFolder> Folder { set; get; } = new List<EncodingScrutatorFolder>();
+
         /// <summary>
-        /// 文件夹的文件和文件编码
+        ///     文件夹的文件和文件编码
         /// </summary>
         public List<EncodingScrutatorFile> File { set; get; }
             = new List<EncodingScrutatorFile>();
@@ -91,10 +95,10 @@ namespace EncodingNormalior.Model
         {
             foreach (var temp in FaceFolder.GetDirectories())
             {
-                var folder = new EncodingScrutatorFolder(temp)
+                var folder = new EncodingScrutatorFolder(temp, InspectFileWhiteListSetting, IncludeFileSetting)
                 {
-                    IncludeFileSetting = IncludeFileSetting,
-                    InspectFileWhiteListSetting = InspectFileWhiteListSetting,
+                    //IncludeFileSetting = IncludeFileSetting,
+                    //InspectFileWhiteListSetting = InspectFileWhiteListSetting,
                     SitpulationEncodingSetting = SitpulationEncodingSetting,
                     _includeRegexFile = _includeRegexFile
                 };
