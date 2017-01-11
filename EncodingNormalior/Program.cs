@@ -32,6 +32,10 @@ namespace EncodingNormalior
         public static void Main(string[] args)
         {
            // GetWildcardRegexString();
+            //foreach (var temp in IncludeFileSetting.TextFileSuffix)
+            //{
+            //    Console.WriteLine(temp);
+            //}
 
             EncodingScrutatorFolder encodingScrutatorFolder=new EncodingScrutatorFolder(new DirectoryInfo("E:\\程序\\公司\\EncodingNormalior"));
             encodingScrutatorFolder.InspectFolderEncoding();

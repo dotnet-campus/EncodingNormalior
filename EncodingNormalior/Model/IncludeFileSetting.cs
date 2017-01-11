@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EncodingNormalior.Model
@@ -13,18 +14,30 @@ namespace EncodingNormalior.Model
 
         }
 
+        static IncludeFileSetting()
+        {
+            //TextFileSuffix
+            var textFileSuffix = Resource.TextFileSuffix.textFileSuffix.Split('\n');
+
+            TextFileSuffix = new List<string>();
+            foreach (var temp in textFileSuffix.Select(temp=> temp.Replace("\r", "").Trim()))
+            {
+                if (!string.IsNullOrEmpty(temp))
+                {
+                    TextFileSuffix.Add("*." + temp);
+                }
+            }
+        }
+
         /// <summary>
         /// 包含的文件的通配符
         /// </summary>
         public List<string> IncludeWildcardFile { set; get; } = new List<string>();
-       
+
         /// <summary>
         /// 常用文本后缀
         /// </summary>
-        public List<string> TextFileSuffix { set; get; }=new List<string>()
-        {
-            
-        };
+        public static List<string> TextFileSuffix { set; get; }
 
         /// <summary>
         /// 获取文件包含规则
