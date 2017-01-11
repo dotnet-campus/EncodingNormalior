@@ -67,11 +67,33 @@ namespace EncodingNormalior.Resource {
         ///c
         ///cpp
         ///md
+        ///csproj
+        ///json
+        ///asp
+        ///bat 
+        ///vbs
+        ///cmd 
+        ///html
+        ///htm
+        ///csv
+        ///ini
+        ///log
+        ///
+        ///
         /// 的本地化字符串。
         /// </summary>
         internal static string textFileSuffix {
             get {
                 return ResourceManager.GetString("textFileSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似  的本地化字符串。
+        /// </summary>
+        internal static string WhiteList {
+            get {
+                return ResourceManager.GetString("WhiteList", resourceCulture);
             }
         }
     }

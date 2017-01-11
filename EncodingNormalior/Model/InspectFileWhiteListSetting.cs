@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EncodingNormalior.Model
@@ -38,6 +40,30 @@ namespace EncodingNormalior.Model
     /// </summary>
     public class InspectFileWhiteListSetting : ISetting
     {
+        static InspectFileWhiteListSetting()
+        {
+            DefaultWhiteList = new List<string>();
+            var file = "WhiteList.txt";
+            string[] whiteList;
+            if (File.Exists(file))
+            {
+                using (StreamReader stream=new StreamReader(
+                    new FileStream(file,FileMode.Open)))
+                {
+                    whiteList = stream.ReadToEnd().Split('\n');
+                }
+            }
+            else
+            {
+                whiteList = Resource.TextFileSuffix.WhiteList.Split('\n');
+            }
+
+            foreach (var temp in whiteList.Select(temp=>temp.Replace("\r","").Trim()))
+            {
+                DefaultWhiteList.Add(temp);
+            }
+        }
+
         public InspectFileWhiteListSetting(List<string> whiteList)
         {
             //if (_folderRegex == null)
@@ -51,6 +77,8 @@ namespace EncodingNormalior.Model
             }
         }
 
+        public static List<string> DefaultWhiteList { set; get; }
+
         public void Add(string whiteList)
         {
             Parse(whiteList);
@@ -61,8 +89,8 @@ namespace EncodingNormalior.Model
             var folderWhiteList = ((List<string>)FolderWhiteList);
 
             Remove(whiteList, folderWhiteList);
-            folderWhiteList = (List<string>) FileWhiteList;
-            Remove(whiteList,folderWhiteList);
+            folderWhiteList = (List<string>)FileWhiteList;
+            Remove(whiteList, folderWhiteList);
         }
 
         private static void Remove(string whiteList, List<string> folderWhiteList)
@@ -88,7 +116,7 @@ namespace EncodingNormalior.Model
         {
             if (_folderRegex.IsMatch(whiteList))
             {
-                ((List<string>) FolderWhiteList).Add(whiteList.Substring(0,whiteList.Length-1));
+                ((List<string>)FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
             }
             else
             {
@@ -97,20 +125,20 @@ namespace EncodingNormalior.Model
                     throw new ArgumentException("不支持指定文件夹中的文件");
                 }
                 ((List<string>)FileWhiteList).Add(whiteList);
-                ((List<Regex>)FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList))); 
+                ((List<Regex>)FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList)));
             }
         }
 
-        private static Regex _folderRegex=new Regex("\\w+\\\\");
+        private static Regex _folderRegex = new Regex("\\w+\\\\");
 
-        public IReadOnlyList<string> FileWhiteList {  get; }=new List<string>();
-        public IReadOnlyList<string> FolderWhiteList {  get; }=new List<string>();
+        public IReadOnlyList<string> FileWhiteList { get; } = new List<string>();
+        public IReadOnlyList<string> FolderWhiteList { get; } = new List<string>();
         public IReadOnlyList<Regex> FileRegexWhiteList { get; } = new List<Regex>();
 
-        /// <summary>
-        ///     设置或获取白名单
-        /// </summary>
-        public List<string> WhiteList { set; get; } = new List<string>();
+        ///// <summary>
+        /////     设置或获取白名单
+        ///// </summary>
+        //public List<string> WhiteList { set; get; } = new List<string>();
         //忽略文件夹      文件夹\
         //忽略文件        文件
         //忽略后缀        *.后缀

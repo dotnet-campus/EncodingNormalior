@@ -1,0 +1,6 @@
+﻿bin\
+*.png
+*.jpg
+*.tmp
+*.exe
+*.mp4

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -17,7 +18,20 @@ namespace EncodingNormalior.Model
         static IncludeFileSetting()
         {
             //TextFileSuffix
-            var textFileSuffix = Resource.TextFileSuffix.textFileSuffix.Split('\n');
+            //读配置
+            string file = "textFileSuffix.txt";
+            string[] textFileSuffix;
+            if (!File.Exists(file))
+            {
+                textFileSuffix = Resource.TextFileSuffix.textFileSuffix.Split('\n');
+            }
+            else
+            {
+                using (StreamReader stream=new StreamReader(new FileStream(file,FileMode.Open)))
+                {
+                    textFileSuffix=stream.ReadToEnd().Split('\n');
+                }
+            }
 
             TextFileSuffix = new List<string>();
             foreach (var temp in textFileSuffix.Select(temp=> temp.Replace("\r", "").Trim()))
@@ -25,6 +39,23 @@ namespace EncodingNormalior.Model
                 if (!string.IsNullOrEmpty(temp))
                 {
                     TextFileSuffix.Add("*." + temp);
+                }
+            }
+
+
+            file = "includeFile.txt";
+            if (File.Exists(file))
+            {
+                using (StreamReader stream = new StreamReader(new FileStream(file, FileMode.Open)))
+                {
+                    textFileSuffix = stream.ReadToEnd().Split('\n');
+                }
+                foreach (var temp in textFileSuffix.Select(temp => temp.Replace("\r", "").Trim()))
+                {
+                    if (!string.IsNullOrEmpty(temp))
+                    {
+                        TextFileSuffix.Add(temp);
+                    }
                 }
             }
         }
