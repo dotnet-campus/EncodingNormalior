@@ -32,6 +32,8 @@ namespace EncodingNormalior.Model
         /// </summary>
         public Encoding Encoding { set; get; }
 
+        public DirectoryInfo Parent { set; get; }
+
         /// <summary>
         ///     置信度
         ///     范围0-1,1表示确定，0表示不确定，注意：ASCII编码的置信度为0

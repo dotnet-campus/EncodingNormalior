@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -15,6 +16,26 @@ namespace EncodingNormalior.Model
 
         }
 
+        public static List<string> ReadIncludeFile(string file)
+        {
+            if (!File.Exists(file))
+            {
+                throw new ArgumentException("文件" + file + "不存在");
+            }
+            List<string> includeFile = new List<string>();
+            using (StreamReader stream = new StreamReader(new FileStream(file, FileMode.Open)))
+            {
+                foreach (var temp in stream.ReadToEnd().Split('\n'))
+                {
+                    if (!string.IsNullOrEmpty(temp))
+                    {
+                        includeFile.Add(temp);
+                    }
+                }
+            }
+            return includeFile;
+        }
+
         static IncludeFileSetting()
         {
             //TextFileSuffix
@@ -27,14 +48,14 @@ namespace EncodingNormalior.Model
             }
             else
             {
-                using (StreamReader stream=new StreamReader(new FileStream(file,FileMode.Open)))
+                using (StreamReader stream = new StreamReader(new FileStream(file, FileMode.Open)))
                 {
-                    textFileSuffix=stream.ReadToEnd().Split('\n');
+                    textFileSuffix = stream.ReadToEnd().Split('\n');
                 }
             }
 
             TextFileSuffix = new List<string>();
-            foreach (var temp in textFileSuffix.Select(temp=> temp.Replace("\r", "").Trim()))
+            foreach (var temp in textFileSuffix.Select(temp => temp.Replace("\r", "").Trim()))
             {
                 if (!string.IsNullOrEmpty(temp))
                 {
@@ -46,18 +67,25 @@ namespace EncodingNormalior.Model
             file = "includeFile.txt";
             if (File.Exists(file))
             {
-                using (StreamReader stream = new StreamReader(new FileStream(file, FileMode.Open)))
+                foreach (var temp in ReadIncludeFile(file))
                 {
-                    textFileSuffix = stream.ReadToEnd().Split('\n');
-                }
-                foreach (var temp in textFileSuffix.Select(temp => temp.Replace("\r", "").Trim()))
-                {
-                    if (!string.IsNullOrEmpty(temp))
-                    {
-                        TextFileSuffix.Add(temp);
-                    }
+                    TextFileSuffix.Add(temp);
                 }
             }
+            //if (File.Exists(file))
+            //{
+            //    using (StreamReader stream = new StreamReader(new FileStream(file, FileMode.Open)))
+            //    {
+            //        textFileSuffix = stream.ReadToEnd().Split('\n');
+            //    }
+            //    foreach (var temp in textFileSuffix.Select(temp => temp.Replace("\r", "").Trim()))
+            //    {
+            //        if (!string.IsNullOrEmpty(temp))
+            //        {
+            //            TextFileSuffix.Add(temp);
+            //        }
+            //    }
+            //}
         }
 
         public IncludeFileSetting(List<string> includeWildcardFile)

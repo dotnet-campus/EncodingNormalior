@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLineArgument.cs" />
+    <Compile Include="CommandLineArgumentParser.cs" />
     <Compile Include="Model\EncodingScrutator.cs" />
     <Compile Include="Model\EncodingScrutatorFile.cs" />
     <Compile Include="Model\EncodingScrutatorFolder.cs" />

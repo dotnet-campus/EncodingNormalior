@@ -40,6 +40,22 @@ namespace EncodingNormalior.Model
     /// </summary>
     public class InspectFileWhiteListSetting : ISetting
     {
+        public static InspectFileWhiteListSetting ReadWhiteListSetting(string file)
+        {
+            if (!File.Exists(file))
+            {
+                throw  new ArgumentException("文件不存在"+file);
+            }
+            var whiteList = new List<string>();
+            using (StreamReader stream = new StreamReader(
+                   new FileStream(file, FileMode.Open)))
+            {
+                whiteList.AddRange(stream.ReadToEnd().Split('\n').Select(temp=>temp.Replace("\r","").Trim()));
+            }
+
+            InspectFileWhiteListSetting inspectFileWhiteListSetting = new InspectFileWhiteListSetting(whiteList);
+            return inspectFileWhiteListSetting;
+        }
         static InspectFileWhiteListSetting()
         {
             DefaultWhiteList = new List<string>();

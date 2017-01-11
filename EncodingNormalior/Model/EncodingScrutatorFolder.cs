@@ -38,6 +38,8 @@ namespace EncodingNormalior.Model
         /// </summary>
         public string Name { get; }
 
+        public DirectoryInfo Parent { set; get; }
+
         /// <summary>
         ///     文件夹是否被忽略
         /// </summary>
@@ -100,7 +102,8 @@ namespace EncodingNormalior.Model
                     //IncludeFileSetting = IncludeFileSetting,
                     //InspectFileWhiteListSetting = InspectFileWhiteListSetting,
                     SitpulationEncodingSetting = SitpulationEncodingSetting,
-                    _includeRegexFile = _includeRegexFile
+                    _includeRegexFile = _includeRegexFile,
+                    Parent = FaceFolder
                 };
 
                 Folder.Add(folder);
@@ -125,7 +128,10 @@ namespace EncodingNormalior.Model
             foreach (var temp in FaceFolder.GetFiles())
                 //.Select(temp=>new EncodingScrutatorFile(temp)))//.Where(PredicateInclude))
             {
-                var file = new EncodingScrutatorFile(temp);
+                var file = new EncodingScrutatorFile(temp)
+                {
+                    Parent = FaceFolder
+                };
                 File.Add(file);
                 //文件是否包含
                 if (!PredicateInclude(temp))
@@ -158,7 +164,6 @@ namespace EncodingNormalior.Model
                 }
             }
         }
-
 
         /// <summary>
         ///     是否要包含文件
