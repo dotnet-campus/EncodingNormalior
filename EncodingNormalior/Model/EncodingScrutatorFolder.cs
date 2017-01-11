@@ -10,14 +10,18 @@ namespace EncodingNormalior.Model
     /// </summary>
     public class EncodingScrutatorFolder
     {
+        //private List<string> _includeRegexFile;
+        private List<Regex> _includeRegexFile;
+
         /// <summary>
         ///     设置或获取文件检测白名单
         /// </summary>
-        public InspectFileWhiteListSetting InspectFileWhiteListSetting = new InspectFileWhiteListSetting(new List<string>()
-        {
-            "bin\\","*.png"
-        });
-
+        public InspectFileWhiteListSetting InspectFileWhiteListSetting =
+            new InspectFileWhiteListSetting(new List<string>
+            {
+                @"bin\",
+                "*.png"
+            });
 
 
         public EncodingScrutatorFolder(DirectoryInfo folder)
@@ -25,10 +29,15 @@ namespace EncodingNormalior.Model
             FaceFolder = folder;
             Name = folder.Name;
         }
-
-        public string Name { set; get; }
-
+        /// <summary>
+        /// 获取文件夹名
+        /// </summary>
+        public string Name {  get; }
+        /// <summary>
+        /// 文件夹是否被忽略
+        /// </summary>
         public bool Ignore { set; get; }
+
         /// <summary>
         ///     当前文件夹
         /// </summary>
@@ -39,16 +48,21 @@ namespace EncodingNormalior.Model
         /// </summary>
         public ISetting SitpulationEncodingSetting { set; get; } =
             Model.SitpulationEncodingSetting.DefaultSitpulationEncodingSetting;
+
         /// <summary>
-        /// 设置或获取要包含文件
+        ///     设置或获取要包含文件
         /// </summary>
-        public IncludeFileSetting IncludeFileSetting { set; get; } = new IncludeFileSetting()
+        public IncludeFileSetting IncludeFileSetting { set; get; } = new IncludeFileSetting
         {
-            IncludeWildcardFile = new List<string>() { "*" }
+            IncludeWildcardFile = new List<string> {"*"}
         };
-
+        /// <summary>
+        /// 设置或获取文件夹包含文件夹
+        /// </summary>
         public List<EncodingScrutatorFolder> Folder { set; get; } = new List<EncodingScrutatorFolder>();
-
+        /// <summary>
+        /// 文件夹的文件和文件编码
+        /// </summary>
         public List<EncodingScrutatorFile> File { set; get; }
             = new List<EncodingScrutatorFile>();
 
@@ -62,13 +76,16 @@ namespace EncodingNormalior.Model
             {
                 return;
             }
+
             GetaIncludeRegexFile();
+
             InspectFileEncoding();
 
             InspectFaceFolderEncoding();
         }
+
         /// <summary>
-        /// 获取当前目录下的文件夹递归文件编码
+        ///     获取当前目录下的文件夹递归文件编码
         /// </summary>
         private void InspectFaceFolderEncoding()
         {
@@ -79,7 +96,7 @@ namespace EncodingNormalior.Model
                     IncludeFileSetting = IncludeFileSetting,
                     InspectFileWhiteListSetting = InspectFileWhiteListSetting,
                     SitpulationEncodingSetting = SitpulationEncodingSetting,
-                    _includeRegexFile = _includeRegexFile,
+                    _includeRegexFile = _includeRegexFile
                 };
 
                 Folder.Add(folder);
@@ -96,9 +113,13 @@ namespace EncodingNormalior.Model
             }
         }
 
+        /// <summary>
+        ///     获取所有文件编码
+        /// </summary>
         private void InspectFileEncoding()
         {
-            foreach (var temp in FaceFolder.GetFiles())//.Select(temp=>new EncodingScrutatorFile(temp)))//.Where(PredicateInclude))
+            foreach (var temp in FaceFolder.GetFiles())
+                //.Select(temp=>new EncodingScrutatorFile(temp)))//.Where(PredicateInclude))
             {
                 var file = new EncodingScrutatorFile(temp);
                 File.Add(file);
@@ -118,6 +139,9 @@ namespace EncodingNormalior.Model
             }
         }
 
+        /// <summary>
+        ///     获取包含文件的规则
+        /// </summary>
         private void GetaIncludeRegexFile()
         {
             if (_includeRegexFile == null)
@@ -133,17 +157,14 @@ namespace EncodingNormalior.Model
 
 
         /// <summary>
-        /// 是否要包含文件
+        ///     是否要包含文件
         /// </summary>
         /// <param name="file"></param>
         private bool PredicateInclude(FileInfo file)
         {
             //return _includeRegexFile.Select(temp => new Regex(temp)).Any(regex => regex.IsMatch(file.Name));
-            return _includeRegexFile.Any(temp => temp.IsMatch(file.Name))  && 
-                   !InspectFileWhiteListSetting.FileRegexWhiteList.Any(temp=>temp.IsMatch(file.Name));
+            return _includeRegexFile.Any(temp => temp.IsMatch(file.Name)) &&
+                   !InspectFileWhiteListSetting.FileRegexWhiteList.Any(temp => temp.IsMatch(file.Name));
         }
-
-        //private List<string> _includeRegexFile;
-        private List<Regex> _includeRegexFile;
     }
 }

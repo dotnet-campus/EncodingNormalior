@@ -11,8 +11,28 @@ namespace EncodingNormalior
 {
     public class Program
     {
+
+        //private static void GetWildcardRegexString()
+        //{
+        //    //IncludeFileSetting includeFile=new IncludeFileSetting();
+        //    List<string > str=new List<string>()
+        //    {
+        //        "*.png",
+        //        "Encoding.cs",
+        //        "林德熙*.doc",
+        //        "林*德熙*.doc",
+        //    };
+
+        //    foreach (var temp in str)
+        //    {
+        //        Console.WriteLine(IncludeFileSetting.GetWildcardRegexString(temp));
+        //    }
+
+        //}
         public static void Main(string[] args)
         {
+           // GetWildcardRegexString();
+
             EncodingScrutatorFolder encodingScrutatorFolder=new EncodingScrutatorFolder(new DirectoryInfo("E:\\程序\\公司\\EncodingNormalior"));
             encodingScrutatorFolder.InspectFolderEncoding();
             using (StreamWriter stream=new StreamWriter(

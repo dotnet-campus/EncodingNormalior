@@ -201,76 +201,76 @@ namespace EncodingNormalior.Model
             stream.Read(CountBuffer, 0, length);
         }
 
-        /// <summary>
-        ///     输入文件是不是GBK编码
-        /// </summary>
-        /// <param name="stream">文件</param>
-        /// <returns>true 是GBK编码，false不是GBK编码</returns>
-        private bool IsGBK(Stream stream)
-        {
-            //无签名 utf8 判断为 GBK
-            long length = 0;
-            var isGBK = false; //如果所有的byte都是不大于127那么是ascii，这时是什么都好
-            var buffer = new byte[1024];
-            var n = 0;
-            while ((n = stream.Read(buffer, 0, 1024)) > 0)
-            {
-                for (var i = 0; i < n; i++)
-                {
-                    var temp = buffer[i];
-                    if (temp < 128)
-                    {
-                        length++;
-                        continue;
-                    }
-                    if (i + 1 == n)
-                    {
-                        break;
-                    }
-                    var temp2 = buffer[i + 1]; //http://en.wikipedia.org/wiki/GBK
-                    if (IsGbk(temp, temp2))
-                    {
-                        length += 2;
-                        i++;
-                        isGBK = true;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            stream.Position = 0;
-            if (!isGBK) //如果没有中文或GBK的在ascii外字符，判断ASCII
-            {
-                return false;
-            }
-            return length == stream.Length;
-        }
+        ///// <summary>
+        /////     输入文件是不是GBK编码
+        ///// </summary>
+        ///// <param name="stream">文件</param>
+        ///// <returns>true 是GBK编码，false不是GBK编码</returns>
+        //private bool IsGBK(Stream stream)
+        //{
+        //    //无签名 utf8 判断为 GBK
+        //    long length = 0;
+        //    var isGBK = false; //如果所有的byte都是不大于127那么是ascii，这时是什么都好
+        //    var buffer = new byte[1024];
+        //    var n = 0;
+        //    while ((n = stream.Read(buffer, 0, 1024)) > 0)
+        //    {
+        //        for (var i = 0; i < n; i++)
+        //        {
+        //            var temp = buffer[i];
+        //            if (temp < 128)
+        //            {
+        //                length++;
+        //                continue;
+        //            }
+        //            if (i + 1 == n)
+        //            {
+        //                break;
+        //            }
+        //            var temp2 = buffer[i + 1]; //http://en.wikipedia.org/wiki/GBK
+        //            if (IsGbk(temp, temp2))
+        //            {
+        //                length += 2;
+        //                i++;
+        //                isGBK = true;
+        //            }
+        //            else
+        //            {
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    stream.Position = 0;
+        //    if (!isGBK) //如果没有中文或GBK的在ascii外字符，判断ASCII
+        //    {
+        //        return false;
+        //    }
+        //    return length == stream.Length;
+        //}
 
-        /// <summary>
-        ///     判断输入的两byte是不是GBK
-        /// </summary>
-        /// <param name="firstByte">第一个字符</param>
-        /// <param name="secondByte">第二个</param>
-        /// <returns>true 是GBK</returns>
-        private static bool IsGbk(byte firstByte, byte secondByte)
-        {
-            //firstByte >= 161 && firstByte <= 247 &&
-            //secondByte >= 161 && secondByte <= 254
-            return (firstByte >= 0xA1 && firstByte <= 0xA9 && secondByte >= 0xA1 && secondByte <= 0xFE) ||
-                   (firstByte >= 0xB0 && firstByte <= 0xF7 && secondByte >= 0xA1 && secondByte <= 0xFE) ||
-                   (firstByte >= 0x81 && firstByte <= 0xA0 && secondByte >= 0x40 && secondByte <= 0xFE &&
-                    secondByte != 0x7F) ||
-                   (firstByte >= 0xAA && firstByte <= 0xFE && secondByte >= 0x40 && secondByte <= 0xA0 &&
-                    secondByte != 0x7F) ||
-                   (firstByte >= 0xA8 && firstByte <= 0xA9 && secondByte >= 0x40 && secondByte <= 0xA0 &&
-                    secondByte != 0x7F) ||
-                   (firstByte >= 0xAA && firstByte <= 0xAF && secondByte >= 0xA1 && secondByte <= 0xFE) ||
-                   (firstByte >= 0xF8 && firstByte <= 0xFE && secondByte >= 0xA1 && secondByte <= 0xFE) ||
-                   (firstByte >= 0xA1 && firstByte <= 0xA7 && secondByte >= 0x40 && secondByte <= 0xA0 &&
-                    secondByte != 0x7F);
-        }
+        ///// <summary>
+        /////     判断输入的两byte是不是GBK
+        ///// </summary>
+        ///// <param name="firstByte">第一个字符</param>
+        ///// <param name="secondByte">第二个</param>
+        ///// <returns>true 是GBK</returns>
+        //private static bool IsGbk(byte firstByte, byte secondByte)
+        //{
+        //    //firstByte >= 161 && firstByte <= 247 &&
+        //    //secondByte >= 161 && secondByte <= 254
+        //    return (firstByte >= 0xA1 && firstByte <= 0xA9 && secondByte >= 0xA1 && secondByte <= 0xFE) ||
+        //           (firstByte >= 0xB0 && firstByte <= 0xF7 && secondByte >= 0xA1 && secondByte <= 0xFE) ||
+        //           (firstByte >= 0x81 && firstByte <= 0xA0 && secondByte >= 0x40 && secondByte <= 0xFE &&
+        //            secondByte != 0x7F) ||
+        //           (firstByte >= 0xAA && firstByte <= 0xFE && secondByte >= 0x40 && secondByte <= 0xA0 &&
+        //            secondByte != 0x7F) ||
+        //           (firstByte >= 0xA8 && firstByte <= 0xA9 && secondByte >= 0x40 && secondByte <= 0xA0 &&
+        //            secondByte != 0x7F) ||
+        //           (firstByte >= 0xAA && firstByte <= 0xAF && secondByte >= 0xA1 && secondByte <= 0xFE) ||
+        //           (firstByte >= 0xF8 && firstByte <= 0xFE && secondByte >= 0xA1 && secondByte <= 0xFE) ||
+        //           (firstByte >= 0xA1 && firstByte <= 0xA7 && secondByte >= 0x40 && secondByte <= 0xA0 &&
+        //            secondByte != 0x7F);
+        //}
 
         /// <summary>
         ///     读取文件的头4个byte

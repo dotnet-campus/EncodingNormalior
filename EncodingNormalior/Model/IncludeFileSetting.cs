@@ -16,11 +16,23 @@ namespace EncodingNormalior.Model
         /// <summary>
         /// 包含的文件的通配符
         /// </summary>
-        public List<string> IncludeWildcardFile { set; get; }=new List<string>();
+        public List<string> IncludeWildcardFile { set; get; } = new List<string>();
+       
+        /// <summary>
+        /// 常用文本后缀
+        /// </summary>
+        public List<string> TextFileSuffix { set; get; }=new List<string>()
+        {
+            
+        };
 
+        /// <summary>
+        /// 获取文件包含规则
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetaIncludeRegexFile()
         {
-            List<string> includeRegexFile=new List<string>();
+            List<string> includeRegexFile = new List<string>();
 
             if (IncludeWildcardFile == null)
             {
@@ -34,10 +46,10 @@ namespace EncodingNormalior.Model
             return includeRegexFile;
         }
 
-        static string GetWildcardRegexString(string wildcardStr)
+        public static string GetWildcardRegexString(string wildcardStr)
         {
             Regex replace = new Regex("[.$^{\\[(|)*+?\\\\]");
-            string regex= replace.Replace(wildcardStr,
+            string regex = replace.Replace(wildcardStr,
                 delegate (Match m)
                 {
                     switch (m.Value)
