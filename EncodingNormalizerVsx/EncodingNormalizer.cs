@@ -7,6 +7,7 @@
 using System;
 using System.ComponentModel.Design;
 using System.Globalization;
+using System.IO;
 using System.Windows.Forms;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
@@ -66,20 +67,38 @@ namespace EncodingNormalizerVsx
             var folder = dte.Solution.FullName;
             if (string.IsNullOrEmpty(folder))
             {
-                MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
+               // MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
                 // return;
             }
+            //ReadAccount();
             //MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory, "路径");
-            string str = EncodingNormalizerPackage.DefinitionPage().CriterionEncoding.ToString();
-            MessageBox.Show(str, "路径");
-            //using (StreamWriter stream=new StreamWriter(
-            //    new FileStream(AppDomain.CurrentDomain.BaseDirectory+ "EncodingNormalizer.json",FileMode.OpenOrCreate)))
-            //{
-            //    stream.Write("EncodingNormalizer");
-            //}
+            //string str = EncodingNormalizerPackage.DefinitionPage().CriterionEncoding.ToString();
+            // MessageBox.Show(str, "路径");
+           
 
 
         }
+
+        //private void ReadAccount()
+        //{
+        //    var folder = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) +
+        //                 "\\EncodingNormalizer\\";
+        //    var file = folder+ "Account.json";
+        //    if (!Directory.Exists(folder))
+        //    {
+        //        Directory.CreateDirectory(folder);
+        //    }
+            
+        //    using (StreamWriter stream = File.CreateText(file))
+        //    {
+        //        stream.Write("EncodingNormalizer");
+        //    }
+
+        //    using (StreamReader stream=File.OpenText(file))
+        //    {
+        //        string str = stream.ReadToEnd();
+        //    }
+        //}
 
         /// <summary>
         /// Gets the instance of the command.

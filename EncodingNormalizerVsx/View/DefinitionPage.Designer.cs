@@ -36,20 +36,21 @@ namespace EncodingNormalizerVsx.View
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(25, 50);
+            this.button1.Location = new System.Drawing.Point(25, 46);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 50);
+            this.button1.Size = new System.Drawing.Size(100, 46);
             this.button1.TabIndex = 0;
             this.button1.Text = "Click Here !";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // ToolboxControl
+            // DefinitionPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.button1);
             this.Name = "DefinitionPage";
+            this.Size = new System.Drawing.Size(525, 470);
             this.ResumeLayout(false);
 
         }
