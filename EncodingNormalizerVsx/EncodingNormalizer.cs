@@ -8,7 +8,9 @@ using System;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.IO;
+using System.Windows;
 using System.Windows.Forms;
+using EncodingNormalizerVsx.View;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -67,14 +69,14 @@ namespace EncodingNormalizerVsx
             var folder = dte.Solution.FullName;
             if (string.IsNullOrEmpty(folder))
             {
-               // MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
+                // MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
                 // return;
             }
             //ReadAccount();
             //MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory, "路径");
             //string str = EncodingNormalizerPackage.DefinitionPage().CriterionEncoding.ToString();
             // MessageBox.Show(str, "路径");
-           
+
 
 
         }
@@ -88,7 +90,7 @@ namespace EncodingNormalizerVsx
         //    {
         //        Directory.CreateDirectory(folder);
         //    }
-            
+
         //    using (StreamWriter stream = File.CreateText(file))
         //    {
         //        stream.Write("EncodingNormalizer");
@@ -138,17 +140,25 @@ namespace EncodingNormalizerVsx
         /// <param name="e">Event args.</param>
         private void MenuItemCallback(object sender, EventArgs e)
         {
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "EncodingNormalizer";
+            System.Windows.Window window = new System.Windows.Window();
+            View.DefinitionPage definitionPage = new DefinitionPage();
+            definitionPage.Closing += (_s, _e) =>
+            {
+                window.Close();
+            };
+            window.Content = definitionPage;
+            window.Show();
+            //string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
+            //string title = "EncodingNormalizer";
 
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.ServiceProvider,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            //// Show a message box to prove we were here
+            //VsShellUtilities.ShowMessageBox(
+            //    this.ServiceProvider,
+            //    message,
+            //    title,
+            //    OLEMSGICON.OLEMSGICON_INFO,
+            //    OLEMSGBUTTON.OLEMSGBUTTON_OK,
+            //    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
         }
     }
 }

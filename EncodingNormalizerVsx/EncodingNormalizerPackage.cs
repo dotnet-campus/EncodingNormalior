@@ -42,8 +42,8 @@ namespace EncodingNormalizerVsx
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(EncodingNormalizerPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    [ProvideProfile(typeof(DefinitionPage), "EncodingNormalizer", "DefinitionPage", 101, 104, true)]
-    [ProvideOptionPage(typeof(DefinitionPage), "EncodingNormalizer", "DefinitionPage", 101, 104, true)]
+    //[ProvideProfile(typeof(DefinitionPage), "EncodingNormalizer", "DefinitionPage", 101, 104, true)]
+    //[ProvideOptionPage(typeof(DefinitionPage), "EncodingNormalizer", "DefinitionPage", 101, 104, true)]
     public sealed class EncodingNormalizerPackage : Package
     {
         /// <summary>
@@ -93,11 +93,11 @@ namespace EncodingNormalizerVsx
             return null;
         }
 
-        public static DefinitionPage DefinitionPage()
-        {
-            EncodingNormalizerPackage package = EnsureEncodingNormalizerPackage();
-            return package?.GetDialogPage(typeof(DefinitionPage)) as DefinitionPage;
-        }
+        //public static DefinitionPage DefinitionPage()
+        //{
+        //    EncodingNormalizerPackage package = EnsureEncodingNormalizerPackage();
+        //    return package?.GetDialogPage(typeof(DefinitionPage)) as DefinitionPage;
+        //}
 
 
         #endregion
