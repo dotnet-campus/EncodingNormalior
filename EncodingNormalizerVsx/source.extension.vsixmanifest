@@ -4,6 +4,7 @@
     <Identity Id="EncodingNormalizerVsx.Company.442f55bf-78ea-4a12-be38-8f3e5fe2147a" Version="1.0" Language="en-US" Publisher="Company" />
     <DisplayName>EncodingNormalizerVsx</DisplayName>
     <Description>Empty VSIX Project.</Description>
+    <Icon>Resources\EncodingNormalizer.png</Icon>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />

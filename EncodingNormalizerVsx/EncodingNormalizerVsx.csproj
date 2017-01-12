@@ -51,10 +51,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="EncodingNormalizer.cs" />
-    <Compile Include="EncodingNormalizerPackage.cs">
+    <Compile Include="DefinitionPage.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="EncodingNormalizer.cs" />
+    <Compile Include="EncodingNormalizerPackage.cs" />
+    <Compile Include="GuidStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\DefinitionPage.cs">
       <SubType>UserControl</SubType>

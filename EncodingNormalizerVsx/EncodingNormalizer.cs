@@ -69,8 +69,9 @@ namespace EncodingNormalizerVsx
                 MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
                 // return;
             }
-            MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory, "路径");
-            
+            //MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory, "路径");
+            string str = EncodingNormalizerPackage.DefinitionPage().CriterionEncoding.ToString();
+            MessageBox.Show(str, "路径");
             //using (StreamWriter stream=new StreamWriter(
             //    new FileStream(AppDomain.CurrentDomain.BaseDirectory+ "EncodingNormalizer.json",FileMode.OpenOrCreate)))
             //{
