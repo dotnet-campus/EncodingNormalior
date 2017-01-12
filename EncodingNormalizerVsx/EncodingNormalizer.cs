@@ -146,6 +146,7 @@ namespace EncodingNormalizerVsx
             {
                 window.Close();
             };
+            window.Title = "编码规范工具设置";
             window.Content = definitionPage;
             window.Show();
             //string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);

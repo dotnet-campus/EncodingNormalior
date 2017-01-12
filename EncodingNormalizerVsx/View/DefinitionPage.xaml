@@ -12,48 +12,54 @@
         <view:DefinitionModel x:Key="ViewModel"></view:DefinitionModel>
     </UserControl.Resources>-->
     <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid>
-                <StackPanel>
-                    <TextBlock Text="规定编码"></TextBlock>
-                    <ComboBox Margin="10,10,10,10"
-                          ItemsSource="{Binding OptionCriterionEncoding}"
-                              SelectedItem="{Binding CriterionEncoding,Mode=OneWayToSource}"></ComboBox>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+        <Border Margin="10,10,10,10" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+            <Grid Margin="10,10,10,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
                 <Grid>
-                    <TextBlock Text="包含的文件"></TextBlock>
-                    <TextBox Margin="10,30,10,10" AcceptsReturn="True"
-                             Text="{Binding Account.FileInclude,Mode=TwoWay}"
-                         TextWrapping="Wrap"></TextBox>
+                    <StackPanel>
+                        <TextBlock Text="规定编码"></TextBlock>
+                        <ComboBox Margin="10,10,10,10"
+                                  ItemsSource="{Binding OptionCriterionEncoding}"
+                                  SelectedItem="{Binding CriterionEncoding,Mode=TwoWay}">
+                        </ComboBox>
+                    </StackPanel>
                 </Grid>
-                <Grid Grid.Column="1">
-                    <TextBlock Text="文件白名单"></TextBlock>
-                    <TextBox Margin="10,30,10,10" AcceptsReturn="True"
-                             Text="{Binding Account.WhiteList,Mode=TwoWay}"
-                TextWrapping="Wrap"></TextBox>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <TextBlock Text="包含的文件"></TextBlock>
+                        <TextBox Margin="10,30,10,10" AcceptsReturn="True"
+                                 Text="{Binding Account.FileInclude,Mode=TwoWay}"
+                                 TextWrapping="Wrap">
+                        </TextBox>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <TextBlock Text="文件白名单"></TextBlock>
+                        <TextBox Margin="10,30,10,10" AcceptsReturn="True"
+                                 Text="{Binding Account.WhiteList,Mode=TwoWay}"
+                                 TextWrapping="Wrap">
+                        </TextBox>
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid Grid.Row="2">
-                <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right">
-                    <Button Content="保存"
-                            Click="WriteButton_OnClick"></Button>
-                    <Button Content="取消"
-                            Click="AbandonButton_OnClick"></Button>
-                </StackPanel>
-            </Grid>
-        </Grid>
+                <Grid Grid.Row="2">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Button Margin="10,10,10,10" Content="保存"
+                                Click="WriteButton_OnClick">
+                        </Button>
+                        <Button Margin="10,10,10,10" Content="取消"
+                                Click="AbandonButton_OnClick">
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid></Border>
     </Grid>
 </UserControl>
 

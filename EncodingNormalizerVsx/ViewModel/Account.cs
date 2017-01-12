@@ -15,7 +15,7 @@ namespace EncodingNormalizerVsx.ViewModel
         /// <summary>
         /// 保存用户设置文件夹
         /// </summary>
-        private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+ "\\EncodingNormalizer\\";
             /// <summary>
             /// 保存用户设置文件
             /// </summary>
@@ -29,11 +29,6 @@ namespace EncodingNormalizerVsx.ViewModel
             if (Account == null)
             {
                 ReadAccount();
-                /*
-                 * “System.IO.FileLoadException”类型的异常在 EncodingNormalizerVsx.dll 中发生，但未在用户代码中进行处理
-
-                   其他信息: 未能加载文件或程序集“EncodingNormalior, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null”或它的某一个依赖项。需要强名称程序集。 (异常来自 HRESULT:0x80131044)
-                 */
             }
 
             OptionCriterionEncoding =new List<string>();
