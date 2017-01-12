@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
@@ -18,6 +19,32 @@ using Microsoft.Win32;
 
 namespace EncodingNormalizerVsx
 {
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [Guid("3c710310-0b5a-4ed0-8969-a87dd220f9e3")]
+    public class DefinitionPage:DialogPage
+    {
+        public DefinitionPage()
+        {
+           
+        }
+
+        protected override IWin32Window Window
+        {
+            get
+            {
+                if (_definitionPage == null)
+                {
+                    _definitionPage=new View.DefinitionPage();
+                }
+                _definitionPage.Owner = this;
+                _definitionPage.InitializeLifetimeService();
+                return _definitionPage;
+            }
+        }
+
+        private View.DefinitionPage _definitionPage;
+    }
+
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
     /// </summary>
@@ -40,6 +67,8 @@ namespace EncodingNormalizerVsx
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(EncodingNormalizerPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
+    [ProvideProfile(typeof(DefinitionPage), "PowerExtension", "DefinitionPage",101,104,true)]
+    [ProvideOptionPage(typeof(DefinitionPage), "PowerExtension", "DefinitionPage", 101, 104, true)]
     public sealed class EncodingNormalizerPackage : Package
     {
         /// <summary>
