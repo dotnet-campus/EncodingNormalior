@@ -60,11 +60,21 @@ namespace EncodingNormalior.Model
         {
             DefaultWhiteList = new List<string>();
             var file = "WhiteList.txt";
+            IEnumerable<string> fileSuffix = ReadWhiteList(file);
+
+            foreach (var temp in fileSuffix)
+            {
+                DefaultWhiteList.Add(temp);
+            }
+        }
+
+        public static IEnumerable<string> ReadWhiteList(string file)
+        {
             string[] whiteList;
             if (File.Exists(file))
             {
-                using (StreamReader stream=new StreamReader(
-                    new FileStream(file,FileMode.Open)))
+                using (StreamReader stream = new StreamReader(
+                    new FileStream(file, FileMode.Open)))
                 {
                     whiteList = stream.ReadToEnd().Split('\n');
                 }
@@ -74,10 +84,8 @@ namespace EncodingNormalior.Model
                 whiteList = Resource.TextFileSuffix.WhiteList.Split('\n');
             }
 
-            foreach (var temp in whiteList.Select(temp=>temp.Replace("\r","").Trim()))
-            {
-                DefaultWhiteList.Add(temp);
-            }
+            var fileSuffix = whiteList.Select(temp => temp.Replace("\r", "").Trim());
+            return fileSuffix;
         }
 
         public InspectFileWhiteListSetting(List<string> whiteList)

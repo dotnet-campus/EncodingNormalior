@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="EncodingNormalizerVsx.View.ConformPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EncodingNormalizerVsx.View"
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self},Path=ViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid>
+            
+        </Grid>
+    </Grid>
+</UserControl>

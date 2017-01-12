@@ -69,9 +69,22 @@ namespace EncodingNormalizerVsx
             var folder = dte.Solution.FullName;
             if (string.IsNullOrEmpty(folder))
             {
-                // MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
-                // return;
+                MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
+                return;
             }
+            System.Windows.Window window=new System.Windows.Window();
+            ConformPage conformPage=new ConformPage();
+            window.Content = conformPage;
+
+            conformPage.Closing += (_s, _e) =>
+            {
+                window.Close();
+            };
+
+            conformPage.SolutionFolder = folder;
+
+
+
             //ReadAccount();
             //MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory, "路径");
             //string str = EncodingNormalizerPackage.DefinitionPage().CriterionEncoding.ToString();

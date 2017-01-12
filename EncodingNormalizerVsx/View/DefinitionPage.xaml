@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:EncodingNormalizerVsx.View"
              xmlns:view="clr-namespace:EncodingNormalizerVsx.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
-             DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=ViewModel}">
+             DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=ViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
     <!--<UserControl.Resources>
         <view:DefinitionModel x:Key="ViewModel"></view:DefinitionModel>
     </UserControl.Resources>-->

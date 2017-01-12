@@ -57,7 +57,12 @@
     <Compile Include="GuidStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Account.cs" />
+    <Compile Include="ViewModel\ConformModel.cs" />
+    <Compile Include="ViewModel\DefinitionModel.cs" />
     <Compile Include="ViewModel\NotifyProperty.cs" />
+    <Compile Include="View\ConformPage.xaml.cs">
+      <DependentUpon>ConformPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DefinitionPage.xaml.cs">
       <DependentUpon>DefinitionPage.xaml</DependentUpon>
     </Compile>
@@ -202,6 +207,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\ConformPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DefinitionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
