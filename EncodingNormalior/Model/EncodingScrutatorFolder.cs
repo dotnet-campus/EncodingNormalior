@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -17,6 +18,7 @@ namespace EncodingNormalior.Model
             : this(folder, new InspectFileWhiteListSetting(InspectFileWhiteListSetting.DefaultWhiteList),
                 new IncludeFileSetting(IncludeFileSetting.TextFileSuffix))
         {
+
         }
 
         public EncodingScrutatorFolder(DirectoryInfo folder, InspectFileWhiteListSetting inspectFileWhiteListSetting,
@@ -38,7 +40,7 @@ namespace EncodingNormalior.Model
         /// </summary>
         public string Name { get; }
 
-        public DirectoryInfo Parent { set; get; }
+        public EncodingScrutatorFolder Parent { set; get; }
 
         /// <summary>
         ///     文件夹是否被忽略
@@ -88,7 +90,13 @@ namespace EncodingNormalior.Model
             InspectFileEncoding();
 
             InspectFaceFolderEncoding();
+
+            Progress.Report(null);
+            //Progress<string> progress=new Progress<string>();
+            //((IProgress<string>)progress).Report("");
         }
+
+        public IProgress<EncodingScrutatorFile> Progress { set; get; }
 
         /// <summary>
         ///     获取当前目录下的文件夹递归文件编码
@@ -103,7 +111,9 @@ namespace EncodingNormalior.Model
                     //InspectFileWhiteListSetting = InspectFileWhiteListSetting,
                     SitpulationEncodingSetting = SitpulationEncodingSetting,
                     _includeRegexFile = _includeRegexFile,
-                    Parent = FaceFolder
+                    //Parent = FaceFolder,
+                    Parent = this,
+                    Progress = Progress
                 };
 
                 Folder.Add(folder);
@@ -126,12 +136,15 @@ namespace EncodingNormalior.Model
         private void InspectFileEncoding()
         {
             foreach (var temp in FaceFolder.GetFiles())
-                //.Select(temp=>new EncodingScrutatorFile(temp)))//.Where(PredicateInclude))
+            //.Select(temp=>new EncodingScrutatorFile(temp)))//.Where(PredicateInclude))
             {
+                //通知扫描到这个文件
                 var file = new EncodingScrutatorFile(temp)
                 {
-                    Parent = FaceFolder
+                    //Parent = FaceFolder
+                    Parent = this
                 };
+                Progress?.Report(file);
                 File.Add(file);
                 //文件是否包含
                 if (!PredicateInclude(temp))

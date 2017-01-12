@@ -28,6 +28,11 @@ namespace EncodingNormalizerVsx.View
 
         }
 
+        public void InspectFolderEncoding()
+        {
+            ViewModel.InspectFolderEncoding(SolutionFolder);
+        }
+
         public EventHandler Closing;
 
         /// <summary>

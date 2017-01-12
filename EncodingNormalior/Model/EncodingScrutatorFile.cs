@@ -32,7 +32,7 @@ namespace EncodingNormalior.Model
         /// </summary>
         public Encoding Encoding { set; get; }
 
-        public DirectoryInfo Parent { set; get; }
+        public EncodingScrutatorFolder Parent { set; get; }
 
         /// <summary>
         ///     置信度

@@ -27,14 +27,19 @@ namespace EncodingNormalior.Model
         /// <remarks>如果是ASCII，那么无法判断他是默认的GBK或UTF-8 返回的是true</remarks>
         public bool ConformtotheDefaultEncoding(Encoding encoding)
         {
+            if (encoding == null)
+            {
+                return false;
+            }
+
             if (Equals(encoding, SitpulationEncoding))
             {
                 return true;
             }
 
             if (encoding.Equals(Encoding.ASCII) &&
-                SitpulationEncoding.Equals(Encoding.UTF8) &&
-                SitpulationEncoding.Equals(Encoding.GetEncoding("GBK")))
+                (SitpulationEncoding.Equals(Encoding.UTF8) ||
+                SitpulationEncoding.Equals(Encoding.GetEncoding("GBK"))))
             {
                 return true;
             }

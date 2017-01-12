@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using EncodingNormalior.Model;
 using Newtonsoft.Json;
 
@@ -11,16 +12,30 @@ namespace EncodingNormalizerVsx.ViewModel
     /// </summary>
     public class Account : NotifyProperty
     {
+        public Encoding ConvertCriterionEncoding()
+        {
+            switch (CriterionEncoding)
+            {
+                case CriterionEncoding.UTF8:
+                    return Encoding.UTF8;
+                    break;
+                case CriterionEncoding.GBK:
+                    return Encoding.GetEncoding("gbk");
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         /// <summary>
         /// 保存用户设置文件夹
         /// </summary>
-        [JsonIgnore]
-        private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EncodingNormalizer\\";
+        [JsonIgnore] private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EncodingNormalizer\\";
+
         /// <summary>
         /// 保存用户设置文件
         /// </summary>
-        [JsonIgnore]
-        private static readonly string _file = _folder + "Account.json";
+        [JsonIgnore] private static readonly string _file = _folder + "Account.json";
 
 
         private CriterionEncoding _criterionEncoding;
@@ -89,9 +104,7 @@ namespace EncodingNormalizerVsx.ViewModel
                 //EncodingNormalior.Resource.TextFileSuffix.textFileSuffix;
                 account = new Account()
                 {
-                    CriterionEncoding = ViewModel.CriterionEncoding.UTF8,
-                    FileInclude = fileInclude,
-                    WhiteList = whiteList
+                    CriterionEncoding = ViewModel.CriterionEncoding.UTF8, FileInclude = fileInclude, WhiteList = whiteList
                 };
                 //foreach (var temp in InspectFileWhiteListSetting.DefaultWhiteList)
                 //{

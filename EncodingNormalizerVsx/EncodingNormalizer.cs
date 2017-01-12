@@ -66,12 +66,13 @@ namespace EncodingNormalizerVsx
         private void EncodingNormalizerCallback(object sender, EventArgs e)
         {
             DTE dte = (DTE)ServiceProvider.GetService(typeof(DTE));
-            var folder = dte.Solution.FullName;
-            if (string.IsNullOrEmpty(folder))
+            var file = dte.Solution.FullName;
+            if (string.IsNullOrEmpty(file))
             {
                 MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
                 return;
             }
+            var folder = new FileInfo(file).Directory?.FullName;
             System.Windows.Window window=new System.Windows.Window();
             ConformPage conformPage=new ConformPage();
             window.Content = conformPage;
@@ -83,7 +84,8 @@ namespace EncodingNormalizerVsx
 
             conformPage.SolutionFolder = folder;
 
-
+            window.Show();
+            conformPage.InspectFolderEncoding();
 
             //ReadAccount();
             //MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory, "路径");
