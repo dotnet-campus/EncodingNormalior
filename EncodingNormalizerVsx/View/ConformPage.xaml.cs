@@ -41,5 +41,10 @@ namespace EncodingNormalizerVsx.View
         public string SolutionFolder { set; get; }
 
         public ConformModel ViewModel { set; get; }
+
+        private void WriteCriterionButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.WriteCriterionEncoding();
+        }
     }
 }

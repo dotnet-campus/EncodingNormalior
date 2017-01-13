@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodingNormalior", "Encodi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodingNormalizerVsx", "EncodingNormalizerVsx\EncodingNormalizerVsx.csproj", "{5C4AABAC-646E-4CA0-822A-0A3D18A296C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodingNormalizerFolder", "..\..\ethylene156\EncodingNormalizerFolder\EncodingNormalizerFolder.csproj", "{7FBB5791-D093-489E-9390-C22DA9A0EE45}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{5C4AABAC-646E-4CA0-822A-0A3D18A296C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C4AABAC-646E-4CA0-822A-0A3D18A296C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C4AABAC-646E-4CA0-822A-0A3D18A296C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7FBB5791-D093-489E-9390-C22DA9A0EE45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FBB5791-D093-489E-9390-C22DA9A0EE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FBB5791-D093-489E-9390-C22DA9A0EE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FBB5791-D093-489E-9390-C22DA9A0EE45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

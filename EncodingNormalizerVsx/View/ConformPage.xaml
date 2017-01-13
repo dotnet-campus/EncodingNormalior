@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EncodingNormalizerVsx.View"
              mc:Ignorable="d" 
+             xmlns:model="clr-namespace:EncodingNormalizerVsx.Model"
              DataContext="{Binding RelativeSource={RelativeSource Self},Path=ViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -15,10 +16,11 @@
             </Grid.RowDefinitions>
             <Grid>
                 <TextBlock Margin="10,10,10,10" Text="{Binding Circular,Mode=OneWay}" TextWrapping="Wrap"></TextBlock>
-                <Button Margin="10,10,10,10" Visibility="{Binding Visibility,Mode=OneWay}"
+                <Button Margin="10,10,10,10" Visibility="{Binding Visibility}"
                         Content="转换"
-                        HorizontalAlignment="Right">
-                    
+                        HorizontalAlignment="Right"
+                        Click="WriteCriterionButton_OnClick">
+
                 </Button>
             </Grid>
             <Grid Grid.Row="1">
@@ -26,8 +28,47 @@
                     <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10">
                         <Grid Margin="10,10,10,10">
                             <Grid Background="#FF5d5d5d">
-                                <TreeView Visibility="{Binding Visibility,Mode=OneWay}">
-
+                                <TreeView Visibility="{Binding Visibility,Mode=OneWay}"
+                                          ItemsSource="{Binding EncodingScrutatorFolder}"
+                                          >
+                                    <!--ItemsSource="{Binding EncodingScrutatorFolder.Folder}">-->
+                                <!--<TreeView.Resources>
+                                        <HierarchicalDataTemplate DataType="model:IEncodingScrutatorFile"
+                                                                  ItemsSource="{Binding Folder}">
+                                            <Grid>
+                                                <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
+                                                    <TextBlock Text="{Binding Name}"></TextBlock>
+                                                </CheckBox>
+                                            </Grid>
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.Resources>-->
+                                    
+                                    <TreeView.ItemTemplate>
+                                        <HierarchicalDataTemplate DataType="model:EncodingScrutatorFolderFile"
+                                                                  ItemsSource="{Binding Folder}">
+                                            <Grid>
+                                               <StackPanel>
+                                                    <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Name}"></TextBlock>
+                                                            <TextBlock Margin="10,0,0,0" Text="{Binding Encoding}"></TextBlock>
+                                                        </StackPanel>
+                                                    </CheckBox>
+                                                    <!--<ListView ItemsSource="{Binding File}">
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid>
+                                                                    <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
+                                                                        <TextBlock Text="{Binding Name}"></TextBlock>
+                                                                    </CheckBox>
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </ListView.ItemTemplate>
+                                                    </ListView>-->
+                                                </StackPanel>
+                                            </Grid>
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.ItemTemplate>
                                 </TreeView>
                             </Grid>
                         </Grid>
@@ -37,4 +78,3 @@
         </Grid>
     </Grid>
 </UserControl>
-
