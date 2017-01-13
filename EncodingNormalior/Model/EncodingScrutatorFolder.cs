@@ -156,7 +156,6 @@ namespace EncodingNormalior.Model
 
                 if (!file.Ignore)
                 {
-                    //是否是文本
 
                     new EncodingScrutator(file).InspectFileEncoding();
                 }
@@ -185,6 +184,18 @@ namespace EncodingNormalior.Model
         /// <param name="file"></param>
         private bool PredicateInclude(FileInfo file)
         {
+            if (InspectFileWhiteListSetting.FileRegexWhiteList.Any(temp => temp.IsMatch(file.Name)))
+            {
+                return false;//不添加文件
+            }
+            if (_includeRegexFile.Any(temp => temp.IsMatch(file.Name)))
+            {
+                return true;//添加
+            }
+
+            //是否是文本
+
+
             //return _includeRegexFile.Select(temp => new Regex(temp)).Any(regex => regex.IsMatch(file.Name));
             return _includeRegexFile.Any(temp => temp.IsMatch(file.Name)) &&
                    !InspectFileWhiteListSetting.FileRegexWhiteList.Any(temp => temp.IsMatch(file.Name));

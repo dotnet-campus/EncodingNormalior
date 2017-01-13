@@ -1,6 +1,13 @@
-﻿bin\
+﻿.git\
+obj\
+bin\
 *.png
 *.jpg
 *.tmp
 *.exe
 *.mp4
+*.snk
+*.pfx
+*.zip
+*.rar
+*.7z

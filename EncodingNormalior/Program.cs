@@ -167,15 +167,15 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode";
             }
 
 
-            EncodingScrutatorFolder encodingScrutatorFolder = new EncodingScrutatorFolder(new DirectoryInfo("E:\\程序\\公司\\EncodingNormalior"));
-            //Print(encodingScrutatorFolder);
-            encodingScrutatorFolder.InspectFolderEncoding();
-            using (StreamWriter stream = new StreamWriter(
-                new FileStream("E:\\1.txt", FileMode.Create)))
-            {
-                //stream.Write(Print(encodingScrutatorFolder));
-                stream.Write(PintnoConformEncodingFile(encodingScrutatorFolder));
-            }
+            //EncodingScrutatorFolder encodingScrutatorFolder = new EncodingScrutatorFolder(new DirectoryInfo("E:\\程序\\公司\\EncodingNormalior"));
+            ////Print(encodingScrutatorFolder);
+            //encodingScrutatorFolder.InspectFolderEncoding();
+            //using (StreamWriter stream = new StreamWriter(
+            //    new FileStream("E:\\1.txt", FileMode.Create)))
+            //{
+            //    //stream.Write(Print(encodingScrutatorFolder));
+            //    stream.Write(PintnoConformEncodingFile(encodingScrutatorFolder));
+            //}
 
 
             ////2017年1月10日16:09:17
