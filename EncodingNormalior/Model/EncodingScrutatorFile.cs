@@ -1,12 +1,20 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace EncodingNormalior.Model
 {
+    public interface IEncodingScrutatorFile
+    {
+        string Name { get; }
+        bool Check { set; get; }
+        List<EncodingScrutatorFolder> Folder { set; get; }
+    }
+
     /// <summary>
     ///     包括文件和编码
     /// </summary>
-    public class EncodingScrutatorFile
+    public class EncodingScrutatorFile:IEncodingScrutatorFile
     {
         public EncodingScrutatorFile()
         {
@@ -15,6 +23,7 @@ namespace EncodingNormalior.Model
         public EncodingScrutatorFile(FileInfo file)
         {
             File = file;
+            Name = file.Name;
         }
 
         /// <summary>
@@ -39,5 +48,9 @@ namespace EncodingNormalior.Model
         ///     范围0-1,1表示确定，0表示不确定，注意：ASCII编码的置信度为0
         /// </summary>
         public double ConfidenceCount { set; get; } = 0;
+
+        public string Name { get; }
+        public bool Check { get; set; } = true;
+        public List<EncodingScrutatorFolder> Folder { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace EncodingNormalior.Model
     /// <summary>
     ///     包括文件夹和文件
     /// </summary>
-    public class EncodingScrutatorFolder
+    public class EncodingScrutatorFolder:IEncodingScrutatorFile
     {
         //private List<string> _includeRegexFile;
         private List<Regex> _includeRegexFile;
@@ -39,6 +39,8 @@ namespace EncodingNormalior.Model
         ///     获取文件夹名
         /// </summary>
         public string Name { get; }
+
+        public bool Check { get; set; } = true;
 
         public EncodingScrutatorFolder Parent { set; get; }
 
@@ -91,7 +93,6 @@ namespace EncodingNormalior.Model
 
             InspectFaceFolderEncoding();
 
-            Progress.Report(null);
             //Progress<string> progress=new Progress<string>();
             //((IProgress<string>)progress).Report("");
         }

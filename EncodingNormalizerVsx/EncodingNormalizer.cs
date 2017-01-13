@@ -63,6 +63,10 @@ namespace EncodingNormalizerVsx
                 commandService.AddCommand(menuItem);
             }
         }
+
+        private System.Windows.Window _conformWindow;
+        private System.Windows.Window _definitionWindow;
+
         private void EncodingNormalizerCallback(object sender, EventArgs e)
         {
             DTE dte = (DTE)ServiceProvider.GetService(typeof(DTE));
@@ -72,21 +76,30 @@ namespace EncodingNormalizerVsx
                 MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
                 return;
             }
+
+            if (_conformWindow != null)
+            {
+                _conformWindow.Focus();
+                _conformWindow.Show();
+                return;
+            }
+
             var folder = new FileInfo(file).Directory?.FullName;
-            System.Windows.Window window=new System.Windows.Window();
+            System.Windows.Window window =new System.Windows.Window();
             ConformPage conformPage=new ConformPage();
             window.Content = conformPage;
 
             conformPage.Closing += (_s, _e) =>
             {
                 window.Close();
+                _conformWindow = null;
             };
 
             conformPage.SolutionFolder = folder;
 
             window.Show();
             conformPage.InspectFolderEncoding();
-
+            _conformWindow = window;
             //ReadAccount();
             //MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory, "路径");
             //string str = EncodingNormalizerPackage.DefinitionPage().CriterionEncoding.ToString();
@@ -155,15 +168,24 @@ namespace EncodingNormalizerVsx
         /// <param name="e">Event args.</param>
         private void MenuItemCallback(object sender, EventArgs e)
         {
+            if (_definitionWindow != null)
+            {
+                _definitionWindow.Focus();
+                _definitionWindow.Show();
+                return;
+            }
             System.Windows.Window window = new System.Windows.Window();
             View.DefinitionPage definitionPage = new DefinitionPage();
             definitionPage.Closing += (_s, _e) =>
             {
                 window.Close();
+                _definitionWindow = null;
             };
             window.Title = "编码规范工具设置";
             window.Content = definitionPage;
             window.Show();
+
+            _definitionWindow = window;
             //string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
             //string title = "EncodingNormalizer";
 
