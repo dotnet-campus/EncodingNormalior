@@ -64,6 +64,7 @@
     <Compile Include="ViewModel\ConformModel.cs" />
     <Compile Include="ViewModel\DefinitionModel.cs" />
     <Compile Include="ViewModel\NotifyProperty.cs" />
+    <Compile Include="Model\WriteFolderEncoding.cs" />
     <Compile Include="View\ConformPage.xaml.cs">
       <DependentUpon>ConformPage.xaml</DependentUpon>
     </Compile>
