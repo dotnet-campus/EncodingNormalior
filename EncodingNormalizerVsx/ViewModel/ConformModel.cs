@@ -31,6 +31,8 @@ namespace EncodingNormalizerVsx.ViewModel
 
         private EncodingScrutatorFolder _encodingScrutatorFolder;
         private Visibility _visibility;
+        private InspectFileWhiteListSetting _whiteList;
+        private IncludeFileSetting _includeFile;
 
         public Visibility Visibility
         {
@@ -69,20 +71,39 @@ namespace EncodingNormalizerVsx.ViewModel
 
         private Account Account { set; get; }
         private Encoding SitpulationEncoding { set; get; }
+
+        public void InspectFolderEncoding(List<string> folder)
+        {
+            foreach (var temp in folder)
+            {
+                InspectFolderEncoding(temp);
+            }
+        }
+
         public void InspectFolderEncoding(string folder)
         {
-            Account = Account.ReadAccount();
+            if (Account == null)
+            {
+                Account = Account.ReadAccount();
+            }
+
             var progress = new EncodingScrutatorProgress();
             progress.ProgressChanged += Progress_ProgressChanged;
             var encoding = Account.ConvertCriterionEncoding();
             SitpulationEncoding = encoding;
-            var whiteList =
-                new InspectFileWhiteListSetting(
-                    Account.WhiteList.Split('\n').Select(temp => temp.Replace("\r", "")).ToList());
-            var includeFile =
-                new IncludeFileSetting(Account.FileInclude.Split('\n').Select(temp => temp.Replace("\r", "")).ToList());
+            if (_whiteList == null)
+            {
+                _whiteList =
+                    new InspectFileWhiteListSetting(
+                        Account.WhiteList.Split('\n').Select(temp => temp.Replace("\r", "")).ToList());
+            }
+            if (_includeFile == null)
+            {
+                _includeFile =
+                    new IncludeFileSetting(Account.FileInclude.Split('\n').Select(temp => temp.Replace("\r", "")).ToList());
+            }
             var encodingScrutatorFolder = new EncodingScrutatorFolder(new DirectoryInfo(folder),
-                whiteList, includeFile)
+                _whiteList, _includeFile)
             {
                 Progress = progress,
                 SitpulationEncodingSetting = new SitpulationEncodingSetting
@@ -91,7 +112,14 @@ namespace EncodingNormalizerVsx.ViewModel
                 }
             };
 
-            _encodingScrutatorFolder = encodingScrutatorFolder;
+            if (_encodingScrutatorFolder == null)
+            {
+                _encodingScrutatorFolder = encodingScrutatorFolder;
+            }
+            else
+            {
+                _encodingScrutatorFolder.Folder.Add(encodingScrutatorFolder);
+            }
 
             new Task(() =>
             {
@@ -215,9 +243,12 @@ namespace EncodingNormalizerVsx.ViewModel
 
             new Task(() =>
             {
-
                 WriteSitpulationEncoding(EncodingScrutatorFolder, progress, SitpulationEncoding);
-                Circular = "转换完成\r\n 转换失败" + count;
+                Circular = "转换完成\r\n ";
+                if (count > 0)
+                {
+                    Circular += "转换失败" + count;
+                }
                 FailWriteSitpulation();
             }).Start();
         }
@@ -236,7 +267,7 @@ DispatcherSynchronizationContext(Application.Current.Dispatcher));
                 FailWriteSitpulation(encodingScrutatorFolder);
                 foreach (var temp in encodingScrutatorFolder)
                 {
-                    EncodingScrutatorFolder.Add((EncodingScrutatorFolderFile) temp);
+                    EncodingScrutatorFolder.Add((EncodingScrutatorFolderFile)temp);
                 }
                 // FailWriteSitpulation(encodingScrutatorFolder);
                 //for (int i = 0; i < encodingScrutatorFolder.Count; i++)
@@ -281,7 +312,7 @@ DispatcherSynchronizationContext(Application.Current.Dispatcher));
                     }
                     if (temp.Folder != null)
                     {
-                       FailWriteSitpulation(temp.Folder);
+                        FailWriteSitpulation(temp.Folder);
                     }
                     if (temp.Folder == null || temp.Folder.Count == 0)
                     {

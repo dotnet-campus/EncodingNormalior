@@ -30,7 +30,14 @@ namespace EncodingNormalizerVsx.View
 
         public void InspectFolderEncoding()
         {
-            ViewModel.InspectFolderEncoding(SolutionFolder);
+            if (Project.Count > 0)
+            {
+                ViewModel.InspectFolderEncoding(Project);
+            }
+            else
+            {
+                ViewModel.InspectFolderEncoding(SolutionFolder);
+            }
         }
 
         public EventHandler Closing;
@@ -39,6 +46,8 @@ namespace EncodingNormalizerVsx.View
         /// 项目文件夹
         /// </summary>
         public string SolutionFolder { set; get; }
+
+        public List<string> Project { set; get; }
 
         public ConformModel ViewModel { set; get; }
 

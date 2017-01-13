@@ -5,6 +5,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.IO;
@@ -71,11 +72,27 @@ namespace EncodingNormalizerVsx
         {
             DTE dte = (DTE)ServiceProvider.GetService(typeof(DTE));
             var file = dte.Solution.FullName;
-            if (string.IsNullOrEmpty(file))
+            List<string> project = new List<string>();
+            //if (string.IsNullOrEmpty(file))
             {
-                MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
-                return;
+                if (dte.Solution.Projects.Count > 0)
+                {
+                    //file = dte.Solution.Projects.Item(0).FullName;
+                    //dte.Solution.Projects
+                    foreach (var temp in dte.Solution.Projects)
+                    {
+                        file = ((Project)temp).FullName;
+                        project.Add(new FileInfo(file).Directory?.FullName);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
+                    return;
+                }
             }
+
+
 
             if (_conformWindow != null)
             {
@@ -84,9 +101,13 @@ namespace EncodingNormalizerVsx
                 return;
             }
 
-            var folder = new FileInfo(file).Directory?.FullName;
-            System.Windows.Window window =new System.Windows.Window();
-            ConformPage conformPage=new ConformPage();
+            var folder = "";
+            if (!string.IsNullOrEmpty(file))
+            {
+                folder = new FileInfo(file).Directory?.FullName;
+            }
+            System.Windows.Window window = new System.Windows.Window();
+            ConformPage conformPage = new ConformPage();
             window.Content = conformPage;
 
             conformPage.Closing += (_s, _e) =>
@@ -96,7 +117,7 @@ namespace EncodingNormalizerVsx
             };
 
             conformPage.SolutionFolder = folder;
-
+            conformPage.Project = project;
             window.Show();
             conformPage.InspectFolderEncoding();
             _conformWindow = window;

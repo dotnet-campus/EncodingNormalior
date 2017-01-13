@@ -154,7 +154,11 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode";
             //{
             //    Console.WriteLine(temp);
             //}
-            Console.WriteLine(Usage);
+            //Console.WriteLine(Usage);
+            if (args.Length < 2)
+            {
+                
+            }
             var arguments = CommandLineArgumentParser.Parse(args);
 
             try

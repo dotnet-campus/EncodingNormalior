@@ -118,6 +118,7 @@ namespace EncodingNormalior.Model
 
             foreach (var temp in IncludeWildcardFile)
             {
+                if(!string.IsNullOrEmpty(temp))
                 includeRegexFile.Add(GetWildcardRegexString(temp));
             }
             return includeRegexFile;
