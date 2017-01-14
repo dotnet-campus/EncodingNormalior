@@ -15,6 +15,7 @@ using EncodingNormalizerVsx.View;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using MessageBox=System.Windows.MessageBox;
 
 namespace EncodingNormalizerVsx
 {
@@ -106,7 +107,7 @@ namespace EncodingNormalizerVsx
                     }
                     catch (NotImplementedException)
                     {
-                        MessageBox.Show("The project not loaded.", "项目还没有加载完成");
+                        System.Windows.MessageBox.Show("The project not loaded.", "项目还没有加载完成");
                         return;
                     }
                     if (noLoadProjectCount > 0)
