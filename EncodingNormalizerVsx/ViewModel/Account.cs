@@ -22,6 +22,8 @@ namespace EncodingNormalizerVsx.ViewModel
                 case CriterionEncoding.GBK:
                     return Encoding.GetEncoding("gbk");
                     break;
+                case CriterionEncoding.Unicode:
+                    return Encoding.Unicode;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -30,12 +32,14 @@ namespace EncodingNormalizerVsx.ViewModel
         /// <summary>
         /// 保存用户设置文件夹
         /// </summary>
-        [JsonIgnore] private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EncodingNormalizer\\";
+        [JsonIgnore]
+        private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EncodingNormalizer\\";
 
         /// <summary>
         /// 保存用户设置文件
         /// </summary>
-        [JsonIgnore] private static readonly string _file = _folder + "Account.json";
+        [JsonIgnore]
+        private static readonly string _file = _folder + "Account.json";
 
 
         private CriterionEncoding _criterionEncoding;
@@ -44,7 +48,9 @@ namespace EncodingNormalizerVsx.ViewModel
 
 
         private string _whiteList;
-
+        /// <summary>
+        /// 包含的文件
+        /// </summary>
         public string FileInclude
         {
             set
@@ -54,7 +60,9 @@ namespace EncodingNormalizerVsx.ViewModel
             }
             get { return _fileInclude; }
         }
-
+        /// <summary>
+        /// 不包含文件
+        /// </summary>
         public string WhiteList
         {
             set
@@ -81,7 +89,7 @@ namespace EncodingNormalizerVsx.ViewModel
         /// </summary>
         public static Account ReadAccount()
         {
-            var folder = _folder;
+            //var folder = _folder;
             var file = _file;
             Account account;
             try
@@ -104,7 +112,9 @@ namespace EncodingNormalizerVsx.ViewModel
                 //EncodingNormalior.Resource.TextFileSuffix.textFileSuffix;
                 account = new Account()
                 {
-                    CriterionEncoding = ViewModel.CriterionEncoding.UTF8, FileInclude = fileInclude, WhiteList = whiteList
+                    CriterionEncoding = ViewModel.CriterionEncoding.UTF8,
+                    FileInclude = fileInclude,
+                    WhiteList = whiteList
                 };
                 //foreach (var temp in InspectFileWhiteListSetting.DefaultWhiteList)
                 //{
@@ -160,6 +170,7 @@ namespace EncodingNormalizerVsx.ViewModel
     public enum CriterionEncoding
     {
         UTF8,
-        GBK
+        GBK,
+        Unicode,
     }
 }

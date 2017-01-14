@@ -157,7 +157,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode";
             //Console.WriteLine(Usage);
             if (args.Length < 2)
             {
-                
+                args = new[] {"-f", "E:\\程序\\ethylene156\\EncodingNormalior"};
             }
             var arguments = CommandLineArgumentParser.Parse(args);
 

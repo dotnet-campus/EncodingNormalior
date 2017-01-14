@@ -31,40 +31,17 @@
                                 <TreeView Visibility="{Binding Visibility,Mode=OneWay}"
                                           ItemsSource="{Binding EncodingScrutatorFolder}"
                                           >
-                                    <!--ItemsSource="{Binding EncodingScrutatorFolder.Folder}">-->
-                                <!--<TreeView.Resources>
-                                        <HierarchicalDataTemplate DataType="model:IEncodingScrutatorFile"
-                                                                  ItemsSource="{Binding Folder}">
-                                            <Grid>
-                                                <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
-                                                    <TextBlock Text="{Binding Name}"></TextBlock>
-                                                </CheckBox>
-                                            </Grid>
-                                        </HierarchicalDataTemplate>
-                                    </TreeView.Resources>-->
-                                    
                                     <TreeView.ItemTemplate>
                                         <HierarchicalDataTemplate DataType="model:EncodingScrutatorFolderFile"
                                                                   ItemsSource="{Binding Folder}">
                                             <Grid>
-                                               <StackPanel>
+                                                <StackPanel>
                                                     <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="{Binding Name}"></TextBlock>
                                                             <TextBlock Margin="10,0,0,0" Text="{Binding Encoding}"></TextBlock>
                                                         </StackPanel>
                                                     </CheckBox>
-                                                    <!--<ListView ItemsSource="{Binding File}">
-                                                        <ListView.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <Grid>
-                                                                    <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
-                                                                        <TextBlock Text="{Binding Name}"></TextBlock>
-                                                                    </CheckBox>
-                                                                </Grid>
-                                                            </DataTemplate>
-                                                        </ListView.ItemTemplate>
-                                                    </ListView>-->
                                                 </StackPanel>
                                             </Grid>
                                         </HierarchicalDataTemplate>

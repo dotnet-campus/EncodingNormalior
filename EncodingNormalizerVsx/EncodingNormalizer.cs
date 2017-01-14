@@ -79,10 +79,18 @@ namespace EncodingNormalizerVsx
                 {
                     //file = dte.Solution.Projects.Item(0).FullName;
                     //dte.Solution.Projects
-                    foreach (var temp in dte.Solution.Projects)
+                    try
                     {
-                        file = ((Project)temp).FullName;
-                        project.Add(new FileInfo(file).Directory?.FullName);
+                        foreach (var temp in dte.Solution.Projects)
+                        {
+                            file = ((Project)temp).FullName;
+                            project.Add(new FileInfo(file).Directory?.FullName);
+                        }
+                    }
+                    catch (NotImplementedException )
+                    {
+                        MessageBox.Show("The project not loaded.", "项目还没有加载完成");
+                        return;
                     }
                 }
                 else
@@ -109,13 +117,16 @@ namespace EncodingNormalizerVsx
             System.Windows.Window window = new System.Windows.Window();
             ConformPage conformPage = new ConformPage();
             window.Content = conformPage;
-
+            window.Title = "编码规范工具";
             conformPage.Closing += (_s, _e) =>
             {
                 window.Close();
                 _conformWindow = null;
             };
-
+            window.Closed += (_s, _e) =>
+            {
+                _conformWindow = null;
+            };
             conformPage.SolutionFolder = folder;
             conformPage.Project = project;
             window.Show();
@@ -200,6 +211,10 @@ namespace EncodingNormalizerVsx
             definitionPage.Closing += (_s, _e) =>
             {
                 window.Close();
+                _definitionWindow = null;
+            };
+            window.Closed += (_s, _e) =>
+            {
                 _definitionWindow = null;
             };
             window.Title = "编码规范工具设置";

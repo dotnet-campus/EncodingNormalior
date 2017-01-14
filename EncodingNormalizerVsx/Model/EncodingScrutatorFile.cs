@@ -31,5 +31,24 @@ namespace EncodingNormalizerVsx.Model
                 stream.Write(str);
             }
         }
+
+        /// <summary>
+        /// 获取全名称
+        /// </summary>
+        /// <param name="encodingScrutatorFile"></param>
+        public string GetEncodingScrutatorFileDirectory()
+        {
+            EncodingScrutatorFile encodingScrutatorFile = this;
+            StringBuilder str = new StringBuilder();
+            var folder = encodingScrutatorFile.Parent;
+            str.Append(encodingScrutatorFile.File.Name);
+            while (folder != null)
+            {
+                str.Insert(0, folder.Name + "\\");
+                folder = folder.Parent;
+            }
+            return str.ToString();
+        }
+
     }
 }

@@ -87,7 +87,14 @@ namespace EncodingNormalizerVsx.ViewModel
         /// </summary>
         public bool WriteAccount()
         {
-            //校验Account
+            //todo: 校验Account
+            ViewModel.CriterionEncoding criterionEncoding;
+            /*Account.CriterionEncoding =*/
+            if (ViewModel.CriterionEncoding.TryParse(CriterionEncoding, out criterionEncoding))
+            {
+                Account.CriterionEncoding = criterionEncoding;
+            }
+            
             try
             {
                 Account.WriteAccount();
