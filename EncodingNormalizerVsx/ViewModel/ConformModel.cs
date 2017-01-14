@@ -20,7 +20,9 @@ namespace EncodingNormalizerVsx.ViewModel
     {
         private string _circular;
 
-        private List<EncodingScrutatorFolder> _encodingScrutatorFolder;
+        //private List<EncodingScrutatorFolder> _encodingScrutatorFolder;
+        private EncodingScrutatorFolder _encodingScrutatorFolder;
+
         private IncludeFileSetting _includeFile;
         private Visibility _visibility;
         private InspectFileWhiteListSetting _whiteList;
@@ -92,13 +94,13 @@ namespace EncodingNormalizerVsx.ViewModel
             
 
             _encodingScrutatorFolder //= encodingScrutatorFolder;
-            =new List<EncodingScrutatorFolder>()
+            //=new List<EncodingScrutatorFolder>()
+           // {
+           = new EncodingScrutatorFolder(new DirectoryInfo(Environment.SystemDirectory))
             {
-                new EncodingScrutatorFolder(new DirectoryInfo(Environment.SystemDirectory))
-                {
-                    Folder = encodingScrutatorFolder
-                }
+                Folder = encodingScrutatorFolder
             };
+            //};
 
             new Task(() =>
             {
@@ -209,7 +211,7 @@ namespace EncodingNormalizerVsx.ViewModel
             var str = new StringBuilder();
             str.Append("扫描完成");
             str.Append("\r\n");
-            str.Append("找到不规范文件" + PintnoConformEncodingFile(_encodingScrutatorFolder));
+            str.Append("找到不规范文件" + PintnoConformEncodingFile(_encodingScrutatorFolder.Folder));
             str.Append(" 当前编码 " + SitpulationEncoding.EncodingName);
             Visibility = Visibility.Visible;
             PrintConformDispatcherSynchronizationContext(EncodingScrutatorFolderBeCriterion);
@@ -228,7 +230,7 @@ namespace EncodingNormalizerVsx.ViewModel
 
         private void EncodingScrutatorFolderBeCriterion()
         {
-            foreach (var temp in _encodingScrutatorFolder)
+            foreach (var temp in _encodingScrutatorFolder.Folder)
             {
                 var encodingScrutatorFolder = temp;
                 EncodingScrutatorFolderBeCriterion(encodingScrutatorFolder);
