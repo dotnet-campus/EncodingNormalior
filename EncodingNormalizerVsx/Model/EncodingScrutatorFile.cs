@@ -37,7 +37,7 @@ namespace EncodingNormalizerVsx.Model
             {
                 str = stream.ReadToEnd();
             }
-            using (StreamWriter stream = new StreamWriter(File.OpenWrite(), encoding))
+            using (StreamWriter stream = new StreamWriter(new FileStream(File.FullName,FileMode.Create), encoding))
             {
                 stream.Write(str);
             }
