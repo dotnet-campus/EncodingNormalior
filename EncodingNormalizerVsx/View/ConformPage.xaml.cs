@@ -17,6 +17,8 @@ namespace EncodingNormalizerVsx.View
         {
             ViewModel = new ConformModel();
             InitializeComponent();
+            //ViewModel.Closing = Closing;
+            ViewModel.Closing += (s, e) => Closing?.Invoke(s, e);
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace EncodingNormalizerVsx.ViewModel
         private IncludeFileSetting _includeFile;
         private Visibility _visibility;
         private InspectFileWhiteListSetting _whiteList;
-
+        public EventHandler Closing;
         public ConformModel()
         {
             Visibility = Visibility.Collapsed;
@@ -91,15 +91,20 @@ namespace EncodingNormalizerVsx.ViewModel
                     });
             }
 
-            
+
 
             _encodingScrutatorFolder //= encodingScrutatorFolder;
-            //=new List<EncodingScrutatorFolder>()
-           // {
+                                     //=new List<EncodingScrutatorFolder>()
+                                     // {
            = new EncodingScrutatorFolder(new DirectoryInfo(Environment.SystemDirectory))
+           {
+               Folder = encodingScrutatorFolder
+           };
+
+            foreach (var temp in encodingScrutatorFolder)
             {
-                Folder = encodingScrutatorFolder
-            };
+                temp.Parent = _encodingScrutatorFolder;
+            }
             //};
 
             new Task(() =>
@@ -211,11 +216,17 @@ namespace EncodingNormalizerVsx.ViewModel
             var str = new StringBuilder();
             str.Append("扫描完成");
             str.Append("\r\n");
-            str.Append("找到不规范文件" + PintnoConformEncodingFile(_encodingScrutatorFolder.Folder));
+            int count = PintnoConformEncodingFile(_encodingScrutatorFolder.Folder);
+            str.Append("找到不规范文件" + count);
             str.Append(" 当前编码 " + SitpulationEncoding.EncodingName);
             Visibility = Visibility.Visible;
             PrintConformDispatcherSynchronizationContext(EncodingScrutatorFolderBeCriterion);
             Circular = str.ToString();
+            if (count == 0)
+            {
+                MessageBox.Show("没有发现不规范文件", "编码规范工具");
+                PrintConformDispatcherSynchronizationContext(() => { Closing?.Invoke(this, null); });
+            }
         }
 
         private int PintnoConformEncodingFile(List<EncodingScrutatorFolder> encodingScrutatorFolder)
@@ -230,11 +241,12 @@ namespace EncodingNormalizerVsx.ViewModel
 
         private void EncodingScrutatorFolderBeCriterion()
         {
-            foreach (var temp in _encodingScrutatorFolder.Folder)
-            {
-                var encodingScrutatorFolder = temp;
-                EncodingScrutatorFolderBeCriterion(encodingScrutatorFolder);
-            }
+            //foreach (var temp in _encodingScrutatorFolder.Folder)
+            //{
+            //    var encodingScrutatorFolder = temp;
+            //    EncodingScrutatorFolderBeCriterion(encodingScrutatorFolder);
+            //}
+            EncodingScrutatorFolderBeCriterion(_encodingScrutatorFolder);
         }
 
         private void EncodingScrutatorFolderBeCriterion(EncodingScrutatorFolder encodingScrutatorFolder)
@@ -287,6 +299,14 @@ namespace EncodingNormalizerVsx.ViewModel
                 if (count > 0)
                 {
                     Circular += "转换失败" + count;
+                }
+                else
+                {
+                    MessageBox.Show("转换完成", "编码规范工具");
+                    PrintConformDispatcherSynchronizationContext(() =>
+                    {
+                        Closing?.Invoke(this,null);
+                    });
                 }
                 FailWriteSitpulation();
             }).Start();

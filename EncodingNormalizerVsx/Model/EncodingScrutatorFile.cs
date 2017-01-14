@@ -46,7 +46,6 @@ namespace EncodingNormalizerVsx.Model
         /// <summary>
         /// 获取全名称
         /// </summary>
-        /// <param name="encodingScrutatorFile"></param>
         public string GetEncodingScrutatorFileDirectory()
         {
             EncodingScrutatorFile encodingScrutatorFile = this;
