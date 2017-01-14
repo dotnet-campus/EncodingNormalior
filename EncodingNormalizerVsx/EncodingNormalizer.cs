@@ -73,6 +73,7 @@ namespace EncodingNormalizerVsx
             DTE dte = (DTE)ServiceProvider.GetService(typeof(DTE));
             var file = dte.Solution.FullName;
             List<string> project = new List<string>();
+            int noLoadProjectCount = 0;
             //if (string.IsNullOrEmpty(file))
             {
                 if (dte.Solution.Projects.Count > 0)
@@ -99,7 +100,7 @@ namespace EncodingNormalizerVsx
                             }
                             catch (NotImplementedException)
                             {
-
+                                noLoadProjectCount++;
                             }
                         }
                     }
@@ -107,6 +108,23 @@ namespace EncodingNormalizerVsx
                     {
                         MessageBox.Show("The project not loaded.", "项目还没有加载完成");
                         return;
+                    }
+                    if (noLoadProjectCount > 0)
+                    {
+                        if (project.Count == 0)
+                        {
+                            MessageBox.Show("All project not loaded.", "全部项目都没有加载完成");
+                            return;
+                        }
+                        MessageBox.Show("存在" + noLoadProjectCount + "个工程没有加载");
+                    }
+                    else
+                    {
+                        if (project.Count == 0)
+                        {
+                            MessageBox.Show("Cant find any project.", "没有发现工程");
+                            return;
+                        }
                     }
                 }
                 else

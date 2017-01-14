@@ -85,11 +85,20 @@ namespace EncodingNormalizerVsx.ViewModel
                         SitpulationEncodingSetting = new SitpulationEncodingSetting
                         {
                             SitpulationEncoding = SitpulationEncoding
-                        }
+                        },
                     });
             }
 
-            _encodingScrutatorFolder = encodingScrutatorFolder;
+            
+
+            _encodingScrutatorFolder //= encodingScrutatorFolder;
+            =new List<EncodingScrutatorFolder>()
+            {
+                new EncodingScrutatorFolder(new DirectoryInfo(Environment.SystemDirectory))
+                {
+                    Folder = encodingScrutatorFolder
+                }
+            };
 
             new Task(() =>
             {
