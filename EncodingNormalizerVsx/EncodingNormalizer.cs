@@ -83,11 +83,27 @@ namespace EncodingNormalizerVsx
                     {
                         foreach (var temp in dte.Solution.Projects)
                         {
-                            file = ((Project)temp).FullName;
-                            project.Add(new FileInfo(file).Directory?.FullName);
+                            try
+                            {
+                                file = ((Project) temp).FileName;
+                                if (file.EndsWith(".csproj"))
+                                {
+                                    
+                                }
+                                file = ((Project)temp).FullName;
+                                
+                                if (!string.IsNullOrEmpty(file))
+                                {
+                                    project.Add(new FileInfo(file).Directory?.FullName);
+                                }
+                            }
+                            catch (NotImplementedException)
+                            {
+
+                            }
                         }
                     }
-                    catch (NotImplementedException )
+                    catch (NotImplementedException)
                     {
                         MessageBox.Show("The project not loaded.", "项目还没有加载完成");
                         return;
