@@ -41,6 +41,9 @@ namespace EncodingNormalior.Model
 
             //从文件获取编码
             var encoding = AutoEncoding(headByte);
+
+            //Encoding.UTF8
+
             // uft8无签名
             if (encoding.Equals(Encoding.ASCII)) //GBK utf8
             {

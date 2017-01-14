@@ -21,6 +21,17 @@ namespace EncodingNormalizerVsx.Model
 
         public void WriteSitpulationEncoding(Encoding encoding)
         {
+            if (Encoding == System.Text.Encoding.ASCII.EncodingName)
+            {
+                //²»ÐÞ¸Äascii
+                if ( Equals(encoding, System.Text.Encoding.UTF8) ||
+                     Equals(encoding, System.Text.Encoding.GetEncoding("GBK"))||
+                     Equals(encoding, System.Text.Encoding.ASCII))
+                {
+                    return;
+                }
+            }
+
             string str;
             using (StreamReader stream=new StreamReader(File.OpenRead(),_encoding))
             {
