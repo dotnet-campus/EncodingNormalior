@@ -6,7 +6,7 @@
     <Description xml:space="preserve">编码规范工具
 可以自动检测工程、文件夹内所有文本的编码，并可以规范所有文件编码 </Description>
     <MoreInfo>https://github.com/lindexi/EncodingNormalior</MoreInfo>
-    <Icon>Resources\EncodingNormalizer.png</Icon>
+    <Icon>Resources\code_711px_1157693_easyicon.net.png</Icon>
     <PreviewImage>Resources\code_711px_1157693_easyicon.net.png</PreviewImage>
   </Metadata>
   <Installation>
