@@ -8,6 +8,21 @@
              xmlns:model="clr-namespace:EncodingNormalizerVsx.Model"
              DataContext="{Binding RelativeSource={RelativeSource Self},Path=ViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <HierarchicalDataTemplate x:Key="HierarchicalDataTemplate" DataType="model:EncodingScrutatorFolderFile"
+                                  ItemsSource="{Binding Folder}">
+            <Grid>
+                <StackPanel>
+                    <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                            <TextBlock Margin="10,0,0,0" Text="{Binding Encoding}"></TextBlock>
+                        </StackPanel>
+                    </CheckBox>
+                </StackPanel>
+            </Grid>
+        </HierarchicalDataTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid Background="#FF3D3D3D">
             <Grid.RowDefinitions>
@@ -20,34 +35,16 @@
                         Content="转换"
                         HorizontalAlignment="Right"
                         Click="WriteCriterionButton_OnClick">
-
                 </Button>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid Margin="10,10,10,10">
                     <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10">
-                        <Grid Margin="10,10,10,10">
-                            <Grid Background="#FF5d5d5d">
-                                <TreeView Visibility="{Binding Visibility,Mode=OneWay}"
-                                          ItemsSource="{Binding EncodingScrutatorFolder}"
-                                          >
-                                    <TreeView.ItemTemplate>
-                                        <HierarchicalDataTemplate DataType="model:EncodingScrutatorFolderFile"
-                                                                  ItemsSource="{Binding Folder}">
-                                            <Grid>
-                                                <StackPanel>
-                                                    <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="{Binding Name}"></TextBlock>
-                                                            <TextBlock Margin="10,0,0,0" Text="{Binding Encoding}"></TextBlock>
-                                                        </StackPanel>
-                                                    </CheckBox>
-                                                </StackPanel>
-                                            </Grid>
-                                        </HierarchicalDataTemplate>
-                                    </TreeView.ItemTemplate>
-                                </TreeView>
-                            </Grid>
+                        <Grid Margin="10,10,10,10" Background="#FF5d5d5d">
+                            <TreeView Visibility="{Binding Visibility,Mode=OneWay}"
+                                      ItemsSource="{Binding EncodingScrutatorFolder}"
+                                      ItemTemplate="{StaticResource HierarchicalDataTemplate}">
+                            </TreeView>
                         </Grid>
                     </Border>
                 </Grid>

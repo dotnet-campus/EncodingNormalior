@@ -8,9 +8,6 @@
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=ViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <!--<UserControl.Resources>
-        <view:DefinitionModel x:Key="ViewModel"></view:DefinitionModel>
-    </UserControl.Resources>-->
     <Grid>
         <Border Margin="10,10,10,10" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
             <Grid Margin="10,10,10,10">
@@ -59,7 +56,8 @@
                         </Button>
                     </StackPanel>
                 </Grid>
-            </Grid></Border>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
 
