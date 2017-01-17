@@ -16,10 +16,11 @@
             <Style TargetType="TextBlock">
                 <Setter Property="Foreground" Value="{StaticResource Theme.Brush.Foreground}"></Setter>
             </Style>
-            <!--<Style TargetType="TextBox">
-                <Setter Property="Foreground" Value="{StaticResource Theme.Brush.Foreground}"></Setter>
-            </Style>-->
-            
+            <Style TargetType="Button">
+                <Setter Property="BorderThickness" Value="5 0 0 0"></Setter>
+                <Setter Property="BorderBrush" Value="{StaticResource Theme.Brush.AccentLight}"></Setter>
+                <Setter Property="Padding" Value="0 0 0 0"></Setter>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Background="{StaticResource Theme.Brush.Background}">

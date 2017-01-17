@@ -26,6 +26,9 @@
                     </StackPanel>
                 </Grid>
             </HierarchicalDataTemplate>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource Theme.Brush.Foreground}"></Setter>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>

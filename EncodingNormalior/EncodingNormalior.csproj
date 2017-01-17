@@ -59,6 +59,7 @@
     <Compile Include="Model\ISetting.cs" />
     <Compile Include="Model\SitpulationEncodingSetting.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\TextFileSuffix.Designer.cs">
       <AutoGen>True</AutoGen>
