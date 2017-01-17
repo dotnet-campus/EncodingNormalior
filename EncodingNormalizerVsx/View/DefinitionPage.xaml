@@ -8,7 +8,21 @@
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Mode=Self},Path=ViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Color.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource Theme.Brush.Foreground}"></Setter>
+            </Style>
+            <!--<Style TargetType="TextBox">
+                <Setter Property="Foreground" Value="{StaticResource Theme.Brush.Foreground}"></Setter>
+            </Style>-->
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="{StaticResource Theme.Brush.Background}">
         <Border Margin="10,10,10,10" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
             <Grid Margin="10,10,10,10">
                 <Grid.RowDefinitions>

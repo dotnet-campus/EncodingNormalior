@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="Theme.Color.Foreground">White</Color>
+    <Color x:Key="Theme.Color.Background">#FF3D3D3D</Color>
+    <Color x:Key="Theme.Color.AccentForeground">White</Color>
+    <Color x:Key="Theme.Color.Accent">#FF006AB2</Color>
+    <Color x:Key="Theme.Color.AccentLight">#FF0E85D4</Color>
+    <Color x:Key="Theme.Color.AccentLight2">#FF0E85D4</Color>
+    <Color x:Key="Theme.Color.AccentDark">#FF005791</Color>
+    <Color x:Key="Theme.Color.AccentDark2">#FF005791</Color>
+    <SolidColorBrush x:Key="Theme.Brush.Foreground" Color="{StaticResource Theme.Color.Foreground}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Background" Color="{StaticResource Theme.Color.Background}"/>
+    <SolidColorBrush x:Key="Theme.Brush.AccentForeground" Color="{StaticResource Theme.Color.AccentForeground}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Accent" Color="{StaticResource Theme.Color.Accent}"/>
+    <SolidColorBrush x:Key="Theme.Brush.AccentLight" Color="{StaticResource Theme.Color.AccentLight}"/>
+    <SolidColorBrush x:Key="Theme.Brush.AccentLight2" Color="{StaticResource Theme.Color.AccentLight2}"/>
+    <SolidColorBrush x:Key="Theme.Brush.AccentDark" Color="{StaticResource Theme.Color.AccentDark}"/>
+    <SolidColorBrush x:Key="Theme.Brush.AccentDark2" Color="{StaticResource Theme.Color.AccentDark2}"/>
+    
+</ResourceDictionary>

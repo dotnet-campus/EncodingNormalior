@@ -87,13 +87,13 @@ namespace EncodingNormalizerVsx
                         {
                             try
                             {
-                                file = ((Project) temp).FileName;
+                                file = ((Project)temp).FileName;
                                 if (file.EndsWith(".csproj"))
                                 {
-                                    
+
                                 }
                                 file = ((Project)temp).FullName;
-                                
+
                                 if (!string.IsNullOrEmpty(file))
                                 {
                                     project.Add(new FileInfo(file).Directory?.FullName);
@@ -135,8 +135,18 @@ namespace EncodingNormalizerVsx
                 }
             }
 
+            ConformWindow(file, project);
+            //ReadAccount();
+            //MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory, "路径");
+            //string str = EncodingNormalizerPackage.DefinitionPage().CriterionEncoding.ToString();
+            // MessageBox.Show(str, "路径");
 
 
+
+        }
+
+        private void ConformWindow(string file, List<string> project)
+        {
             if (_conformWindow != null)
             {
                 _conformWindow.Focus();
@@ -167,13 +177,6 @@ namespace EncodingNormalizerVsx
             window.Show();
             conformPage.InspectFolderEncoding();
             _conformWindow = window;
-            //ReadAccount();
-            //MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory, "路径");
-            //string str = EncodingNormalizerPackage.DefinitionPage().CriterionEncoding.ToString();
-            // MessageBox.Show(str, "路径");
-
-
-
         }
 
         //private void ReadAccount()

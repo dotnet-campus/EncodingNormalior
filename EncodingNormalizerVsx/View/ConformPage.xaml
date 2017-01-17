@@ -9,19 +9,24 @@
              DataContext="{Binding RelativeSource={RelativeSource Self},Path=ViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <HierarchicalDataTemplate x:Key="HierarchicalDataTemplate" DataType="model:EncodingScrutatorFolderFile"
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Color.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <HierarchicalDataTemplate x:Key="HierarchicalDataTemplate" DataType="model:EncodingScrutatorFolderFile"
                                   ItemsSource="{Binding Folder}">
-            <Grid>
-                <StackPanel>
-                    <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                            <TextBlock Margin="10,0,0,0" Text="{Binding Encoding}"></TextBlock>
-                        </StackPanel>
-                    </CheckBox>
-                </StackPanel>
-            </Grid>
-        </HierarchicalDataTemplate>
+                <Grid>
+                    <StackPanel>
+                        <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                                <TextBlock Margin="10,0,0,0" Text="{Binding Encoding}"></TextBlock>
+                            </StackPanel>
+                        </CheckBox>
+                    </StackPanel>
+                </Grid>
+            </HierarchicalDataTemplate>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid Background="#FF3D3D3D">
