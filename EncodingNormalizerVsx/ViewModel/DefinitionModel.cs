@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using EncodingNormalior.Model;
 using Newtonsoft.Json;
 
@@ -87,14 +88,29 @@ namespace EncodingNormalizerVsx.ViewModel
         /// </summary>
         public bool WriteAccount()
         {
-            //todo: 校验Account
             ViewModel.CriterionEncoding criterionEncoding;
             /*Account.CriterionEncoding =*/
-            if (ViewModel.CriterionEncoding.TryParse(CriterionEncoding, out criterionEncoding))
+            if (Enum.TryParse(CriterionEncoding, out criterionEncoding))
             {
                 Account.CriterionEncoding = criterionEncoding;
             }
-            
+
+            //检查白名单
+            //if (!)
+            //{
+            //    MessageBox.Show("不支持指定文件夹中的文件", "白名单格式错误");
+            //    return false;
+            //}
+            try
+            {
+                ConformWhiteList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
             try
             {
                 Account.WriteAccount();
@@ -106,6 +122,11 @@ namespace EncodingNormalizerVsx.ViewModel
             }
 
             return true;
+        }
+
+        private void ConformWhiteList()
+        {
+            InspectFileWhiteListSetting inspectFileWhiteListSetting = new InspectFileWhiteListSetting(new List<string>(Account.WhiteList.Split('\n').Select(temp => temp.Replace("\r", "")).ToList()));
         }
     }
 }

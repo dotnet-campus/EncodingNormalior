@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using EncodingNormalior.Annotations;
 
 namespace EncodingNormalior.Model
 {
@@ -44,13 +45,13 @@ namespace EncodingNormalior.Model
         {
             if (!File.Exists(file))
             {
-                throw  new ArgumentException("文件不存在"+file);
+                throw new ArgumentException("文件不存在" + file);
             }
             var whiteList = new List<string>();
             using (StreamReader stream = new StreamReader(
                    new FileStream(file, FileMode.Open)))
             {
-                whiteList.AddRange(stream.ReadToEnd().Split('\n').Select(temp=>temp.Replace("\r","").Trim()));
+                whiteList.AddRange(stream.ReadToEnd().Split('\n').Select(temp => temp.Replace("\r", "").Trim()));
             }
 
             InspectFileWhiteListSetting inspectFileWhiteListSetting = new InspectFileWhiteListSetting(whiteList);
@@ -88,7 +89,7 @@ namespace EncodingNormalior.Model
             return fileSuffix;
         }
 
-        public InspectFileWhiteListSetting(List<string> whiteList)
+        public InspectFileWhiteListSetting([NotNull] List<string> whiteList)
         {
             //if (_folderRegex == null)
             //{
@@ -138,13 +139,15 @@ namespace EncodingNormalior.Model
 
         private void Parse(string whiteList)
         {
+            //"\\w+[\\\\|/]"
+            _folderRegex = new Regex("\\w+[\\\\|/]$");
             if (_folderRegex.IsMatch(whiteList))
             {
                 ((List<string>)FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
             }
             else
             {
-                if (whiteList.Contains("\\") || whiteList.Contains("//"))
+                if (whiteList.Contains("\\") || whiteList.Contains("/"))
                 {
                     throw new ArgumentException("不支持指定文件夹中的文件");
                 }
@@ -153,7 +156,27 @@ namespace EncodingNormalior.Model
             }
         }
 
-        private static Regex _folderRegex = new Regex("\\w+\\\\");
+        /// <summary>
+        /// 判断白名单是否有效
+        /// </summary>
+        /// <param name="whiteList"></param>
+        public bool ConformWhiteList(string whiteList)
+        {
+            try
+            {
+                foreach (var temp in whiteList.Split('\n').Select(temp => temp.Replace("\r", "")).ToList())
+                {
+                    Parse(temp);
+                }
+            }
+            catch (ArgumentException )
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static Regex _folderRegex = new Regex("\\w+[\\\\|/]");
 
         public IReadOnlyList<string> FileWhiteList { get; } = new List<string>();
         public IReadOnlyList<string> FolderWhiteList { get; } = new List<string>();

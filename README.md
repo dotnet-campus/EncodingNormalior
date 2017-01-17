@@ -18,7 +18,41 @@
 
 好像我的项目名称 编码规范工具 是 EncodingNormalizer ，写错了，但是不想改。
 
-我还把他放在 vs 扩展库，还没有发出来，于是我就不发链接。
+我还把他放在 vs 扩展库，可以到 https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a 下载。
+
+工具的使用：
+
+打开 visual Sutido 在安装完 编码规范工具 ，可以看到菜单多了 选项 EncodingNormalizer
+
+![这里写图片描述](http://img.blog.csdn.net/20170117115031647?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+### 设置
+
+点击菜单 EncodingNormailzer ，选择 Setting 。可以看到下面界面
+
+![这里写图片描述](http://img.blog.csdn.net/20170117115248683?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+首先是可以忽略一些文件或文件夹，默认是忽略一些不是文本的文件和 bin、obj、git文件夹，注意，千万不要去转换 git 文件夹的代码。
+
+然后我们可以设置编码，现在做的是 Utf8 、GBK、Unicode的编码，如果检测工程存在文件的编码和我们设置的不一样，就会提示去转换。
+
+因为 Ascii 的文件，存放为 GBK 和 UTF8不带签名是无法区分的，所以忽略 ASCII 编码文件。
+
+因为对 Unicode-16 的文件是无法使用判断存在'\0'来区分文件是不是文本，所以，对于某些文件还是自己手动添加是否一定检测，对于没有被添加到一定需要检测的文件，先判断他是不是文本，如果是的话，就检测。
+
+设置保存在 我的文档\ EncodingNormalizer \ Account.json
+
+### 检查编码
+
+然后在打开完工程，注意要加载完成才使用。
+
+点击 Conform solution encoding ，自动检测方案所有工程的文件编码，如果发现所有的编码都符合规范，那么弹出窗口说所有文件都符合规范。如果有文件不符合规范，那么提示用户是否转换。
+
+![这里写图片描述](http://img.blog.csdn.net/20170117120101255?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+
+
+## 和我组队做工具
 
 来说下如何使用我的项目：
 
