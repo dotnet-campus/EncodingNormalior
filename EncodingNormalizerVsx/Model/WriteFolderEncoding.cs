@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,7 @@ namespace EncodingNormalizerVsx.Model
     public class WriteFolderEncoding
     {
         /// <summary>
-        ///     °ÑËùÓĞµÄÎÄ¼şĞ´±àÂë¹æ·¶
+        ///     æŠŠæ‰€æœ‰çš„æ–‡ä»¶å†™ç¼–ç è§„èŒƒ
         /// </summary>
         public void WriteSitpulationEncoding(IEnumerable<IEncodingScrutatorFile> encodingScrutatorFolder,
             EncodingScrutatorProgress progress, Encoding encoding)

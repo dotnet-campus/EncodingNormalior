@@ -1,4 +1,4 @@
-using System.IO;
+Ôªøusing System.IO;
 using System.Text;
 
 namespace EncodingNormalizerVsx.Model
@@ -23,7 +23,7 @@ namespace EncodingNormalizerVsx.Model
         {
             if (Encoding == System.Text.Encoding.ASCII.EncodingName)
             {
-                //≤ª–ﬁ∏ƒascii
+                //‰∏ç‰øÆÊîπascii
                 if ( Equals(encoding, System.Text.Encoding.UTF8) ||
                      Equals(encoding, System.Text.Encoding.GetEncoding("GBK"))||
                      Equals(encoding, System.Text.Encoding.ASCII))
@@ -44,7 +44,7 @@ namespace EncodingNormalizerVsx.Model
         }
 
         /// <summary>
-        /// ªÒ»°»´√˚≥∆
+        /// Ëé∑ÂèñÂÖ®ÂêçÁß∞
         /// </summary>
         public string GetEncodingScrutatorFileDirectory()
         {

@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,16 +9,16 @@ using Newtonsoft.Json;
 namespace EncodingNormalizerVsx.ViewModel
 {
     /// <summary>
-    ///     ¶¨ÒåÓÃ»§ÉèÖÃ
+    ///     å®šä¹‰ç”¨æˆ·è®¾ç½®
     /// </summary>
     public class DefinitionModel : NotifyProperty
     {
         /// <summary>
-        /// ±£´æÓÃ»§ÉèÖÃÎÄ¼ş¼Ğ
+        /// ä¿å­˜ç”¨æˆ·è®¾ç½®æ–‡ä»¶å¤¹
         /// </summary>
         private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EncodingNormalizer\\";
         /// <summary>
-        /// ±£´æÓÃ»§ÉèÖÃÎÄ¼ş
+        /// ä¿å­˜ç”¨æˆ·è®¾ç½®æ–‡ä»¶
         /// </summary>
         private static readonly string _file = _folder + "Account.json";
 
@@ -26,7 +26,7 @@ namespace EncodingNormalizerVsx.ViewModel
 
         public DefinitionModel()
         {
-            //Ò»¶¨»á¶Á
+            //ä¸€å®šä¼šè¯»
             if (Account == null)
             {
                 ReadAccount();
@@ -38,12 +38,12 @@ namespace EncodingNormalizerVsx.ViewModel
                 OptionCriterionEncoding.Add(temp);
             }
 
-            //»ñÈ¡Ö®Ç°µÄ±àÂë
+            //è·å–ä¹‹å‰çš„ç¼–ç 
             CriterionEncoding = OptionCriterionEncoding.First(temp => temp.Equals(Account.CriterionEncoding.ToString()));
         }
 
         /// <summary>
-        /// ¿ÉÑ¡µÄ±àÂë
+        /// å¯é€‰çš„ç¼–ç 
         /// </summary>
         public List<string> OptionCriterionEncoding { set; get; }
 
@@ -62,7 +62,7 @@ namespace EncodingNormalizerVsx.ViewModel
             }
         }
         /// <summary>
-        ///     ÓÃ»§ÉèÖÃ
+        ///     ç”¨æˆ·è®¾ç½®
         /// </summary>
         public Account Account
         {
@@ -75,7 +75,7 @@ namespace EncodingNormalizerVsx.ViewModel
         }
 
         /// <summary>
-        ///     ¶ÁÈ¡ÉèÖÃ
+        ///     è¯»å–è®¾ç½®
         /// </summary>
         private void ReadAccount()
         {
@@ -84,7 +84,7 @@ namespace EncodingNormalizerVsx.ViewModel
 
 
         /// <summary>
-        ///     Ğ´ÈëÓÃ»§ÉèÖÃ
+        ///     å†™å…¥ç”¨æˆ·è®¾ç½®
         /// </summary>
         public bool WriteAccount()
         {
@@ -96,10 +96,10 @@ namespace EncodingNormalizerVsx.ViewModel
             }
             //Account.FileInclude
 
-            //¼ì²é°×Ãûµ¥
+            //æ£€æŸ¥ç™½åå•
             //if (!)
             //{
-            //    MessageBox.Show("²»Ö§³ÖÖ¸¶¨ÎÄ¼ş¼ĞÖĞµÄÎÄ¼ş", "°×Ãûµ¥¸ñÊ½´íÎó");
+            //    MessageBox.Show("ä¸æ”¯æŒæŒ‡å®šæ–‡ä»¶å¤¹ä¸­çš„æ–‡ä»¶", "ç™½åå•æ ¼å¼é”™è¯¯");
             //    return false;
             //}
             if (!ConformWhiteList())
@@ -135,10 +135,10 @@ namespace EncodingNormalizerVsx.ViewModel
                 };
                 foreach (var temp in Account.FileInclude.Split('\n').Select(temp => temp.Replace("\r", "")).ToList())
                 {
-                    //²»ÄÜ°üº¬¸ñÊ½
+                    //ä¸èƒ½åŒ…å«æ ¼å¼
                     if (illegalFile.Any(temp.Contains))
                     {
-                        MessageBox.Show("³öÏÖÎÄ¼ş²»ÄÜ°üº¬×Ö·û \r\nµÚÒ»´¦´íÎóÔÚ "+ temp, "°üº¬ÎÄ¼ş¸ñÊ½´íÎó");
+                        MessageBox.Show("å‡ºç°æ–‡ä»¶ä¸èƒ½åŒ…å«å­—ç¬¦ \r\nç¬¬ä¸€å¤„é”™è¯¯åœ¨ "+ temp, "åŒ…å«æ–‡ä»¶æ ¼å¼é”™è¯¯");
                         return false;
                     }
                 }
@@ -148,7 +148,7 @@ namespace EncodingNormalizerVsx.ViewModel
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "°üº¬ÎÄ¼ş¸ñÊ½´íÎó");
+                MessageBox.Show(e.Message, "åŒ…å«æ–‡ä»¶æ ¼å¼é”™è¯¯");
                 return false;
             }
             return true;
@@ -162,7 +162,7 @@ namespace EncodingNormalizerVsx.ViewModel
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "°×Ãûµ¥¸ñÊ½´íÎó");
+                MessageBox.Show(e.Message, "ç™½åå•æ ¼å¼é”™è¯¯");
                 return false;
             }
             return true;
