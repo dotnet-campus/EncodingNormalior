@@ -94,6 +94,7 @@ namespace EncodingNormalizerVsx.ViewModel
             {
                 Account.CriterionEncoding = criterionEncoding;
             }
+            //Account.FileInclude
 
             //检查白名单
             //if (!)
@@ -101,14 +102,14 @@ namespace EncodingNormalizerVsx.ViewModel
             //    MessageBox.Show("不支持指定文件夹中的文件", "白名单格式错误");
             //    return false;
             //}
-            try
+            if (!ConformWhiteList())
             {
-                ConformWhiteList();
+                return false;
             }
-            catch (Exception e)
+
+            if (!ConformFileInclude())
             {
-                Console.WriteLine(e);
-                throw;
+                return false;
             }
 
             try
@@ -124,9 +125,47 @@ namespace EncodingNormalizerVsx.ViewModel
             return true;
         }
 
-        private void ConformWhiteList()
+        private bool ConformFileInclude()
         {
-            InspectFileWhiteListSetting inspectFileWhiteListSetting = new InspectFileWhiteListSetting(new List<string>(Account.WhiteList.Split('\n').Select(temp => temp.Replace("\r", "")).ToList()));
+            try
+            {
+                List<string> illegalFile = new List<string>()
+                {
+                    "\\","/",":","\"","?","<" , ">" ,"|"
+                };
+                foreach (var temp in Account.FileInclude.Split('\n').Select(temp => temp.Replace("\r", "")).ToList())
+                {
+                    //不能包含格式
+                    if (illegalFile.Any(temp.Contains))
+                    {
+                        MessageBox.Show("出现文件不能包含字符 \r\n第一处错误在 "+ temp, "包含文件格式错误");
+                        return false;
+                    }
+                }
+                //    var includeFileSetting = new IncludeFileSetting(
+                //        Account.FileInclude.Split('\n').Select(temp => temp.Replace("\r", "")).ToList());
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "包含文件格式错误");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ConformWhiteList()
+        {
+            try
+            {
+                InspectFileWhiteListSetting inspectFileWhiteListSetting = new InspectFileWhiteListSetting(new List<string>(Account.WhiteList.Split('\n').Select(temp => temp.Replace("\r", "")).ToList()));
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "白名单格式错误");
+                return false;
+            }
+            return true;
         }
     }
 }

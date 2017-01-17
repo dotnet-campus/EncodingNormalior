@@ -145,7 +145,7 @@ namespace EncodingNormalizerVsx.ViewModel
             {
                 _includeFile =
                     new IncludeFileSetting(
-                        Account.FileInclude.Split('\n').Select(temp => temp.Replace("\r", "")).ToList());
+                        Account.FileInclude.Split('\n').Select(temp => temp.Replace("\r", "")).Where(temp=>!string.IsNullOrEmpty(temp)).ToList());
             }
         }
 

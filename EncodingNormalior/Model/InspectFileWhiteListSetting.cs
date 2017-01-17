@@ -149,7 +149,7 @@ namespace EncodingNormalior.Model
             {
                 if (whiteList.Contains("\\") || whiteList.Contains("/"))
                 {
-                    throw new ArgumentException("不支持指定文件夹中的文件");
+                    throw new ArgumentException("不支持指定文件夹中的文件\r\n"+whiteList+" 错误");
                 }
                 ((List<string>)FileWhiteList).Add(whiteList);
                 ((List<Regex>)FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList)));
