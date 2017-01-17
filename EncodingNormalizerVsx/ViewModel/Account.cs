@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EncodingNormalior.Model;
+using EncodingNormalior.Resource;
 using Newtonsoft.Json;
 
 namespace EncodingNormalizerVsx.ViewModel
@@ -12,34 +13,16 @@ namespace EncodingNormalizerVsx.ViewModel
     /// </summary>
     public class Account : NotifyProperty
     {
-        public Encoding ConvertCriterionEncoding()
-        {
-            switch (CriterionEncoding)
-            {
-                case CriterionEncoding.UTF8:
-                    return Encoding.UTF8;
-                    break;
-                case CriterionEncoding.GBK:
-                    return Encoding.GetEncoding("gbk");
-                    break;
-                case CriterionEncoding.Unicode:
-                    return Encoding.Unicode;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        /// <summary>
+        ///     保存用户设置文件夹
+        /// </summary>
+        [JsonIgnore] private static readonly string _folder =
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EncodingNormalizer\\";
 
         /// <summary>
-        /// 保存用户设置文件夹
+        ///     保存用户设置文件
         /// </summary>
-        [JsonIgnore]
-        private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EncodingNormalizer\\";
-
-        /// <summary>
-        /// 保存用户设置文件
-        /// </summary>
-        [JsonIgnore]
-        private static readonly string _file = _folder + "Account.json";
+        [JsonIgnore] private static readonly string _file = _folder + "Account.json";
 
 
         private CriterionEncoding _criterionEncoding;
@@ -48,8 +31,9 @@ namespace EncodingNormalizerVsx.ViewModel
 
 
         private string _whiteList;
+
         /// <summary>
-        /// 包含的文件
+        ///     包含的文件
         /// </summary>
         public string FileInclude
         {
@@ -60,8 +44,9 @@ namespace EncodingNormalizerVsx.ViewModel
             }
             get { return _fileInclude; }
         }
+
         /// <summary>
-        /// 不包含文件
+        ///     不包含文件
         /// </summary>
         public string WhiteList
         {
@@ -81,6 +66,23 @@ namespace EncodingNormalizerVsx.ViewModel
                 OnPropertyChanged();
             }
             get { return _criterionEncoding; }
+        }
+
+        public Encoding ConvertCriterionEncoding()
+        {
+            switch (CriterionEncoding)
+            {
+                case CriterionEncoding.UTF8:
+                    return Encoding.UTF8;
+                    break;
+                case CriterionEncoding.GBK:
+                    return Encoding.GetEncoding("gbk");
+                    break;
+                case CriterionEncoding.Unicode:
+                    return Encoding.Unicode;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
 
@@ -107,12 +109,13 @@ namespace EncodingNormalizerVsx.ViewModel
             catch (Exception)
             {
                 //默认配置
-                var whiteList = EncodingNormalior.Resource.TextFileSuffix.WhiteList;
-                var fileInclude = IncludeFileSetting.TextFileSuffix.Aggregate("", (current, temp) => current + (temp + "\r\n"));
+                var whiteList = TextFileSuffix.WhiteList;
+                var fileInclude = IncludeFileSetting.TextFileSuffix.Aggregate("",
+                    (current, temp) => current + temp + "\r\n");
                 //EncodingNormalior.Resource.TextFileSuffix.textFileSuffix;
-                account = new Account()
+                account = new Account
                 {
-                    CriterionEncoding = ViewModel.CriterionEncoding.UTF8,
+                    CriterionEncoding = CriterionEncoding.UTF8,
                     FileInclude = fileInclude,
                     WhiteList = whiteList
                 };
@@ -152,9 +155,7 @@ namespace EncodingNormalizerVsx.ViewModel
             var folder = _folder;
             var file = _file;
             if (!Directory.Exists(folder))
-            {
                 Directory.CreateDirectory(folder);
-            }
 
             var str = JsonConvert.SerializeObject(this);
 
@@ -171,6 +172,6 @@ namespace EncodingNormalizerVsx.ViewModel
     {
         UTF8,
         GBK,
-        Unicode,
+        Unicode
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EncodingNormalior.Model;
 
 namespace EncodingNormalizerVsx.Model
 {

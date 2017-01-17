@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace EncodingNormalizerVsx
 {
-    public partial class MainWindow : System.Windows.Window
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
@@ -35,7 +31,7 @@ namespace EncodingNormalizerVsx
 
         private void LoadStoryboard_Completed(object sender, EventArgs e)
         {
-            ((Panel)SplashPanel.Parent).Children.Remove(SplashPanel);
+            ((Panel) SplashPanel.Parent).Children.Remove(SplashPanel);
             SplashPanel = null;
             SplashLogo = null;
 

@@ -15,16 +15,12 @@ namespace EncodingNormalizerVsx.ViewModel
     /// </summary>
     public class NotifyProperty : INotifyPropertyChanged
     {
-        public NotifyProperty()
-        {
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public void UpdateProper<T>(ref T properValue, T newValue, [CallerMemberName] string properName = "")
         {
             if (Equals(properValue, newValue))
-            {
                 return;
-            }
 
             properValue = newValue;
             OnPropertyChanged(properName);
@@ -32,15 +28,13 @@ namespace EncodingNormalizerVsx.ViewModel
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
+            var handler = PropertyChanged;
             try
             {
                 SynchronizationContext.SetSynchronizationContext(new
-                   DispatcherSynchronizationContext(Application.Current.Dispatcher));
-                SynchronizationContext.Current.Send(obj =>
-                {
-                    handler?.Invoke(this, new PropertyChangedEventArgs(name));
-                }, null);
+                    DispatcherSynchronizationContext(Application.Current.Dispatcher));
+                SynchronizationContext.Current.Send(
+                    obj => { handler?.Invoke(this, new PropertyChangedEventArgs(name)); }, null);
             }
             catch (Exception)
             {
@@ -48,7 +42,5 @@ namespace EncodingNormalizerVsx.ViewModel
             }
             //handler?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

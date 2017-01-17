@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using EncodingNormalior.Model;
-using Newtonsoft.Json;
 
 namespace EncodingNormalizerVsx.ViewModel
 {
@@ -14,40 +12,38 @@ namespace EncodingNormalizerVsx.ViewModel
     public class DefinitionModel : NotifyProperty
     {
         /// <summary>
-        /// 保存用户设置文件夹
+        ///     保存用户设置文件夹
         /// </summary>
-        private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\EncodingNormalizer\\";
+        private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) +
+                                                 "\\EncodingNormalizer\\";
+
         /// <summary>
-        /// 保存用户设置文件
+        ///     保存用户设置文件
         /// </summary>
         private static readonly string _file = _folder + "Account.json";
 
         private Account _account;
 
+        private string _criterionEncoding;
+
         public DefinitionModel()
         {
             //一定会读
             if (Account == null)
-            {
                 ReadAccount();
-            }
 
             OptionCriterionEncoding = new List<string>();
             foreach (var temp in Enum.GetNames(typeof(CriterionEncoding)))
-            {
                 OptionCriterionEncoding.Add(temp);
-            }
 
             //获取之前的编码
             CriterionEncoding = OptionCriterionEncoding.First(temp => temp.Equals(Account.CriterionEncoding.ToString()));
         }
 
         /// <summary>
-        /// 可选的编码
+        ///     可选的编码
         /// </summary>
         public List<string> OptionCriterionEncoding { set; get; }
-
-        private string _criterionEncoding;
 
         public string CriterionEncoding
         {
@@ -56,11 +52,9 @@ namespace EncodingNormalizerVsx.ViewModel
                 _criterionEncoding = value;
                 OnPropertyChanged();
             }
-            get
-            {
-                return _criterionEncoding;
-            }
+            get { return _criterionEncoding; }
         }
+
         /// <summary>
         ///     用户设置
         /// </summary>
@@ -88,12 +82,10 @@ namespace EncodingNormalizerVsx.ViewModel
         /// </summary>
         public bool WriteAccount()
         {
-            ViewModel.CriterionEncoding criterionEncoding;
+            CriterionEncoding criterionEncoding;
             /*Account.CriterionEncoding =*/
             if (Enum.TryParse(CriterionEncoding, out criterionEncoding))
-            {
                 Account.CriterionEncoding = criterionEncoding;
-            }
             //Account.FileInclude
 
             //检查白名单
@@ -103,14 +95,10 @@ namespace EncodingNormalizerVsx.ViewModel
             //    return false;
             //}
             if (!ConformWhiteList())
-            {
                 return false;
-            }
 
             if (!ConformFileInclude())
-            {
                 return false;
-            }
 
             try
             {
@@ -118,7 +106,6 @@ namespace EncodingNormalizerVsx.ViewModel
             }
             catch (Exception)
             {
-
                 return false;
             }
 
@@ -129,22 +116,25 @@ namespace EncodingNormalizerVsx.ViewModel
         {
             try
             {
-                List<string> illegalFile = new List<string>()
+                var illegalFile = new List<string>
                 {
-                    "\\","/",":","\"","?","<" , ">" ,"|"
+                    "\\",
+                    "/",
+                    ":",
+                    "\"",
+                    "?",
+                    "<",
+                    ">",
+                    "|"
                 };
                 foreach (var temp in Account.FileInclude.Split('\n').Select(temp => temp.Replace("\r", "")).ToList())
-                {
-                    //不能包含格式
                     if (illegalFile.Any(temp.Contains))
                     {
-                        MessageBox.Show("出现文件不能包含字符 \r\n第一处错误在 "+ temp, "包含文件格式错误");
+                        MessageBox.Show("出现文件不能包含字符 \r\n第一处错误在 " + temp, "包含文件格式错误");
                         return false;
                     }
-                }
                 //    var includeFileSetting = new IncludeFileSetting(
                 //        Account.FileInclude.Split('\n').Select(temp => temp.Replace("\r", "")).ToList());
-
             }
             catch (Exception e)
             {
@@ -158,7 +148,9 @@ namespace EncodingNormalizerVsx.ViewModel
         {
             try
             {
-                InspectFileWhiteListSetting inspectFileWhiteListSetting = new InspectFileWhiteListSetting(new List<string>(Account.WhiteList.Split('\n').Select(temp => temp.Replace("\r", "")).ToList()));
+                var inspectFileWhiteListSetting =
+                    new InspectFileWhiteListSetting(
+                        new List<string>(Account.WhiteList.Split('\n').Select(temp => temp.Replace("\r", "")).ToList()));
             }
             catch (Exception e)
             {

@@ -5,19 +5,16 @@ namespace EncodingNormalizerVsx.Model
 {
     public class EncodingScrutatorFolder : EncodingScrutatorFolderFile
     {
-        public EncodingScrutatorFolder(EncodingNormalior.Model.EncodingScrutatorFolder encodingScrutatorFolder,EncodingScrutatorFolder parent)
-            : base(encodingScrutatorFolder.Name,parent)
+        public EncodingScrutatorFolder(EncodingNormalior.Model.EncodingScrutatorFolder encodingScrutatorFolder,
+            EncodingScrutatorFolder parent)
+            : base(encodingScrutatorFolder.Name, parent)
         {
             Folder = new List<IEncodingScrutatorFile>();
             foreach (var temp in encodingScrutatorFolder.File)
-            {
-                Folder.Add(new EncodingScrutatorFile(temp,parent));
-            }
+                Folder.Add(new EncodingScrutatorFile(temp, parent));
 
             foreach (var temp in encodingScrutatorFolder.Folder)
-            {
-                Folder.Add(new EncodingScrutatorFolder(temp,this));
-            }
+                Folder.Add(new EncodingScrutatorFolder(temp, this));
             SitpulationEncodingSetting = encodingScrutatorFolder.SitpulationEncodingSetting;
         }
 

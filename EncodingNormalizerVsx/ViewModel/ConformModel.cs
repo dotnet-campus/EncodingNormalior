@@ -27,6 +27,7 @@ namespace EncodingNormalizerVsx.ViewModel
         private Visibility _visibility;
         private InspectFileWhiteListSetting _whiteList;
         public EventHandler Closing;
+
         public ConformModel()
         {
             Visibility = Visibility.Collapsed;
@@ -46,7 +47,7 @@ namespace EncodingNormalizerVsx.ViewModel
         }
 
         /// <summary>
-        /// 不符合编码文件文件夹
+        ///     不符合编码文件文件夹
         /// </summary>
         public ObservableCollection<EncodingScrutatorFolderFile> EncodingScrutatorFolder { set; get; } =
             new ObservableCollection<EncodingScrutatorFolderFile>();
@@ -78,7 +79,6 @@ namespace EncodingNormalizerVsx.ViewModel
             ParseAccount();
             var encodingScrutatorFolder = new List<EncodingScrutatorFolder>();
             foreach (var temp in folder)
-            {
                 encodingScrutatorFolder.Add(
                     new EncodingScrutatorFolder(new DirectoryInfo(temp),
                         _whiteList, _includeFile)
@@ -87,32 +87,26 @@ namespace EncodingNormalizerVsx.ViewModel
                         SitpulationEncodingSetting = new SitpulationEncodingSetting
                         {
                             SitpulationEncoding = SitpulationEncoding
-                        },
+                        }
                     });
-            }
-
 
 
             _encodingScrutatorFolder //= encodingScrutatorFolder;
-                                     //=new List<EncodingScrutatorFolder>()
-                                     // {
-           = new EncodingScrutatorFolder(new DirectoryInfo(Environment.SystemDirectory))
-           {
-               Folder = encodingScrutatorFolder
-           };
+                //=new List<EncodingScrutatorFolder>()
+                // {
+                = new EncodingScrutatorFolder(new DirectoryInfo(Environment.SystemDirectory))
+                {
+                    Folder = encodingScrutatorFolder
+                };
 
             foreach (var temp in encodingScrutatorFolder)
-            {
                 temp.Parent = _encodingScrutatorFolder;
-            }
             //};
 
             new Task(() =>
             {
                 foreach (var temp in encodingScrutatorFolder)
-                {
                     temp.InspectFolderEncoding();
-                }
                 progress.Report(null);
             }).Start();
         }
@@ -123,30 +117,27 @@ namespace EncodingNormalizerVsx.ViewModel
         /// <param name="folder"></param>
         public void InspectFolderEncoding(string folder)
         {
-            InspectFolderEncoding(new List<string> { folder });
+            InspectFolderEncoding(new List<string> {folder});
         }
 
         private void ParseAccount()
         {
             if (Account == null)
-            {
                 Account = Account.ReadAccount();
-            }
 
             var encoding = Account.ConvertCriterionEncoding();
             SitpulationEncoding = encoding;
             if (_whiteList == null)
-            {
                 _whiteList =
                     new InspectFileWhiteListSetting(
                         Account.WhiteList.Split('\n').Select(temp => temp.Replace("\r", "")).ToList());
-            }
             if (_includeFile == null)
-            {
                 _includeFile =
                     new IncludeFileSetting(
-                        Account.FileInclude.Split('\n').Select(temp => temp.Replace("\r", "")).Where(temp=>!string.IsNullOrEmpty(temp)).ToList());
-            }
+                        Account.FileInclude.Split('\n')
+                            .Select(temp => temp.Replace("\r", ""))
+                            .Where(temp => !string.IsNullOrEmpty(temp))
+                            .ToList());
         }
 
         /// <summary>
@@ -216,7 +207,7 @@ namespace EncodingNormalizerVsx.ViewModel
             var str = new StringBuilder();
             str.Append("扫描完成");
             str.Append("\r\n");
-            int count = PintnoConformEncodingFile(_encodingScrutatorFolder.Folder);
+            var count = PintnoConformEncodingFile(_encodingScrutatorFolder.Folder);
             str.Append("找到不规范文件" + count);
             str.Append(" 当前编码 " + SitpulationEncoding.EncodingName);
             Visibility = Visibility.Visible;
@@ -233,9 +224,7 @@ namespace EncodingNormalizerVsx.ViewModel
         {
             var count = 0;
             foreach (var temp in encodingScrutatorFolder)
-            {
                 count += PintnoConformEncodingFile(temp);
-            }
             return count;
         }
 
@@ -252,13 +241,9 @@ namespace EncodingNormalizerVsx.ViewModel
         private void EncodingScrutatorFolderBeCriterion(EncodingScrutatorFolder encodingScrutatorFolder)
         {
             foreach (var temp in encodingScrutatorFolder.Folder)
-            {
                 EncodingScrutatorFolder.Add(new Model.EncodingScrutatorFolder(temp, null));
-            }
             foreach (var temp in encodingScrutatorFolder.File)
-            {
                 EncodingScrutatorFolder.Add(new Model.EncodingScrutatorFile(temp, null));
-            }
         }
 
         private void PrintConformDispatcherSynchronizationContext(Action action)
@@ -303,10 +288,7 @@ namespace EncodingNormalizerVsx.ViewModel
                 else
                 {
                     MessageBox.Show("转换完成", "编码规范工具");
-                    PrintConformDispatcherSynchronizationContext(() =>
-                    {
-                        Closing?.Invoke(this,null);
-                    });
+                    PrintConformDispatcherSynchronizationContext(() => { Closing?.Invoke(this, null); });
                 }
                 FailWriteSitpulation();
             }).Start();
@@ -325,9 +307,7 @@ namespace EncodingNormalizerVsx.ViewModel
                 EncodingScrutatorFolder.Clear();
                 FailWriteSitpulation(encodingScrutatorFolder);
                 foreach (var temp in encodingScrutatorFolder)
-                {
-                    EncodingScrutatorFolder.Add((EncodingScrutatorFolderFile)temp);
-                }
+                    EncodingScrutatorFolder.Add((EncodingScrutatorFolderFile) temp);
             }, null);
         }
 
@@ -352,9 +332,7 @@ namespace EncodingNormalizerVsx.ViewModel
                         i--;
                     }
                     if (temp.Folder != null)
-                    {
                         FailWriteSitpulation(temp.Folder);
-                    }
                     if (temp.Folder == null || temp.Folder.Count == 0)
                     {
                         encodingScrutatorFolder.RemoveAt(i);

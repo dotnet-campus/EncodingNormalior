@@ -14,10 +14,9 @@ namespace EncodingNormalizerVsx.Model
             EncodingScrutatorProgress progress, Encoding encoding)
         {
             foreach (var temp in encodingScrutatorFolder.Where(temp => temp.Check))
-            {
-                if (temp is Model.EncodingScrutatorFile)
+                if (temp is EncodingScrutatorFile)
                 {
-                    var file = (Model.EncodingScrutatorFile)temp;
+                    var file = (EncodingScrutatorFile) temp;
                     progress.ReportWriteSitpulationFile(file);
                     try
                     {
@@ -29,11 +28,10 @@ namespace EncodingNormalizerVsx.Model
                         progress.ReportExcept(e);
                     }
                 }
-                else if (temp is Model.EncodingScrutatorFolder)
+                else if (temp is EncodingScrutatorFolder)
                 {
-                    WriteSitpulationEncoding(((Model.EncodingScrutatorFolder)temp).Folder, progress, encoding);
+                    WriteSitpulationEncoding(((EncodingScrutatorFolder) temp).Folder, progress, encoding);
                 }
-            }
         }
     }
 }

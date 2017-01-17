@@ -139,7 +139,6 @@ namespace EncodingNormalior.Model
 
         private void Parse(string whiteList)
         {
-            //"\\w+[\\\\|/]"
             _folderRegex = new Regex("\\w+[\\\\|/]$");
             if (_folderRegex.IsMatch(whiteList))
             {
