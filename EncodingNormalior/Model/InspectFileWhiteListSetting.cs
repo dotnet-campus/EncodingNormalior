@@ -140,6 +140,7 @@ namespace EncodingNormalior.Model
         private void Parse(string whiteList)
         {
             _folderRegex = new Regex("\\w+[\\\\|/]$");
+             
             if (_folderRegex.IsMatch(whiteList))
             {
                 ((List<string>)FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
@@ -151,8 +152,9 @@ namespace EncodingNormalior.Model
                     throw new ArgumentException("不支持指定文件夹中的文件\r\n"+whiteList+" 错误");
                 }
                 ((List<string>)FileWhiteList).Add(whiteList);
-                ((List<Regex>)FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList)));
+                ((List<Regex>)FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList), RegexOptions.IgnoreCase));
             }
+
         }
 
         /// <summary>
