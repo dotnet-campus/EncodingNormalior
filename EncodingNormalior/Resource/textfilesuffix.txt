@@ -15,5 +15,6 @@ htm
 csv
 ini
 log
-
+xaml
+xml
 
