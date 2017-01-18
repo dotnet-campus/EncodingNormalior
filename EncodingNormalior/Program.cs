@@ -306,7 +306,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             using (var stream = new StreamReader(file.OpenRead()))
             {
                 //int @char = 0;
-                while (stream.EndOfStream)
+                while (!stream.EndOfStream)
                 {
                     if (stream.Read() == 0)
                     {
