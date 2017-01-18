@@ -119,7 +119,7 @@ namespace EncodingNormalior.Model
 
                 Folder.Add(folder);
                 //不包含
-                if (InspectFileWhiteListSetting.FolderWhiteList.Any(t => string.Equals(t, temp.Name)))
+                if (InspectFileWhiteListSetting.FolderWhiteList.Any(t => String.Equals(t, temp.Name)))
                 {
                     folder.Ignore = true;
                 }
@@ -194,11 +194,47 @@ namespace EncodingNormalior.Model
             }
 
             //是否是文本
+            return ConformFileText(file);
 
 
             //return _includeRegexFile.Select(temp => new Regex(temp)).Any(regex => regex.IsMatch(file.Name));
-            return _includeRegexFile.Any(temp => temp.IsMatch(file.Name)) &&
-                   !InspectFileWhiteListSetting.FileRegexWhiteList.Any(temp => temp.IsMatch(file.Name));
+            //    return _includeRegexFile.Any(temp => temp.IsMatch(file.Name)) &&
+            //           !InspectFileWhiteListSetting.FileRegexWhiteList.Any(temp => temp.IsMatch(file.Name));
+        }
+
+        /// <summary>
+        /// 判断文件是文本
+        /// 对Unicode不生效
+        /// </summary>
+        /// <param name="file"></param>
+        private static bool ConformFileText(FileInfo file)
+        {
+            using (var stream = new StreamReader(file.OpenRead()))
+            {
+                //int @char = 0;
+                while (!stream.EndOfStream)
+                {
+                    if (IsControlChar(stream.Read()))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private static bool IsControlChar(int ch)
+        {
+            return (ch > Chars.NUL && ch < Chars.BS)
+                   || (ch > Chars.CR && ch < Chars.SUB);
+        }
+
+        private static class Chars
+        {
+            public static char NUL = (char)0; // Null char
+            public static char BS = (char)8; // Back Space
+            public static char CR = (char)13; // Carriage Return
+            public static char SUB = (char)26; // Substitute
         }
     }
 }

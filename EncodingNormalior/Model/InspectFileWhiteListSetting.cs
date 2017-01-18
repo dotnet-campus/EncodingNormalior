@@ -91,11 +91,6 @@ namespace EncodingNormalior.Model
 
         public InspectFileWhiteListSetting([NotNull] List<string> whiteList)
         {
-            //if (_folderRegex == null)
-            //{
-            //    string folderRegex = "\\s+\\\\";
-            //    _folderRegex=new Regex(folderRegex);
-            //}
             foreach (var temp in whiteList)
             {
                 Parse(temp);
@@ -154,7 +149,6 @@ namespace EncodingNormalior.Model
                 ((List<string>)FileWhiteList).Add(whiteList);
                 ((List<Regex>)FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList), RegexOptions.IgnoreCase));
             }
-
         }
 
         /// <summary>

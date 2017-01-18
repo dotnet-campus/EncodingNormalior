@@ -206,14 +206,6 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 {
                     str.Append("文件忽略");
 
-                    //debug
-                    //if (temp.Name.Contains("ml"))
-                    {
-                        if (ConformFileText(temp.File))
-                        {
-                            str.Append(" 是文本");
-                        }
-                    }
 
                 }
                 else
@@ -296,40 +288,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             return str.ToString();
         }
 
-        /// <summary>
-        /// 判断文件是文本
-        /// 对Unicode不生效
-        /// </summary>
-        /// <param name="file"></param>
-        private static bool ConformFileText(FileInfo file)
-        {
-            using (var stream = new StreamReader(file.OpenRead()))
-            {
-                //int @char = 0;
-                while (!stream.EndOfStream)
-                {
-                    if (stream.Read() == 0)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        //public static bool IsControlChar(int ch)
-        //{
-        //    return (ch > Chars.NUL && ch < Chars.BS)
-        //        || (ch > Chars.CR && ch < Chars.SUB);
-        //}
-
-        //public static class Chars
-        //{
-        //    public static char NUL = (char)0; // Null char
-        //    public static char BS = (char)8; // Back Space
-        //    public static char CR = (char)13; // Carriage Return
-        //    public static char SUB = (char)26; // Substitute
-        //}
+ 
 
         //private static void ReadFile(EncodingScrutatorFile encoding)
         //{
