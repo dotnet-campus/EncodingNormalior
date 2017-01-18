@@ -60,7 +60,7 @@ namespace EncodingNormalior.Model
         static InspectFileWhiteListSetting()
         {
             DefaultWhiteList = new List<string>();
-            var file = "WhiteList.txt";
+            var file = EncodingScrutatorFileStorage.WhiteListFile;
             IEnumerable<string> fileSuffix = ReadWhiteList(file);
 
             foreach (var temp in fileSuffix)

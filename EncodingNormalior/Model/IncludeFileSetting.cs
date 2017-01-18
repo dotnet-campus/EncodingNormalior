@@ -64,7 +64,7 @@ namespace EncodingNormalior.Model
             }
 
 
-            file = "includeFile.txt";
+            file = EncodingScrutatorFileStorage.InlcudeFile;
             if (File.Exists(file))
             {
                 foreach (var temp in ReadIncludeFile(file))

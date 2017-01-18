@@ -9,7 +9,7 @@ namespace EncodingNormalior.Model
     /// <summary>
     ///     包括文件夹和文件
     /// </summary>
-    public class EncodingScrutatorFolder:IEncodingScrutatorFile
+    public class EncodingScrutatorFolder : IEncodingScrutatorFile
     {
         //private List<string> _includeRegexFile;
         private List<Regex> _includeRegexFile;
@@ -87,6 +87,10 @@ namespace EncodingNormalior.Model
                 return;
             }
 
+            //读取白名单
+            //包含文件
+            ReadAccount();
+
             GetaIncludeRegexFile();
 
             InspectFileEncoding();
@@ -95,6 +99,26 @@ namespace EncodingNormalior.Model
 
             //Progress<string> progress=new Progress<string>();
             //((IProgress<string>)progress).Report("");
+        }
+
+        private void ReadAccount()
+        {
+            //todo做这个
+            ReadIncludeFile();
+            ReadWhiteList();
+        }
+
+        private void ReadWhiteList()
+        {
+            //获取
+            //添加到
+            //删除
+        }
+
+        private void ReadIncludeFile()
+        {
+            //后缀在白名单，删除
+
         }
 
         public IProgress<EncodingScrutatorFile> Progress { set; get; }
