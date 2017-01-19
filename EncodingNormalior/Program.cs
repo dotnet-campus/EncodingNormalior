@@ -82,9 +82,13 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
         {
             ConformCommand(arguments);
             var folder = arguments.Get(FolderCommand).Next;
+            if (string.IsNullOrEmpty(folder))
+            {
+                throw new ArgumentCommadnException("不存在文件夹参数");
+            }
             if (!Directory.Exists(folder))
             {
-                throw new ArgumentException("不存在文件夹" + folder);
+                throw new ArgumentCommadnException("不存在文件夹" + folder);
             }
 
             EncodingScrutatorFolder encodingScrutatorFolder = new EncodingScrutatorFolder(new DirectoryInfo(folder));
@@ -194,6 +198,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
         {
             try
             {
+               // args = new[] { "-f","2" };
                 var arguments = CommandLineArgumentParser.Parse(args);
 
                 try
@@ -203,6 +208,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 catch (ArgumentCommadnException e)
                 {
                     Console.WriteLine(e.Message + "\r\n" + Usage);
+                    Environment.Exit(-1);
                 }
             }
             catch (Exception e)
@@ -260,7 +266,6 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             return str.ToString();
         }
 
-        //private static bool _illicitFile=false;//存在不合法文件
 
         private static List<EncodingScrutatorFile> _illicitFile = new List<EncodingScrutatorFile>();
 

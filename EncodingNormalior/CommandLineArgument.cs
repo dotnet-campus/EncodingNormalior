@@ -68,7 +68,7 @@ namespace EncodingNormalior
 
         public static implicit operator string(CommandLineArgument argument)
         {
-            return argument._argumentText;
+            return argument?._argumentText;
         }
 
         public override string ToString()
