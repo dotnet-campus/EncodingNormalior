@@ -11,7 +11,6 @@ namespace EncodingNormalior.Model
     /// </summary>
     public class EncodingScrutatorFolder : IEncodingScrutatorFile
     {
-        //private List<string> _includeRegexFile;
         private List<Regex> _includeRegexFile;
 
         public EncodingScrutatorFolder(DirectoryInfo folder)

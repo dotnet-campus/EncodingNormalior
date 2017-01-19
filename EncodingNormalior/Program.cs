@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -17,6 +18,7 @@ namespace EncodingNormalior
         private const string EncodingCommand = "-E";
         private const string FolderCommand = "-f";
         private const string ProjectCommand = "-p";
+
 
         //        private const string Usage =
         //@"usage: EncodingNormalior <command> [args]
@@ -141,14 +143,42 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             }
         }
 
+        //public class MyClass
+        //{
+        //    public MyClass()
+        //    {
 
+        //    }
+
+        //    private string arg;
+        //    private Action<string[]> action;
+        //}
 
         private static void ConformCommand(CommandLineArgumentParser arguments)
         {
+            List<string> command = new List<string>()
+            {
+                IncludeFileCommand,
+                WhiteListCommand,
+                EncodingCommand,
+                FolderCommand,
+            };
+
+
+            foreach (var arg in arguments.GetEnumerator().Where(temp => ((string)temp).StartsWith("-")))
+            {
+                if (command.All(temp => !temp.Equals(arg)))
+                {
+                    throw new ArgumentCommadnException("存在无法识别参数" + arg);
+                }
+            }
+
+
             if (!arguments.Has(FolderCommand))
             {
-                throw new ArgumentException("需要包含要检测文件夹");
+                throw new ArgumentCommadnException("需要包含要检测文件夹");
             }
+
 
             //if (!arguments.Has(ProjectCommand) && !arguments.Has(FolderCommand))
             //{
@@ -170,9 +200,9 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 {
                     ParseCommand(arguments);
                 }
-                catch (ArgumentException)
+                catch (ArgumentCommadnException e)
                 {
-                    Console.WriteLine(Usage);
+                    Console.WriteLine(e.Message + "\r\n" + Usage);
                 }
             }
             catch (Exception e)
@@ -288,7 +318,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             return str.ToString();
         }
 
- 
+
 
         //private static void ReadFile(EncodingScrutatorFile encoding)
         //{
@@ -340,6 +370,4 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
         //    }
         //}
     }
-
-
 }
