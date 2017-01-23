@@ -129,9 +129,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 var whiteListFile = arguments.Get(WhiteListCommand).Take();
                 encodingScrutatorFolder.InspectFileWhiteListSetting = InspectFileWhiteListSetting.ReadWhiteListSetting(whiteListFile);
             }
-            //EncodingScrutatorFolder encodingScrutatorFolder = new EncodingScrutatorFolder(new DirectoryInfo("E:\\程序\\公司\\EncodingNormalior"));
 
-            //if()//检测文件编码
             encodingScrutatorFolder.InspectFolderEncoding();
             Console.WriteLine(PintnoConformEncodingFile(encodingScrutatorFolder));
             if (_illicitFile.Count > 0)
@@ -140,23 +138,11 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 str.Append("存在以下文件不符合规范\r\n");
                 foreach (var temp in _illicitFile)
                 {
-                    //temp.File
                     str.Append(temp.File.FullName + "\r\n");
                 }
                 throw new Exception(str.ToString());
             }
         }
-
-        //public class MyClass
-        //{
-        //    public MyClass()
-        //    {
-
-        //    }
-
-        //    private string arg;
-        //    private Action<string[]> action;
-        //}
 
         private static void ConformCommand(CommandLineArgumentParser arguments)
         {
@@ -182,23 +168,12 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             {
                 throw new ArgumentCommadnException("需要包含要检测文件夹");
             }
-
-
-            //if (!arguments.Has(ProjectCommand) && !arguments.Has(FolderCommand))
-            //{
-            //    throw new ArgumentException("需要包含要检测文件夹或csproj文件");
-            //}
-            //if (arguments.Has(ProjectCommand) && arguments.Has(FolderCommand))
-            //{
-            //    throw new ArgumentException("要检测文件夹或csproj文件只能包含一个");
-            //}
         }
 
         public static void Main(string[] args)
         {
             try
             {
-               // args = new[] { "-f","2" };
                 var arguments = CommandLineArgumentParser.Parse(args);
 
                 try
@@ -322,57 +297,5 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             //Console.WriteLine(str.ToString());
             return str.ToString();
         }
-
-
-
-        //private static void ReadFile(EncodingScrutatorFile encoding)
-        //{
-        //    using (StreamReader stream=new StreamReader(encoding.File.Open(FileMode.Open),Encoding.UTF8))
-        //    {
-        //        string str = stream.ReadToEnd();
-        //    }
-
-        //    using (StreamReader stream = new StreamReader(encoding.File.Open(FileMode.Open), Encoding.GetEncoding("GBK")))
-        //    {
-        //        string str = stream.ReadToEnd();
-        //    }
-        //}
-
-        //private static void ReadByte()
-        //{
-        //    string file = "E:\\程序\\公司\\EncodingNormalior\\EncodingNormalior\\textFile\\GBK 3.txt";
-        //    Stream stream=new FileStream(file,FileMode.Open);
-        //    int n =(int) stream.Length;
-        //    byte[] buffer=new byte[n];
-        //    stream.Read(buffer, 0, n);
-        //    //aa 文206 196
-        //    //aa文三 97 97 206 196 200 253
-        //}
-
-        ///// <summary>
-        ///// 写入编码各种
-        ///// </summary>
-        //private static void EncodingWrite()
-        //{
-        //    string str = "这是{0}编码";
-        //    List<Encoding> encoding=new List<Encoding>()
-        //    {
-        //        Encoding.ASCII,
-        //        Encoding.BigEndianUnicode,
-        //        Encoding.UTF8,
-        //        Encoding.GetEncoding("gbk"),
-
-        //    };
-
-        //    string file = "E:\\程序\\公司\\EncodingNormalior\\EncodingNormalior\\textFile\\";
-        //    foreach (var temp in encoding)
-        //    {
-        //        using (StreamWriter stream =new StreamWriter(
-        //            new FileStream(file+temp.EncodingName+".txt",FileMode.OpenOrCreate),temp))
-        //        {
-        //            stream.Write(str, temp);
-        //        }
-        //    }
-        //}
     }
 }

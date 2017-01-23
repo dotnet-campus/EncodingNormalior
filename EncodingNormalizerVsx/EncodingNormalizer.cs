@@ -47,7 +47,9 @@ namespace EncodingNormalizerVsx
         private EncodingNormalizer(Package package)
         {
             if (package == null)
+            {
                 throw new ArgumentNullException("package");
+            }
 
             this.package = package;
 
@@ -64,27 +66,6 @@ namespace EncodingNormalizerVsx
             }
         }
 
-        //private void ReadAccount()
-        //{
-        //    var folder = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) +
-        //                 "\\EncodingNormalizer\\";
-        //    var file = folder+ "Account.json";
-        //    if (!Directory.Exists(folder))
-        //    {
-        //        Directory.CreateDirectory(folder);
-        //    }
-
-        //    using (StreamWriter stream = File.CreateText(file))
-        //    {
-        //        stream.Write("EncodingNormalizer");
-        //    }
-
-        //    using (StreamReader stream=File.OpenText(file))
-        //    {
-        //        string str = stream.ReadToEnd();
-        //    }
-        //}
-
         /// <summary>
         ///     Gets the instance of the command.
         /// </summary>
@@ -100,70 +81,73 @@ namespace EncodingNormalizerVsx
 
         private void EncodingNormalizerCallback(object sender, EventArgs e)
         {
-            var dte = (DTE) ServiceProvider.GetService(typeof(DTE));
+            var dte = (DTE)ServiceProvider.GetService(typeof(DTE));
             var file = dte.Solution.FullName;
             var project = new List<string>();
-            var noLoadProjectCount = 0;
-            //if (string.IsNullOrEmpty(file))
-            {
-                if (dte.Solution.Projects.Count > 0)
-                {
-                    //file = dte.Solution.Projects.Item(0).FullName;
-                    //dte.Solution.Projects
-                    try
-                    {
-                        foreach (var temp in dte.Solution.Projects)
-                            try
-                            {
-                                file = ((Project) temp).FileName;
-                                if (file.EndsWith(".csproj"))
-                                {
-                                }
-                                file = ((Project) temp).FullName;
 
-                                if (!string.IsNullOrEmpty(file))
-                                    project.Add(new FileInfo(file).Directory?.FullName);
-                            }
-                            catch (NotImplementedException)
-                            {
-                                noLoadProjectCount++;
-                            }
-                    }
-                    catch (NotImplementedException)
+            if (dte.Solution.Projects.Count > 0)
+            {
+                //try
+                //{
+                var noLoadProjectCount = TryParseProject(dte, project);
+                //}
+                // catch (NotImplementedException)
+                //{
+                //    MessageBox.Show("The project not loaded.", "项目还没有加载完成");
+                //    return;
+                //}
+                if (noLoadProjectCount > 0)
+                {
+                    if (project.Count == 0)
                     {
-                        MessageBox.Show("The project not loaded.", "项目还没有加载完成");
+                        MessageBox.Show("All project not loaded.", "全部项目都没有加载完成");
                         return;
                     }
-                    if (noLoadProjectCount > 0)
-                    {
-                        if (project.Count == 0)
-                        {
-                            MessageBox.Show("All project not loaded.", "全部项目都没有加载完成");
-                            return;
-                        }
-                        MessageBox.Show("存在" + noLoadProjectCount + "个工程没有加载");
-                    }
-                    else
-                    {
-                        if (project.Count == 0)
-                        {
-                            MessageBox.Show("Cant find any project.", "没有发现工程");
-                            return;
-                        }
-                    }
+                    MessageBox.Show("存在" + noLoadProjectCount + "个工程没有加载");
                 }
                 else
                 {
-                    MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
-                    return;
+                    if (project.Count == 0)
+                    {
+                        MessageBox.Show("Cant find any project.", "没有发现工程");
+                        return;
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Cant find the solution.", "少年，听说你没有打开工程");
+                return;
             }
 
             ConformWindow(file, project);
-            //ReadAccount();
-            //MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory, "路径");
-            //string str = EncodingNormalizerPackage.DefinitionPage().CriterionEncoding.ToString();
-            // MessageBox.Show(str, "路径");
+        }
+
+        private static int TryParseProject(DTE dte, List<string> project)
+        {
+            int noLoadProjectCount = 0;
+            foreach (var temp in dte.Solution.Projects)
+            {
+                try
+                {
+                    //file = ((Project)temp).FileName;
+                    //if (file.EndsWith(".csproj"))
+                    //{
+
+                    //}
+                    var file = ((Project)temp).FullName;
+
+                    if (!string.IsNullOrEmpty(file))
+                    {
+                        project.Add(new FileInfo(file).Directory?.FullName);
+                    }
+                }
+                catch (NotImplementedException)
+                {
+                    noLoadProjectCount++;
+                }
+            }
+            return noLoadProjectCount;
         }
 
         private void ConformWindow(string file, List<string> project)
@@ -177,7 +161,9 @@ namespace EncodingNormalizerVsx
 
             var folder = "";
             if (!string.IsNullOrEmpty(file))
+            {
                 folder = new FileInfo(file).Directory?.FullName;
+            }
             var window = new Window();
             var conformPage = new ConformPage();
             window.Content = conformPage;
@@ -232,17 +218,6 @@ namespace EncodingNormalizerVsx
             window.Show();
 
             _definitionWindow = window;
-            //string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            //string title = "EncodingNormalizer";
-
-            //// Show a message box to prove we were here
-            //VsShellUtilities.ShowMessageBox(
-            //    this.ServiceProvider,
-            //    message,
-            //    title,
-            //    OLEMSGICON.OLEMSGICON_INFO,
-            //    OLEMSGBUTTON.OLEMSGBUTTON_OK,
-            //    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
         }
     }
 }

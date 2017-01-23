@@ -47,11 +47,6 @@ namespace EncodingNormalior.Model
             // uft8无签名
             if (encoding.Equals(Encoding.ASCII)) //GBK utf8
             {
-                //if (IsGBK(stream))
-                //{
-                //    encoding = Encoding.GetEncoding("GBK");
-                //}
-
                 //如果都是ASCII，那么无法知道编码
                 //如果属于 Utf8的byte数大于 GBK byte数，那么编码是 utf8，否则是GBK
                 //如果两个数相同，那么不知道是哪个
@@ -139,7 +134,7 @@ namespace EncodingNormalior.Model
             var length = CountBuffer.Length;
 
 
-            var buffer = CountBuffer; // new byte[length];
+            var buffer = CountBuffer; 
             const char head = (char) 0x80;
             //while ((n = stream.Read(buffer, 0, n)) > 0)
             {
