@@ -19,7 +19,6 @@ namespace EncodingNormalizerVsx.View
         {
             ViewModel = new DefinitionModel();
             InitializeComponent();
-            //ViewModel = (DefinitionModel) DataContext;
         }
 
         public DefinitionModel ViewModel { set; get; }

@@ -72,20 +72,6 @@ namespace EncodingNormalior.Model
                     TextFileSuffix.Add(temp);
                 }
             }
-            //if (File.Exists(file))
-            //{
-            //    using (StreamReader stream = new StreamReader(new FileStream(file, FileMode.Open)))
-            //    {
-            //        textFileSuffix = stream.ReadToEnd().Split('\n');
-            //    }
-            //    foreach (var temp in textFileSuffix.Select(temp => temp.Replace("\r", "").Trim()))
-            //    {
-            //        if (!string.IsNullOrEmpty(temp))
-            //        {
-            //            TextFileSuffix.Add(temp);
-            //        }
-            //    }
-            //}
         }
 
         public IncludeFileSetting(List<string> includeWildcardFile)

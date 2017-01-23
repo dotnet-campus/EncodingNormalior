@@ -40,7 +40,6 @@ namespace EncodingNormalizerVsx.ViewModel
             {
                 handler?.Invoke(this, new PropertyChangedEventArgs(name));
             }
-            //handler?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

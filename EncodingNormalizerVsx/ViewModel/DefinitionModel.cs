@@ -14,13 +14,13 @@ namespace EncodingNormalizerVsx.ViewModel
         /// <summary>
         ///     保存用户设置文件夹
         /// </summary>
-        private static readonly string _folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) +
+        private static readonly string Folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) +
                                                  "\\EncodingNormalizer\\";
 
         /// <summary>
         ///     保存用户设置文件
         /// </summary>
-        private static readonly string _file = _folder + "Account.json";
+        private static readonly string File = Folder + "Account.json";
 
         private Account _account;
 
@@ -30,7 +30,9 @@ namespace EncodingNormalizerVsx.ViewModel
         {
             //一定会读
             if (Account == null)
+            {
                 ReadAccount();
+            }
 
             OptionCriterionEncoding = new List<string>();
             foreach (var temp in Enum.GetNames(typeof(CriterionEncoding)))
@@ -83,7 +85,6 @@ namespace EncodingNormalizerVsx.ViewModel
         public bool WriteAccount()
         {
             CriterionEncoding criterionEncoding;
-            /*Account.CriterionEncoding =*/
             if (Enum.TryParse(CriterionEncoding, out criterionEncoding))
                 Account.CriterionEncoding = criterionEncoding;
             //Account.FileInclude
