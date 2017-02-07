@@ -200,7 +200,6 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
         /// </summary>
         private static string PintnoConformEncodingFile(EncodingScrutatorFolder encodingScrutatorFolder, string white = "", StringBuilder str = null)
         {
-
             if (str == null)
             {
                 str = new StringBuilder();
@@ -211,17 +210,17 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             }
             foreach (var temp in encodingScrutatorFolder.File)
             {
-                str.Append(white);
-                str.Append(temp.File.Name + " ");
+                //str.Append(white);
+                str.Append($"文件名： {white}{temp.File.Name}\r\n");
                 if (temp.Ignore)
                 {
-                    str.Append("文件忽略");
-
-
+                    str.Append("文件忽略\r\n");
                 }
                 else
                 {
-                    str.Append("编码 " + temp.Encoding.EncodingName + " 置信度 " + temp.ConfidenceCount + " ");
+                    str.Append($"编码　:{temp.Encoding.EncodingName.PadRight(10)} {(temp.Encoding.Equals(Encoding.ASCII) ? "" : $"置信度:{temp.ConfidenceCount}")} \r\n");
+                    //str.Append("编码　:" + temp.Encoding.EncodingName + " 置信度 " + temp.ConfidenceCount + " ");
+                    str.Append("状态:");
                     if (encodingScrutatorFolder.SitpulationEncodingSetting.ConformtotheDefaultEncoding(temp.Encoding))
                     {
                         str.Append("文件符合规范");
@@ -231,6 +230,8 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                     {
                         str.Append("文件不符合规范");
                     }
+                    str.Append("\r\n");
+
                     //str.Append(
                     //    encodingScrutatorFolder.SitpulationEncodingSetting.ConformtotheDefaultEncoding(temp.Encoding)
                     //        ? "文件符合规范"
@@ -244,58 +245,58 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
 
         private static List<EncodingScrutatorFile> _illicitFile = new List<EncodingScrutatorFile>();
 
-        private static string Print(EncodingScrutatorFolder encodingScrutatorFolder, string white = "", StringBuilder str = null)
-        {
-            //Console.WriteLine("包含文件");
-            //foreach (var temp in encodingScrutatorFolder.IncludeFileSetting.IncludeWildcardFile)
-            //{
-            //    Console.WriteLine(temp);
-            //}
+        //private static string Print(EncodingScrutatorFolder encodingScrutatorFolder, string white = "", StringBuilder str = null)
+        //{
+        //    //Console.WriteLine("包含文件");
+        //    //foreach (var temp in encodingScrutatorFolder.IncludeFileSetting.IncludeWildcardFile)
+        //    //{
+        //    //    Console.WriteLine(temp);
+        //    //}
 
-            //Console.WriteLine("不包含文件");
-            //foreach (var temp in encodingScrutatorFolder.InspectFileWhiteListSetting.FileWhiteList)
-            //{
-            //    Console.WriteLine(temp);
-            //}
+        //    //Console.WriteLine("不包含文件");
+        //    //foreach (var temp in encodingScrutatorFolder.InspectFileWhiteListSetting.FileWhiteList)
+        //    //{
+        //    //    Console.WriteLine(temp);
+        //    //}
 
-            //foreach (var temp in encodingScrutatorFolder.InspectFileWhiteListSetting.FolderWhiteList)
-            //{
-            //    Console.WriteLine(temp);
-            //}
+        //    //foreach (var temp in encodingScrutatorFolder.InspectFileWhiteListSetting.FolderWhiteList)
+        //    //{
+        //    //    Console.WriteLine(temp);
+        //    //}
 
-            if (str == null)
-            {
-                str = new StringBuilder();
-            }
-            foreach (var temp in encodingScrutatorFolder.Folder)
-            {
-                Print(temp, white + temp.Name + "/", str);
-            }
-            //StringBuilder str=new StringBuilder();
+        //    if (str == null)
+        //    {
+        //        str = new StringBuilder();
+        //    }
+        //    foreach (var temp in encodingScrutatorFolder.Folder)
+        //    {
+        //        Print(temp, white + temp.Name + "/", str);
+        //    }
+        //    //StringBuilder str=new StringBuilder();
 
-            foreach (var temp in encodingScrutatorFolder.File)
-            {
-                str.Append(white);
-                str.Append(temp.File.Name + " ");
-                if (temp.Ignore)
-                {
-                    str.Append("文件忽略");
-                }
-                else
-                {
-                    str.Append("编码 " + temp.Encoding.EncodingName + " 置信度 " + temp.ConfidenceCount);
-                }
-                str.Append("\r\n");
-            }
+        //    foreach (var temp in encodingScrutatorFolder.File)
+        //    {
+        //        str.Append(white);
+        //        str.Append(temp.File.Name + " ");
+        //        if (temp.Ignore)
+        //        {
+        //            str.Append("文件忽略");
+        //        }
+        //        else
+        //        {
+        //            str.Append("编码 " + temp.Encoding.EncodingName + " 置信度 " + temp.ConfidenceCount);
+        //        }
+        //        str.Append("\r\n");
+        //    }
 
-            //using (StreamWriter stream=new StreamWriter(
-            //    new FileStream("E:\\1.txt",FileMode.Create)))
-            //{
-            //    stream.Write(str.ToString());
-            //}
+        //    //using (StreamWriter stream=new StreamWriter(
+        //    //    new FileStream("E:\\1.txt",FileMode.Create)))
+        //    //{
+        //    //    stream.Write(str.ToString());
+        //    //}
 
-            //Console.WriteLine(str.ToString());
-            return str.ToString();
-        }
+        //    //Console.WriteLine(str.ToString());
+        //    return str.ToString();
+        //}
     }
 }
