@@ -78,13 +78,15 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
 
         //有不符合Main返回不是0
 
+        public const string NoFolderArgException = "不存在文件夹参数";
+
         private static void ParseCommand(CommandLineArgumentParser arguments)
         {
             ConformCommand(arguments);
             var folder = arguments.Get(FolderCommand).Next;
             if (string.IsNullOrEmpty(folder))
             {
-                throw new ArgumentCommadnException("不存在文件夹参数");
+                throw new ArgumentCommadnException(NoFolderArgException);
             }
             if (!Directory.Exists(folder))
             {
