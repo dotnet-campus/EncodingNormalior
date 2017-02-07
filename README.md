@@ -24,7 +24,7 @@
 
 ### 命令行使用
 
-命令行使用参见：[编码工具——命令行](.\EncodingNormalior\README.md)
+命令行使用参见：[编码工具——命令行](./EncodingNormalior/README.md)
 
 ### 插件使用
 
