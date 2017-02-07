@@ -20,13 +20,19 @@
 
 我还把他放在 vs 扩展库，可以到 https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a 下载。
 
-工具的使用：
+## 工具的使用
 
-打开 visual Sutido 在安装完 编码规范工具 ，可以看到菜单多了 选项 EncodingNormalizer
+### 命令行使用
+
+命令行使用参见：[编码工具——命令行](.\EncodingNormalior\README.md)
+
+### 插件使用
+
+打开 visual Sutido 在安装完 [编码规范工具](https://marketplace.visualstudio.com/items?itemName=lindexigd.vs-extension-18109) ，可以看到菜单多了 选项 EncodingNormalizer
 
 ![这里写图片描述](http://img.blog.csdn.net/20170117115031647?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
-### 设置
+#### 设置
 
 点击菜单 EncodingNormailzer ，选择 Setting 。可以看到下面界面
 
@@ -42,7 +48,7 @@
 
 设置保存在 我的文档\ EncodingNormalizer \ Account.json
 
-### 检查编码
+#### 检查编码
 
 然后在打开完工程，注意要加载完成才使用。
 
@@ -51,6 +57,8 @@
 ![这里写图片描述](http://img.blog.csdn.net/20170117120101255?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 ![这里写图片描述](http://img.blog.csdn.net/20170117142656020?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+
 
 ## 和我组队做工具
 
