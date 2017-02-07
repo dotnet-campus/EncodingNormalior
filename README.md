@@ -1,6 +1,6 @@
 # 编码检测和修改工具
 
-在开发中经常遇到编码不一致的文件，导致在乱码。所以需要一个工具可以自动检测工程、文件夹内所有文本的编码，并可以规范所有文件编码。
+在开发中经常遇到编码不一致的文件，而如果这些文件包含需要显示的字符串，就会导致在乱码。所以需要一个工具可以自动检测工程、文件夹内所有文本的编码，并可以规范所有文件编码。
 
 工具要求可以设置规定的编码，如果文件的编码不是规定的编码，用户可以选择把文件的编码转换为规定的编码。
 
@@ -12,13 +12,9 @@
 
 <!--more-->
 
-这个工具相信是比较需要的，所以我就做了这个工具。做这个工具最难在于判断文件编码，和如何做vs扩展。如果大家也想做一个差不多的东西，可以参见博客使用的技术：[判断文件编码](http://lindexi.oschina.io/lindexi/post/C-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81/) [扩展开发](http://lindexi.oschina.io/lindexi/post/VisualStudio 扩展开发/)
 
-我把工具放在 github ：https://github.com/lindexi/EncodingNormalior
 
-好像我的项目名称 编码规范工具 是 EncodingNormalizer ，写错了，但是不想改。
-
-我还把他放在 vs 扩展库，可以到 https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a 下载。
+首先是告诉大家如何使用工具。
 
 ## 工具的使用
 
@@ -28,9 +24,15 @@
 
 ### 插件使用
 
-打开 visual Sutido 在安装完 [编码规范工具](https://marketplace.visualstudio.com/items?itemName=lindexigd.vs-extension-18109) ，可以看到菜单多了 选项 EncodingNormalizer
+首先是下载插件，插件可以到 [https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a](https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a) 下载，也可以在 [VS 插件网](https://marketplace.visualstudio.com/vs)搜索 `Encoding` 就可以找到我的工具啦。可以说我翻遍了整个插件网，都没有找到我这个功能的插件，但是还是找到了一些有用的插件。
+
+![](http://7xqpl8.com1.z0.glb.clouddn.com/8f464be7-2358-45f4-b6cd-eae32c47a878201727162028.jpg)
+
+打开 visual Sutido ，在安装完 [编码规范工具](https://marketplace.visualstudio.com/items?itemName=lindexigd.vs-extension-18109) ，可以看到菜单多了 选项 EncodingNormalizer
 
 ![这里写图片描述](http://img.blog.csdn.net/20170117115031647?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+然后来说下我做的功能。
 
 #### 设置
 
@@ -61,6 +63,14 @@
 
 
 ## 和我组队做工具
+
+这个工具相信是大家比较需要的，所以我就做了这个工具。做这个工具最难的地方在于判断文件编码，和如何做vs扩展两个。如果大家也想做一个差不多的东西，可以参见开发过程中使用的技术：[判断文件编码](http://lindexi.oschina.io/lindexi/post/C-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81/)， [扩展开发](http://lindexi.oschina.io/lindexi/post/VisualStudio 扩展开发/)
+
+我把工具放在 github ：https://github.com/lindexi/EncodingNormalior
+
+好像我的项目名称 编码规范工具 是 EncodingNormalizer ，写错了，但是不想改。
+
+我还把他放在 vs 扩展库，可以到 [https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a](https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a) 下载。
 
 来说下如何使用我的项目：
 
