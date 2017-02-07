@@ -9,7 +9,7 @@ namespace EncodingNormalizer.UnitTest
         [TestMethod]
         public void NoFolderArgTest()
         {
-            //没有存在文件夹
+            //没有存在文件夹arg
             string[] arg = new[]
             {
                 "-f",
@@ -24,6 +24,27 @@ namespace EncodingNormalizer.UnitTest
             {
                 Assert.AreEqual(e.GetType(), typeof(ArgumentException));
                 Assert.AreEqual(e.Message, EncodingNormalior.Program.NoFolderArgException);
+            }
+        }
+
+        [TestMethod]
+        public void NotFoundFolderArgTest()
+        {
+            //没有存在文件夹
+            string[] arg = new[]
+            {
+                "-f",
+                "E:\\不存在"
+            };
+
+            try
+            {
+                EncodingNormalior.Program.Main(arg);
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(e.GetType(), typeof(ArgumentException));
+                Assert.AreEqual(e.Message.Contains("不存在文件夹"), true);
             }
         }
     }
