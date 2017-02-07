@@ -135,12 +135,16 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             if (_illicitFile.Count > 0)
             {
                 StringBuilder str = new StringBuilder();
-                str.Append("存在以下文件不符合规范\r\n");
+                str.Append($"存在不符合规范文件：  {_illicitFile.Count}\r\n");
                 foreach (var temp in _illicitFile)
                 {
                     str.Append(temp.File.FullName + "\r\n");
                 }
                 throw new Exception(str.ToString());
+            }
+            else
+            {
+                Console.WriteLine("恭喜你，没有存在不规范文件\r\n");
             }
         }
 

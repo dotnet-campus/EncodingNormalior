@@ -1,6 +1,7 @@
 ﻿.git\
 obj\
 bin\
+packages\
 *.png
 *.jpg
 *.tmp
@@ -11,3 +12,4 @@ bin\
 *.zip
 *.rar
 *.7z
+*.cer
