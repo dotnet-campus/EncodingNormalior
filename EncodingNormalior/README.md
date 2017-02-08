@@ -81,4 +81,11 @@
 
 默认[白名单](./Resource/WhiteList.txt):https://github.com/iip-easi/EncodingNormalior/blob/master/EncodingNormalior/Resource/WhiteList.txt。
 
-### 
+### 包含文件的配置文件格式
+
+包含文件的配置以行做分割。
+
+一行包括一个包含的文件。
+
+文件支持通配符，通配符和 MS （Microsoft） 通配符格式相同。
+

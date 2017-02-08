@@ -41,6 +41,26 @@ namespace EncodingNormalior.Model
         {
             //TextFileSuffix
             //读配置
+
+             ReadFileSuffix();
+
+            //获取用户自定义的包括文件，默认在应用同目录是全局配置
+
+            string  file = EncodingScrutatorFileStorage.InlcudeFile;
+            if (File.Exists(file))
+            {
+                foreach (var temp in ReadIncludeFile(file))
+                {
+                    TextFileSuffix.Add(temp);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 常用文件配置
+        /// </summary>
+        private static void ReadFileSuffix()
+        {
             string file = "textFileSuffix.txt";
             string[] textFileSuffix;
             if (!File.Exists(file))
@@ -61,16 +81,6 @@ namespace EncodingNormalior.Model
                 if (!string.IsNullOrEmpty(temp))
                 {
                     TextFileSuffix.Add("*." + temp);
-                }
-            }
-
-
-            file = EncodingScrutatorFileStorage.InlcudeFile;
-            if (File.Exists(file))
-            {
-                foreach (var temp in ReadIncludeFile(file))
-                {
-                    TextFileSuffix.Add(temp);
                 }
             }
         }
