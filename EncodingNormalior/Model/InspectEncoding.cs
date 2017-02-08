@@ -17,7 +17,8 @@ namespace EncodingNormalior.Model
         public static async Task InspectFolderEncodingAsync(EncodingScrutatorFolder encodingScrutatorFolder, IProgress<EncodingScrutatorFile> progress)
         {
             encodingScrutatorFolder.Progress = progress;
-            await new Task(encodingScrutatorFolder.InspectFolderEncoding);
+            //await new Task(encodingScrutatorFolder.InspectFolderEncoding);
+            await Task.Run(() => encodingScrutatorFolder.InspectFolderEncoding());
         }
     }
 }
