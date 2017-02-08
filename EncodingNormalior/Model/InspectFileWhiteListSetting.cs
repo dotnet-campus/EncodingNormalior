@@ -56,7 +56,7 @@ namespace EncodingNormalior.Model
 
         public InspectFileWhiteListSetting([NotNull] List<string> whiteList)
         {
-            foreach (var temp in whiteList)
+            foreach (var temp in whiteList.Where(temp=>!string.IsNullOrEmpty(temp)))
             {
                 Parse(temp);
             }
@@ -119,10 +119,10 @@ namespace EncodingNormalior.Model
 
         public void Remove(string whiteList)
         {
-            var folderWhiteList = ((List<string>) FolderWhiteList);
+            var folderWhiteList = ((List<string>)FolderWhiteList);
 
             Remove(whiteList, folderWhiteList);
-            folderWhiteList = (List<string>) FileWhiteList;
+            folderWhiteList = (List<string>)FileWhiteList;
             Remove(whiteList, folderWhiteList);
         }
 
@@ -151,7 +151,7 @@ namespace EncodingNormalior.Model
 
             if (_folderRegex.IsMatch(whiteList))
             {
-                ((List<string>) FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
+                ((List<string>)FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
             }
             else
             {
@@ -159,8 +159,8 @@ namespace EncodingNormalior.Model
                 {
                     throw new ArgumentException("不支持指定文件夹中的文件\r\n" + whiteList + " 错误");
                 }
-                ((List<string>) FileWhiteList).Add(whiteList);
-                ((List<Regex>) FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList),
+                ((List<string>)FileWhiteList).Add(whiteList);
+                ((List<Regex>)FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList),
                     RegexOptions.IgnoreCase));
             }
         }
@@ -197,7 +197,7 @@ namespace EncodingNormalior.Model
         {
             Regex replace = new Regex("[.$^{\\[(|)*+?\\\\]");
             return replace.Replace(wildcardStr,
-                delegate(Match m)
+                delegate (Match m)
                 {
                     switch (m.Value)
                     {
@@ -208,7 +208,7 @@ namespace EncodingNormalior.Model
                         default:
                             return "\\" + m.Value;
                     }
-                });
+                }) + "$";
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using EncodingNormalior.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -40,6 +41,7 @@ namespace EncodingNormalizer.UnitTest
             TestRegexFile(file, str, true);
 
             str = "1.png1";
+            Assert.AreEqual((new Regex(".*\\.png$")).IsMatch(str), false);
             TestRegexFile(file, str, false);
 
 
@@ -48,7 +50,7 @@ obj
 bin
 packages";
 
-            foreach (var temp in str.Split('\n'))
+            foreach (var temp in str.Split('\n').Select(temp => temp.Replace("\r", "")))
             {
                 Assert.AreEqual(folder.Any(t => t == temp), true);
             }
@@ -56,7 +58,7 @@ packages";
 
         private static void TestRegexFile(IReadOnlyList<System.Text.RegularExpressions.Regex> file, string str, bool acequal)
         {
-            foreach (var temp in str.Split('\n'))
+            foreach (var temp in str.Split('\n').Select(temp => temp.Replace("\r", "")))
             {
                 Assert.AreEqual(file.Any(regex => regex.IsMatch(temp)), acequal);
             }
