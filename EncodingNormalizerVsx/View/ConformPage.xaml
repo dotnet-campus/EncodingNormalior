@@ -27,7 +27,7 @@
             <local:ConvertFractionStr x:Key="ConvertStr"></local:ConvertFractionStr>-->
 
 
-          
+
             <HierarchicalDataTemplate x:Key="HierarchicalDataTemplate" DataType="model:EncodingScrutatorFolderFile"
                                       ItemsSource="{Binding Folder}">
                 <Grid>
@@ -54,10 +54,10 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition ></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Margin="10,10,10,10" Text="编码规范工具"
+                <TextBlock x:Name="EncodingTextBlock" Margin="10,10,10,10" Text="编码规范工具"
                        FontSize="{StaticResource EncodingNormalizer.Theme.Font}"
                        Foreground="{StaticResource EncodingNormalizer.Theme.Foreground}"></TextBlock>
-                <TextBlock Grid.Row="1" Margin="10,10,10,10"
+                <TextBlock x:Name="Ctext" Grid.Row="1" Margin="10,10,10,10"
                        Text="{Binding Path=Circular,Mode=OneWay}"
                        TextWrapping="Wrap"></TextBlock>
 
@@ -73,13 +73,23 @@
                                         <CircleEase EasingMode="EaseOut"/>
                                     </EasingDoubleKeyFrame.EasingFunction>
                                 </EasingDoubleKeyFrame>
-                                <EasingDoubleKeyFrame KeyTime="0:0:3.6" Value="-640">
+                                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="-640">
                                     <EasingDoubleKeyFrame.EasingFunction>
                                         <CircleEase EasingMode="EaseOut"/>
                                     </EasingDoubleKeyFrame.EasingFunction>
                                 </EasingDoubleKeyFrame>
-                                <EasingDoubleKeyFrame KeyTime="0:0:4.0" Value="-1080"/>
+                                <!--<EasingDoubleKeyFrame KeyTime="0:0:4.0" Value="-1080"/>-->
                             </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimation Storyboard.TargetName="EncodingTextBlock"
+                                             Storyboard.TargetProperty="Opacity"
+                                             By="1" To="0" From="1" BeginTime="0:0:0" Duration="0:0:1.8">
+                                
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetName="Ctext"
+                                             Storyboard.TargetProperty="Opacity"
+                                             By="1" To="0" From="1" BeginTime="0:0:0" Duration="0:0:1.8">
+
+                            </DoubleAnimation>
                         </Storyboard>
                     </Grid.Resources>
 
