@@ -64,6 +64,7 @@
     <Compile Include="Model\EncodingScrutatorFileStorage.cs" />
     <Compile Include="Model\EncodingScrutatorFolder.cs" />
     <Compile Include="Model\IncludeFileSetting.cs" />
+    <Compile Include="Model\InspectEncoding.cs" />
     <Compile Include="Model\InspectFileWhiteListSetting.cs" />
     <Compile Include="Model\ISetting.cs" />
     <Compile Include="Model\SitpulationEncodingSetting.cs" />

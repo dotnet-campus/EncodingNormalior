@@ -78,7 +78,7 @@ namespace EncodingNormalior.Model
         /// <summary>
         ///     获取文件夹所有文件的编码
         /// </summary>
-        public void InspectFolderEncoding()
+        public Action InspectFolderEncoding()
         {
             //递归获取所有的文件夹
             if (!FaceFolder.Exists)
@@ -88,7 +88,7 @@ namespace EncodingNormalior.Model
 
             //读取白名单
             //包含文件
-            ReadAccount();
+            //ReadAccount();
 
             GetaIncludeRegexFile();
 
@@ -100,25 +100,24 @@ namespace EncodingNormalior.Model
             //((IProgress<string>)progress).Report("");
         }
 
-        private void ReadAccount()
-        {
-            //todo做这个
-            ReadIncludeFile();
-            ReadWhiteList();
-        }
+        //private void ReadAccount()
+        //{
+        //    ReadIncludeFile();
+        //    ReadWhiteList();
+        //}
 
-        private void ReadWhiteList()
-        {
-            //获取
-            //添加到
-            //删除
-        }
+        //private void ReadWhiteList()
+        //{
+        //    //获取
+        //    //添加到
+        //    //删除
+        //}
 
-        private void ReadIncludeFile()
-        {
-            //后缀在白名单，删除
+        //private void ReadIncludeFile()
+        //{
+        //    //后缀在白名单，删除
 
-        }
+        //}
 
         public IProgress<EncodingScrutatorFile> Progress { set; get; }
 
