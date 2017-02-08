@@ -18,6 +18,14 @@ namespace EncodingNormalizerVsx.Model
             ExceptChanged?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// 需要处理总数
+        /// </summary>
+        public double Amount { set; get; }
+        /// <summary>
+        /// 当前数
+        /// </summary>
+        public double ProgressCount { set; get; }
 
         public void ReportWriteSitpulationFile(EncodingScrutatorFile encodingScrutatorFile)
         {

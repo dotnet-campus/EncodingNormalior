@@ -68,6 +68,23 @@ namespace EncodingNormalizerVsx.ViewModel
         private Account Account { set; get; }
         private Encoding SitpulationEncoding { set; get; }
 
+        private double _progress;
+        /// <summary>
+        /// 进度
+        /// </summary>
+        public double Progress
+        {
+            set
+            {
+                _progress = value;
+                OnPropertyChanged();
+            }
+            get
+            {
+                return _progress;
+            }
+        }
+
         /// <summary>
         ///     检查多个文件夹文件编码
         /// </summary>
@@ -157,11 +174,11 @@ namespace EncodingNormalizerVsx.ViewModel
             if (_includeFile == null)
             {
                 _includeFile =
-                   new IncludeFileSetting(
-                       Account.FileInclude.Split('\n')
-                           .Select(temp => temp.Replace("\r", ""))
-                           .Where(temp => !string.IsNullOrEmpty(temp))
-                           .ToList());
+                    new IncludeFileSetting(
+                        Account.FileInclude.Split('\n')
+                            .Select(temp => temp.Replace("\r", ""))
+                            .Where(temp => !string.IsNullOrEmpty(temp))
+                            .ToList());
             }
         }
 
@@ -341,7 +358,7 @@ namespace EncodingNormalizerVsx.ViewModel
         }
 
         /// <summary>
-        /// 显示写入失败的文件或文件夹
+        ///     显示写入失败的文件或文件夹
         /// </summary>
         /// <param name="encodingScrutatorFolder"></param>
         private void FailWriteSitpulation(List<IEncodingScrutatorFile> encodingScrutatorFolder)
