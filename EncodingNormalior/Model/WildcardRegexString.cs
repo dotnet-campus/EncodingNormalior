@@ -28,7 +28,6 @@ namespace EncodingNormalior.Model
                        }) + "$";
         }
 
-        private static Regex _regex = new Regex("[.$^{\\[(|)*+?\\\\]", RegexOptions.Compiled);
 
         /// <summary>
         /// 获取通配符的正则
@@ -38,11 +37,16 @@ namespace EncodingNormalior.Model
         /// <returns></returns>
         public static Regex GetWildcardRegex(string wildcarStr, bool ignoreCase)
         {
-            if (ignoreCase)
-            {
-                return new Regex(GetWildcardRegexString(wildcarStr));
-            }
-            return new Regex(GetWildcardRegexString(wildcarStr), RegexOptions.IgnoreCase);
+            //if (ignoreCase)
+            //{
+            //    return new Regex(GetWildcardRegexString(wildcarStr));
+            //}
+            //return new Regex(GetWildcardRegexString(wildcarStr), RegexOptions.IgnoreCase);
+
+            return new Regex(GetWildcardRegexString(wildcarStr), ignoreCase? RegexOptions.IgnoreCase:RegexOptions.None);
         }
+
+
+        private static Regex _regex = new Regex("[.$^{\\[(|)*+?\\\\]", RegexOptions.Compiled);
     }
 }
