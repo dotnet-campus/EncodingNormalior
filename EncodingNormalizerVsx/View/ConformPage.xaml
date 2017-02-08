@@ -236,7 +236,7 @@
                         </Canvas>
                     </Viewbox>
 
-                    <TextBlock Text="正在扫描……"
+                    <TextBlock Text="{Binding Path=ProgressStr}"
                           Foreground="{StaticResource EncodingNormalizer.Theme.Stroke}"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"
