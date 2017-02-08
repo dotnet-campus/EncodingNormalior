@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using EncodingNormalior.Annotations;
+using EncodingNormalior.Resource;
 
 namespace EncodingNormalior.Model
 {
@@ -41,27 +42,6 @@ namespace EncodingNormalior.Model
     /// </summary>
     public class InspectFileWhiteListSetting : ISetting
     {
-        /// <summary>
-        /// 获取文件配置白名单
-        /// </summary>
-        /// <param name="file">文件</param>
-        /// <returns>白名单</returns>
-        public static InspectFileWhiteListSetting ReadWhiteListSetting(string file)
-        {
-            if (!File.Exists(file))
-            {
-                throw new ArgumentException("文件不存在" + file);
-            }
-            var whiteList = new List<string>();
-            using (StreamReader stream = new StreamReader(
-                   new FileStream(file, FileMode.Open)))
-            {
-                whiteList.AddRange(stream.ReadToEnd().Split('\n').Select(temp => temp.Replace("\r", "").Trim()));
-            }
-
-            InspectFileWhiteListSetting inspectFileWhiteListSetting = new InspectFileWhiteListSetting(whiteList);
-            return inspectFileWhiteListSetting;
-        }
         static InspectFileWhiteListSetting()
         {
             DefaultWhiteList = new List<string>();
@@ -74,7 +54,45 @@ namespace EncodingNormalior.Model
             }
         }
 
-        public static IEnumerable<string> ReadWhiteList(string file)
+        public InspectFileWhiteListSetting([NotNull] List<string> whiteList)
+        {
+            foreach (var temp in whiteList)
+            {
+                Parse(temp);
+            }
+        }
+
+        private static Regex _folderRegex = new Regex("\\w+[\\\\|/]");
+
+        public static List<string> DefaultWhiteList { set; get; }
+
+        public IReadOnlyList<string> FileWhiteList { get; } = new List<string>();
+        public IReadOnlyList<string> FolderWhiteList { get; } = new List<string>();
+        public IReadOnlyList<Regex> FileRegexWhiteList { get; } = new List<Regex>();
+
+        /// <summary>
+        ///     获取文件配置白名单
+        /// </summary>
+        /// <param name="file">文件</param>
+        /// <returns>白名单</returns>
+        public static InspectFileWhiteListSetting ReadWhiteListSetting(string file)
+        {
+            if (!File.Exists(file))
+            {
+                throw new ArgumentException("文件不存在" + file);
+            }
+            var whiteList = new List<string>();
+            using (StreamReader stream = new StreamReader(
+                new FileStream(file, FileMode.Open)))
+            {
+                whiteList.AddRange(stream.ReadToEnd().Split('\n').Select(temp => temp.Replace("\r", "").Trim()));
+            }
+
+            InspectFileWhiteListSetting inspectFileWhiteListSetting = new InspectFileWhiteListSetting(whiteList);
+            return inspectFileWhiteListSetting;
+        }
+
+        private static IEnumerable<string> ReadWhiteList(string file)
         {
             string[] whiteList;
             if (File.Exists(file))
@@ -87,22 +105,12 @@ namespace EncodingNormalior.Model
             }
             else
             {
-                whiteList = Resource.TextFileSuffix.WhiteList.Split('\n');
+                whiteList = TextFileSuffix.WhiteList.Split('\n');
             }
 
             var fileSuffix = whiteList.Select(temp => temp.Replace("\r", "").Trim());
             return fileSuffix;
         }
-
-        public InspectFileWhiteListSetting([NotNull] List<string> whiteList)
-        {
-            foreach (var temp in whiteList)
-            {
-                Parse(temp);
-            }
-        }
-
-        public static List<string> DefaultWhiteList { set; get; }
 
         public void Add(string whiteList)
         {
@@ -111,10 +119,10 @@ namespace EncodingNormalior.Model
 
         public void Remove(string whiteList)
         {
-            var folderWhiteList = ((List<string>)FolderWhiteList);
+            var folderWhiteList = ((List<string>) FolderWhiteList);
 
             Remove(whiteList, folderWhiteList);
-            folderWhiteList = (List<string>)FileWhiteList;
+            folderWhiteList = (List<string>) FileWhiteList;
             Remove(whiteList, folderWhiteList);
         }
 
@@ -143,7 +151,7 @@ namespace EncodingNormalior.Model
 
             if (_folderRegex.IsMatch(whiteList))
             {
-                ((List<string>)FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
+                ((List<string>) FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
             }
             else
             {
@@ -151,13 +159,14 @@ namespace EncodingNormalior.Model
                 {
                     throw new ArgumentException("不支持指定文件夹中的文件\r\n" + whiteList + " 错误");
                 }
-                ((List<string>)FileWhiteList).Add(whiteList);
-                ((List<Regex>)FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList), RegexOptions.IgnoreCase));
+                ((List<string>) FileWhiteList).Add(whiteList);
+                ((List<Regex>) FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList),
+                    RegexOptions.IgnoreCase));
             }
         }
 
         /// <summary>
-        /// 判断白名单是否有效
+        ///     判断白名单是否有效
         /// </summary>
         /// <param name="whiteList"></param>
         public bool ConformWhiteList(string whiteList)
@@ -176,12 +185,6 @@ namespace EncodingNormalior.Model
             return true;
         }
 
-        private static Regex _folderRegex = new Regex("\\w+[\\\\|/]");
-
-        public IReadOnlyList<string> FileWhiteList { get; } = new List<string>();
-        public IReadOnlyList<string> FolderWhiteList { get; } = new List<string>();
-        public IReadOnlyList<Regex> FileRegexWhiteList { get; } = new List<Regex>();
-
         ///// <summary>
         /////     设置或获取白名单
         ///// </summary>
@@ -190,22 +193,22 @@ namespace EncodingNormalior.Model
         //忽略文件        文件
         //忽略后缀        *.后缀
 
-        static string GetWildcardRegexString(string wildcardStr)
+        private static string GetWildcardRegexString(string wildcardStr)
         {
             Regex replace = new Regex("[.$^{\\[(|)*+?\\\\]");
             return replace.Replace(wildcardStr,
-                 delegate (Match m)
-                 {
-                     switch (m.Value)
-                     {
-                         case "?":
-                             return ".?";
-                         case "*":
-                             return ".*";
-                         default:
-                             return "\\" + m.Value;
-                     }
-                 });
+                delegate(Match m)
+                {
+                    switch (m.Value)
+                    {
+                        case "?":
+                            return ".?";
+                        case "*":
+                            return ".*";
+                        default:
+                            return "\\" + m.Value;
+                    }
+                });
         }
     }
 }
