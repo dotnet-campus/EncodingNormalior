@@ -47,7 +47,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Grid Visibility="{Binding ProgressGridVisibility}">
+        <Grid x:Name="ProgressVisbilityGrid">
             <Grid Background="{StaticResource EncodingNormalizer.Theme.Background}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -247,7 +247,7 @@
 
 
         </Grid>
-        <Grid Background="{StaticResource EncodingNormalizer.Theme.Background}" Visibility="{Binding GridVisibility}">
+        <Grid x:Name="VisibilityGrid" Background="{StaticResource EncodingNormalizer.Theme.Background}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />

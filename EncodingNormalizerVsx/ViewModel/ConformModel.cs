@@ -76,8 +76,8 @@ namespace EncodingNormalizerVsx.ViewModel
         private Encoding SitpulationEncoding { set; get; }
 
         private string _progressStr="正在扫描……";
-        private Visibility _progressGridVisibility=Visibility.Visible;
-        private Visibility _gridVisibility=Visibility.Hidden;
+        //private Visibility _progressGridVisibility=Visibility.Visible;
+        //private Visibility _gridVisibility=Visibility.Hidden;
         public string ProgressStr
         {
             set
@@ -88,36 +88,36 @@ namespace EncodingNormalizerVsx.ViewModel
             get { return _progressStr; }
         }
 
-        public void ProgressGrid_OnCompleted()
-        {
-            ProgressGridVisibility = Visibility.Collapsed;
-            GridVisibility=Visibility.Visible;
-        }
+        //public void ProgressGrid_OnCompleted()
+        //{
+        //    ProgressGridVisibility = Visibility.Collapsed;
+        //    GridVisibility=Visibility.Visible;
+        //}
 
 
 
-        public Visibility ProgressGridVisibility
-        {
-            set
-            {
-                _progressGridVisibility = value;
-                OnPropertyChanged();
-            }
-            get
-            {
-                return _progressGridVisibility;
-            }
-        }
+        //public Visibility ProgressGridVisibility
+        //{
+        //    set
+        //    {
+        //        _progressGridVisibility = value;
+        //        OnPropertyChanged();
+        //    }
+        //    get
+        //    {
+        //        return _progressGridVisibility;
+        //    }
+        //}
 
-        public Visibility GridVisibility
-        {
-            set
-            {
-                _gridVisibility = value;
-                OnPropertyChanged();
-            }
-            get { return _gridVisibility; }
-        }
+        //public Visibility GridVisibility
+        //{
+        //    set
+        //    {
+        //        _gridVisibility = value;
+        //        OnPropertyChanged();
+        //    }
+        //    get { return _gridVisibility; }
+        //}
 
         //private double _progress;
         ///// <summary>
