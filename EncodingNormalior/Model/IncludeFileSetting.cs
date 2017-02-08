@@ -90,7 +90,7 @@ namespace EncodingNormalior.Model
                 includeFile.AddRange(
                     stream.ReadToEnd()
                         .Split('\n')
-                        .Select(temp => temp.Replace("\r", ""))
+                        .Select(temp => temp.Replace("\r", "").Trim())
                         .Where(temp => !string.IsNullOrEmpty(temp)));
             }
             return includeFile;
