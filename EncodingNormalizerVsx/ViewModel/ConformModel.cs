@@ -32,13 +32,16 @@ namespace EncodingNormalizerVsx.ViewModel
 
         private string _circular;
 
-        //private List<EncodingScrutatorFolder> _encodingScrutatorFolder;
         private EncodingScrutatorFolder _encodingScrutatorFolder;
 
         private IncludeFileSetting _includeFile;
+
+        private string _progressStr = "正在扫描……";
         private Visibility _visibility;
         private InspectFileWhiteListSetting _whiteList;
         public EventHandler Closing;
+
+        public EventHandler InspectCompleted;
 
         /// <summary>
         ///     显示用户可以使用控件
@@ -75,9 +78,6 @@ namespace EncodingNormalizerVsx.ViewModel
         private Account Account { set; get; }
         private Encoding SitpulationEncoding { set; get; }
 
-        private string _progressStr="正在扫描……";
-        //private Visibility _progressGridVisibility=Visibility.Visible;
-        //private Visibility _gridVisibility=Visibility.Hidden;
         public string ProgressStr
         {
             set
@@ -88,53 +88,6 @@ namespace EncodingNormalizerVsx.ViewModel
             get { return _progressStr; }
         }
 
-        //public void ProgressGrid_OnCompleted()
-        //{
-        //    ProgressGridVisibility = Visibility.Collapsed;
-        //    GridVisibility=Visibility.Visible;
-        //}
-
-
-
-        //public Visibility ProgressGridVisibility
-        //{
-        //    set
-        //    {
-        //        _progressGridVisibility = value;
-        //        OnPropertyChanged();
-        //    }
-        //    get
-        //    {
-        //        return _progressGridVisibility;
-        //    }
-        //}
-
-        //public Visibility GridVisibility
-        //{
-        //    set
-        //    {
-        //        _gridVisibility = value;
-        //        OnPropertyChanged();
-        //    }
-        //    get { return _gridVisibility; }
-        //}
-
-        //private double _progress;
-        ///// <summary>
-        ///// 进度
-        ///// </summary>
-        //public double Progress
-        //{
-        //    set
-        //    {
-        //        _progress = value;
-        //        OnPropertyChanged();
-        //    }
-        //    get
-        //    {
-        //        return _progress;
-        //    }
-        //}
 
         /// <summary>
         ///     检查多个文件夹文件编码
@@ -159,8 +112,6 @@ namespace EncodingNormalizerVsx.ViewModel
                 progress.Report(null);
             }).Start();
         }
-
-        public EventHandler InspectCompleted;
 
         /// <summary>
         ///     把所有的要检测的文件夹放到虚拟目录
@@ -206,7 +157,7 @@ namespace EncodingNormalizerVsx.ViewModel
         /// <param name="folder"></param>
         public void InspectFolderEncoding(string folder)
         {
-            InspectFolderEncoding(new List<string> { folder });
+            InspectFolderEncoding(new List<string> {folder});
         }
 
         private void ParseAccount()
@@ -289,7 +240,7 @@ namespace EncodingNormalizerVsx.ViewModel
             if (e == null)
             {
                 //完成检测
-                InspectCompleted?.Invoke(this,null);
+                InspectCompleted?.Invoke(this, null);
             }
             else
             {
@@ -406,7 +357,7 @@ namespace EncodingNormalizerVsx.ViewModel
                 var encodingScrutatorFolder = EncodingScrutatorFolder.ToList<IEncodingScrutatorFile>();
                 EncodingScrutatorFolder.Clear();
                 FailWriteSitpulation(encodingScrutatorFolder);
-                foreach (var temp in encodingScrutatorFolder) EncodingScrutatorFolder.Add((EncodingScrutatorFolderFile)temp);
+                foreach (var temp in encodingScrutatorFolder) EncodingScrutatorFolder.Add((EncodingScrutatorFolderFile) temp);
             }, null);
         }
 

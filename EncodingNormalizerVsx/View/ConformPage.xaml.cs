@@ -31,7 +31,6 @@ namespace EncodingNormalizerVsx.View
             {
                 ProgressGrid.BeginStoryboard(ProgressGrid.Resources["ProgressGridStory"] as Storyboard);
             });
-
         }
 
         /// <summary>
@@ -58,7 +57,6 @@ namespace EncodingNormalizerVsx.View
 
         private void ProgressGrid_OnCompleted(object sender, EventArgs e)
         {
-            //ViewModel.ProgressGrid_OnCompleted();
             ProgressVisbilityGrid.Visibility=Visibility.Collapsed;
             VisibilityGrid.Visibility=Visibility.Visible;
         }
