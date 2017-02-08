@@ -74,8 +74,6 @@
     <Compile Include="View\ConformPage.xaml.cs">
       <DependentUpon>ConformPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ConvertDashPercent.cs" />
-    <Compile Include="View\ConvertFractionStr.cs" />
     <Compile Include="View\DefinitionPage.xaml.cs">
       <DependentUpon>DefinitionPage.xaml</DependentUpon>
     </Compile>
