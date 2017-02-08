@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace EncodingNormalior.Model
 {
@@ -127,21 +126,21 @@ namespace EncodingNormalior.Model
 
         private static string GetWildcardRegexString(string wildcardStr)
         {
-            Regex replace = new Regex("[.$^{\\[(|)*+?\\\\]");
-            string regex = replace.Replace(wildcardStr,
-                delegate(Match m)
-                {
-                    switch (m.Value)
-                    {
-                        case "?":
-                            return ".?";
-                        case "*":
-                            return ".*";
-                        default:
-                            return "\\" + m.Value;
-                    }
-                });
-            return regex;
+            //Regex replace = new Regex("[.$^{\\[(|)*+?\\\\]");
+            //string regex = replace.Replace(wildcardStr,
+            //    delegate(Match m)
+            //    {
+            //        switch (m.Value)
+            //        {
+            //            case "?":
+            //                return ".?";
+            //            case "*":
+            //                return ".*";
+            //            default:
+            //                return "\\" + m.Value;
+            //        }
+            //    });
+            return WildcardRegexString.GetWildcardRegexString(wildcardStr);
         }
     }
 }

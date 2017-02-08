@@ -68,6 +68,7 @@
     <Compile Include="Model\InspectFileWhiteListSetting.cs" />
     <Compile Include="Model\ISetting.cs" />
     <Compile Include="Model\SitpulationEncodingSetting.cs" />
+    <Compile Include="Model\WildcardRegexString.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
