@@ -28,7 +28,7 @@ namespace EncodingNormalizer.UnitTest
             //全部匹配
             foreach (var temp in includeFileSetting.GetaIncludeRegexFile())
             {
-                includeRegex.Add(new Regex(temp));
+                includeRegex.Add(new Regex(temp,RegexOptions.IgnoreCase));
             }
 
             List<string> file = new List<string>()

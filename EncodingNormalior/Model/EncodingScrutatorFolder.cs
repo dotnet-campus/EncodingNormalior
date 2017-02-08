@@ -195,7 +195,7 @@ namespace EncodingNormalior.Model
                 _includeRegexFile = new List<Regex>();
                 foreach (var temp in IncludeFileSetting.GetaIncludeRegexFile())
                 {
-                    _includeRegexFile.Add(new Regex(temp));
+                    _includeRegexFile.Add(new Regex(temp,RegexOptions.IgnoreCase));
                 }
             }
         }
