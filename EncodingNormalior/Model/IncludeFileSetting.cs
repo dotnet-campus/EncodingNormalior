@@ -25,13 +25,14 @@ namespace EncodingNormalior.Model
             List<string> includeFile = new List<string>();
             using (StreamReader stream = new StreamReader(new FileStream(file, FileMode.Open)))
             {
-                foreach (var temp in stream.ReadToEnd().Split('\n'))
-                {
-                    if (!string.IsNullOrEmpty(temp))
-                    {
-                        includeFile.Add(temp);
-                    }
-                }
+                //foreach (var temp in stream.ReadToEnd().Split('\n').Select(temp => temp.Replace("\r", "")))
+                //{
+                //    if (!string.IsNullOrEmpty(temp))
+                //    {
+                //        includeFile.Add(temp);
+                //    }
+                //}
+                includeFile.AddRange(stream.ReadToEnd().Split('\n').Select(temp => temp.Replace("\r", "")).Where(temp => !string.IsNullOrEmpty(temp)));
             }
             return includeFile;
         }

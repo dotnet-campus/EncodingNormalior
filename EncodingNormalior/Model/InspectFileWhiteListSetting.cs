@@ -41,6 +41,11 @@ namespace EncodingNormalior.Model
     /// </summary>
     public class InspectFileWhiteListSetting : ISetting
     {
+        /// <summary>
+        /// 获取文件配置白名单
+        /// </summary>
+        /// <param name="file">文件</param>
+        /// <returns>白名单</returns>
         public static InspectFileWhiteListSetting ReadWhiteListSetting(string file)
         {
             if (!File.Exists(file))
@@ -135,7 +140,7 @@ namespace EncodingNormalior.Model
         private void Parse(string whiteList)
         {
             _folderRegex = new Regex("\\w+[\\\\|/]$");
-             
+
             if (_folderRegex.IsMatch(whiteList))
             {
                 ((List<string>)FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
@@ -144,7 +149,7 @@ namespace EncodingNormalior.Model
             {
                 if (whiteList.Contains("\\") || whiteList.Contains("/"))
                 {
-                    throw new ArgumentException("不支持指定文件夹中的文件\r\n"+whiteList+" 错误");
+                    throw new ArgumentException("不支持指定文件夹中的文件\r\n" + whiteList + " 错误");
                 }
                 ((List<string>)FileWhiteList).Add(whiteList);
                 ((List<Regex>)FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList), RegexOptions.IgnoreCase));
@@ -164,7 +169,7 @@ namespace EncodingNormalior.Model
                     Parse(temp);
                 }
             }
-            catch (ArgumentException )
+            catch (ArgumentException)
             {
                 return false;
             }
