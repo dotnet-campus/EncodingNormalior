@@ -44,6 +44,15 @@ namespace EncodingNormalizer.UnitTest
             {
                 Assert.AreEqual(includeRegex.Any(regex => regex.IsMatch(temp)),true);
             }
+
+            file=new List<string>()
+            {
+                "lindexi.txt1"
+            };
+            foreach (var temp in file)
+            {
+                Assert.AreEqual(includeRegex.Any(regex => regex.IsMatch(temp)), false);
+            }
         }
 
         private void WriteFile()
