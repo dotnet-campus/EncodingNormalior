@@ -21,6 +21,13 @@ namespace EncodingNormalizerVsx.ViewModel
         public ConformModel()
         {
             Visibility = Visibility.Collapsed;
+
+            InspectCompleted = (s, e) =>
+            {
+                //输出不规范文件
+                PrintConformEncoding();
+                ProgressStr = "扫描完成";
+            };
         }
 
         private string _circular;
@@ -68,22 +75,66 @@ namespace EncodingNormalizerVsx.ViewModel
         private Account Account { set; get; }
         private Encoding SitpulationEncoding { set; get; }
 
-        private double _progress;
-        /// <summary>
-        /// 进度
-        /// </summary>
-        public double Progress
+        private string _progressStr="正在扫描……";
+        private Visibility _progressGridVisibility=Visibility.Visible;
+        private Visibility _gridVisibility=Visibility.Hidden;
+        public string ProgressStr
         {
             set
             {
-                _progress = value;
+                _progressStr = value;
+                OnPropertyChanged();
+            }
+            get { return _progressStr; }
+        }
+
+        public void ProgressGrid_OnCompleted()
+        {
+            ProgressGridVisibility = Visibility.Collapsed;
+            GridVisibility=Visibility.Visible;
+        }
+
+
+
+        public Visibility ProgressGridVisibility
+        {
+            set
+            {
+                _progressGridVisibility = value;
                 OnPropertyChanged();
             }
             get
             {
-                return _progress;
+                return _progressGridVisibility;
             }
         }
+
+        public Visibility GridVisibility
+        {
+            set
+            {
+                _gridVisibility = value;
+                OnPropertyChanged();
+            }
+            get { return _gridVisibility; }
+        }
+
+        //private double _progress;
+        ///// <summary>
+        ///// 进度
+        ///// </summary>
+        //public double Progress
+        //{
+        //    set
+        //    {
+        //        _progress = value;
+        //        OnPropertyChanged();
+        //    }
+        //    get
+        //    {
+        //        return _progress;
+        //    }
+        //}
 
         /// <summary>
         ///     检查多个文件夹文件编码
@@ -108,6 +159,8 @@ namespace EncodingNormalizerVsx.ViewModel
                 progress.Report(null);
             }).Start();
         }
+
+        public EventHandler InspectCompleted;
 
         /// <summary>
         ///     把所有的要检测的文件夹放到虚拟目录
@@ -235,8 +288,8 @@ namespace EncodingNormalizerVsx.ViewModel
         {
             if (e == null)
             {
-                //完成检测，输出不规范文件
-                PrintConformEncoding();
+                //完成检测
+                InspectCompleted?.Invoke(this,null);
             }
             else
             {

@@ -164,7 +164,11 @@ namespace EncodingNormalizerVsx
             {
                 folder = new FileInfo(file).Directory?.FullName;
             }
-            var window = new Window();
+            var window = new Window()
+            {
+                Width = 500,
+                Height = 500
+            };
             var conformPage = new ConformPage();
             window.Content = conformPage;
             window.Title = "编码规范工具";

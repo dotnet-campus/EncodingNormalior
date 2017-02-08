@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using EncodingNormalizerVsx.ViewModel;
 
 namespace EncodingNormalizerVsx.View
@@ -19,6 +20,16 @@ namespace EncodingNormalizerVsx.View
             InitializeComponent();
             //ViewModel.Closing = Closing;
             ViewModel.Closing += (s, e) => Closing?.Invoke(s, e);
+            ViewModel.InspectCompleted += InspectCompleted;
+        }
+
+        private void InspectCompleted(object sender, EventArgs s)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ProgressGrid.BeginStoryboard(ProgressGrid.Resources["ProgressGridStory"] as Storyboard);
+            });
+
         }
 
         /// <summary>
@@ -41,6 +52,11 @@ namespace EncodingNormalizerVsx.View
         private void WriteCriterionButton_OnClick(object sender, RoutedEventArgs e)
         {
             ViewModel.WriteCriterionEncoding();
+        }
+
+        private void ProgressGrid_OnCompleted(object sender, EventArgs e)
+        {
+            ViewModel.ProgressGrid_OnCompleted();
         }
     }
 }
