@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using EncodingNormalior.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,8 +24,26 @@ namespace EncodingNormalizer.UnitTest
             }
 
             IncludeFileSetting includeFileSetting = new IncludeFileSetting(new FileInfo(Folder + File));
-            var includeRegex = includeFileSetting.GetaIncludeRegexFile();
+            var includeRegex = new List<Regex>();
+            //全部匹配
+            foreach (var temp in includeFileSetting.GetaIncludeRegexFile())
+            {
+                includeRegex.Add(new Regex(temp));
+            }
 
+            List<string> file = new List<string>()
+            {
+                "lindexi.txt",
+                "1.lindexitxt",
+                "lindexi.md",
+                "lindexi.dox",
+                "lindexi1.txt"
+            };
+
+            foreach (var temp in file)
+            {
+                Assert.AreEqual(includeRegex.Any(regex => regex.IsMatch(temp)),true);
+            }
         }
 
         private void WriteFile()
