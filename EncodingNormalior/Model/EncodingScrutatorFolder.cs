@@ -78,7 +78,7 @@ namespace EncodingNormalior.Model
         /// <summary>
         ///     获取文件夹所有文件的编码
         /// </summary>
-        public Action InspectFolderEncoding()
+        public void InspectFolderEncoding()
         {
             //递归获取所有的文件夹
             if (!FaceFolder.Exists)
