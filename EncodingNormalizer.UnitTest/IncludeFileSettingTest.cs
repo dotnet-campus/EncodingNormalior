@@ -42,10 +42,10 @@ namespace EncodingNormalizer.UnitTest
 
             foreach (var temp in file)
             {
-                Assert.AreEqual(includeRegex.Any(regex => regex.IsMatch(temp)),true);
+                Assert.AreEqual(includeRegex.Any(regex => regex.IsMatch(temp)), true);
             }
 
-            file=new List<string>()
+            file = new List<string>()
             {
                 "lindexi.txt1"
             };
@@ -53,6 +53,25 @@ namespace EncodingNormalizer.UnitTest
             {
                 Assert.AreEqual(includeRegex.Any(regex => regex.IsMatch(temp)), false);
             }
+
+            TestCase(includeRegex);
+        }
+
+        private static void TestCase(List<Regex> includeRegex)
+        {
+            List<string> file = new List<string>()
+            {
+                "lindexi.Txt"
+            };
+            foreach (var temp in file)
+            {
+                Assert.AreEqual(includeRegex.Any(regex => regex.IsMatch(temp)), true);
+            }
+        }
+
+        private void TestCase()
+        {
+            
         }
 
         private void WriteFile()
