@@ -11,12 +11,12 @@ namespace EncodingNormalior.Model
     /// </summary>
     public class IncludeFileSetting : ISetting
     {
-        public IncludeFileSetting()
-        {
+        //public IncludeFileSetting()
+        //{
 
-        }
+        //}
 
-        public static List<string> ReadIncludeFile(string file)
+        private static List<string> ReadIncludeFile(string file)
         {
             if (!File.Exists(file))
             {
@@ -83,6 +83,11 @@ namespace EncodingNormalior.Model
                     TextFileSuffix.Add("*." + temp);
                 }
             }
+        }
+
+        public IncludeFileSetting(FileInfo file)
+        {
+            IncludeWildcardFile = ReadIncludeFile(file.Name);
         }
 
         public IncludeFileSetting(List<string> includeWildcardFile)

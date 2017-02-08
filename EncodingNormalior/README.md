@@ -89,3 +89,16 @@
 
 文件支持通配符，通配符和 MS （Microsoft） 通配符格式相同。
 
+
+例：
+
+```csharp
+lindexi.txt
+*.lindexitxt
+lindexi.md
+lindexi.dox
+lindexi*.txt  
+```
+
+注意：包含的文件中不支持文件夹路径。
+

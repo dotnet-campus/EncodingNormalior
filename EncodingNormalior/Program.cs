@@ -97,7 +97,9 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             if (arguments.Has(IncludeFileCommand))
             {
                 var includeFile = arguments.Get(IncludeFileCommand).Take();
-                var wildCardFile = IncludeFileSetting.ReadIncludeFile(includeFile);
+                var wildCardFile = /*IncludeFileSetting.ReadIncludeFile(includeFile);*/
+                    new FileInfo(includeFile);
+
                 IncludeFileSetting includeFileSetting = new IncludeFileSetting(wildCardFile);
                 encodingScrutatorFolder.IncludeFileSetting = includeFileSetting;
             }
