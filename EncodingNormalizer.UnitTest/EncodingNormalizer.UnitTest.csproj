@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ArgTest.cs" />
     <Compile Include="IncludeFileSettingTest.cs" />
+    <Compile Include="InspectFileWhiteListSettingTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
