@@ -96,10 +96,14 @@ namespace EncodingNormalizerVsx.ViewModel
             //    return false;
             //}
             if (!ConformWhiteList())
+            {
                 return false;
+            }
 
             if (!ConformFileInclude())
+            {
                 return false;
+            }
 
             try
             {
@@ -112,11 +116,15 @@ namespace EncodingNormalizerVsx.ViewModel
 
             return true;
         }
-
+        /// <summary>
+        /// 判断包含文件名是否非法
+        /// </summary>
+        /// <returns>true 可以作为包含文件名，false 不能作为包含文件名</returns>
         private bool ConformFileInclude()
         {
             try
             {
+                //不能作为文件名的字符
                 var illegalFile = new List<string>
                 {
                     "\\",
@@ -145,6 +153,10 @@ namespace EncodingNormalizerVsx.ViewModel
             return true;
         }
 
+        /// <summary>
+        /// 判断白名单是否非法
+        /// </summary>
+        /// <returns>true 可以作为白名单 ，false 不可做白名单</returns>
         private bool ConformWhiteList()
         {
             try

@@ -18,6 +18,11 @@ namespace EncodingNormalizerVsx.ViewModel
 {
     public class ConformModel : NotifyProperty
     {
+        public ConformModel()
+        {
+            Visibility = Visibility.Collapsed;
+        }
+
         private string _circular;
 
         //private List<EncodingScrutatorFolder> _encodingScrutatorFolder;
@@ -27,11 +32,6 @@ namespace EncodingNormalizerVsx.ViewModel
         private Visibility _visibility;
         private InspectFileWhiteListSetting _whiteList;
         public EventHandler Closing;
-
-        public ConformModel()
-        {
-            Visibility = Visibility.Collapsed;
-        }
 
         /// <summary>
         ///     显示用户可以使用控件
@@ -76,9 +76,34 @@ namespace EncodingNormalizerVsx.ViewModel
         {
             var progress = new EncodingScrutatorProgress();
             progress.ProgressChanged += Progress_ProgressChanged;
+
             ParseAccount();
+            List<EncodingScrutatorFolder> encodingScrutatorFolder = FolderToVirtualDirectory(folder, progress);
+            //};
+
+            new Task(() =>
+            {
+                foreach (var temp in encodingScrutatorFolder)
+                {
+                    temp.InspectFolderEncoding();
+                }
+                //通知完成
+                progress.Report(null);
+            }).Start();
+        }
+
+        /// <summary>
+        ///     把所有的要检测的文件夹放到虚拟目录
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <param name="progress"></param>
+        /// <returns></returns>
+        private List<EncodingScrutatorFolder> FolderToVirtualDirectory(List<string> folder,
+            EncodingScrutatorProgress progress)
+        {
             var encodingScrutatorFolder = new List<EncodingScrutatorFolder>();
             foreach (var temp in folder)
+            {
                 encodingScrutatorFolder.Add(
                     new EncodingScrutatorFolder(new DirectoryInfo(temp),
                         _whiteList, _includeFile)
@@ -89,26 +114,20 @@ namespace EncodingNormalizerVsx.ViewModel
                             SitpulationEncoding = SitpulationEncoding
                         }
                     });
+            }
 
 
-            _encodingScrutatorFolder //= encodingScrutatorFolder;
-                //=new List<EncodingScrutatorFolder>()
-                // {
-                = new EncodingScrutatorFolder(new DirectoryInfo(Environment.SystemDirectory))
-                {
-                    Folder = encodingScrutatorFolder
-                };
+            _encodingScrutatorFolder = new EncodingScrutatorFolder(new DirectoryInfo(Environment.SystemDirectory))
+            {
+                Folder = encodingScrutatorFolder
+            };
 
             foreach (var temp in encodingScrutatorFolder)
-                temp.Parent = _encodingScrutatorFolder;
-            //};
-
-            new Task(() =>
             {
-                foreach (var temp in encodingScrutatorFolder)
-                    temp.InspectFolderEncoding();
-                progress.Report(null);
-            }).Start();
+                temp.Parent = _encodingScrutatorFolder;
+            }
+
+            return encodingScrutatorFolder;
         }
 
         /// <summary>
@@ -117,27 +136,33 @@ namespace EncodingNormalizerVsx.ViewModel
         /// <param name="folder"></param>
         public void InspectFolderEncoding(string folder)
         {
-            InspectFolderEncoding(new List<string> {folder});
+            InspectFolderEncoding(new List<string> { folder });
         }
 
         private void ParseAccount()
         {
             if (Account == null)
+            {
                 Account = Account.ReadAccount();
+            }
 
             var encoding = Account.ConvertCriterionEncoding();
             SitpulationEncoding = encoding;
             if (_whiteList == null)
+            {
                 _whiteList =
                     new InspectFileWhiteListSetting(
                         Account.WhiteList.Split('\n').Select(temp => temp.Replace("\r", "")).ToList());
+            }
             if (_includeFile == null)
+            {
                 _includeFile =
-                    new IncludeFileSetting(
-                        Account.FileInclude.Split('\n')
-                            .Select(temp => temp.Replace("\r", ""))
-                            .Where(temp => !string.IsNullOrEmpty(temp))
-                            .ToList());
+                   new IncludeFileSetting(
+                       Account.FileInclude.Split('\n')
+                           .Select(temp => temp.Replace("\r", ""))
+                           .Where(temp => !string.IsNullOrEmpty(temp))
+                           .ToList());
+            }
         }
 
         /// <summary>
@@ -168,6 +193,13 @@ namespace EncodingNormalizerVsx.ViewModel
                 }
             }
 
+            count = PintnoConformEncodingFolder(encodingScrutatorFolder, count);
+            return count;
+        }
+
+        private int PintnoConformEncodingFolder(EncodingScrutatorFolder encodingScrutatorFolder, int count)
+        {
+            //输出不规范文件夹
             for (var i = 0; i < encodingScrutatorFolder.Folder.Count; i++)
             {
                 count += PintnoConformEncodingFile(encodingScrutatorFolder.Folder[i]);
@@ -178,6 +210,7 @@ namespace EncodingNormalizerVsx.ViewModel
                     i--;
                 }
             }
+
             return count;
         }
 
@@ -185,6 +218,7 @@ namespace EncodingNormalizerVsx.ViewModel
         {
             if (e == null)
             {
+                //完成检测，输出不规范文件
                 PrintConformEncoding();
             }
             else
@@ -223,8 +257,7 @@ namespace EncodingNormalizerVsx.ViewModel
         private int PintnoConformEncodingFile(List<EncodingScrutatorFolder> encodingScrutatorFolder)
         {
             var count = 0;
-            foreach (var temp in encodingScrutatorFolder)
-                count += PintnoConformEncodingFile(temp);
+            foreach (var temp in encodingScrutatorFolder) count += PintnoConformEncodingFile(temp);
             return count;
         }
 
@@ -240,10 +273,8 @@ namespace EncodingNormalizerVsx.ViewModel
 
         private void EncodingScrutatorFolderBeCriterion(EncodingScrutatorFolder encodingScrutatorFolder)
         {
-            foreach (var temp in encodingScrutatorFolder.Folder)
-                EncodingScrutatorFolder.Add(new Model.EncodingScrutatorFolder(temp, null));
-            foreach (var temp in encodingScrutatorFolder.File)
-                EncodingScrutatorFolder.Add(new Model.EncodingScrutatorFile(temp, null));
+            foreach (var temp in encodingScrutatorFolder.Folder) EncodingScrutatorFolder.Add(new Model.EncodingScrutatorFolder(temp, null));
+            foreach (var temp in encodingScrutatorFolder.File) EncodingScrutatorFolder.Add(new Model.EncodingScrutatorFile(temp, null));
         }
 
         private void PrintConformDispatcherSynchronizationContext(Action action)
@@ -278,8 +309,7 @@ namespace EncodingNormalizerVsx.ViewModel
 
             new Task(() =>
             {
-                new WriteFolderEncoding().
-                    WriteSitpulationEncoding(EncodingScrutatorFolder, progress, SitpulationEncoding);
+                WriteFolderEncoding.WriteSitpulationEncoding(EncodingScrutatorFolder, progress, SitpulationEncoding);
                 Circular = "转换完成\r\n ";
                 if (count > 0)
                 {
@@ -306,8 +336,7 @@ namespace EncodingNormalizerVsx.ViewModel
                 var encodingScrutatorFolder = EncodingScrutatorFolder.ToList<IEncodingScrutatorFile>();
                 EncodingScrutatorFolder.Clear();
                 FailWriteSitpulation(encodingScrutatorFolder);
-                foreach (var temp in encodingScrutatorFolder)
-                    EncodingScrutatorFolder.Add((EncodingScrutatorFolderFile) temp);
+                foreach (var temp in encodingScrutatorFolder) EncodingScrutatorFolder.Add((EncodingScrutatorFolderFile)temp);
             }, null);
         }
 
@@ -331,8 +360,7 @@ namespace EncodingNormalizerVsx.ViewModel
                         encodingScrutatorFolder.RemoveAt(i);
                         i--;
                     }
-                    if (temp.Folder != null)
-                        FailWriteSitpulation(temp.Folder);
+                    if (temp.Folder != null) FailWriteSitpulation(temp.Folder);
                     if (temp.Folder == null || temp.Folder.Count == 0)
                     {
                         encodingScrutatorFolder.RemoveAt(i);

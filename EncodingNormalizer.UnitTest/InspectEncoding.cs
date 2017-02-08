@@ -29,6 +29,8 @@ namespace EncodingNormalizer.UnitTest
             Debug.Write(str.ToString());
         }
 
+
+
         private const string Folder = "E:\\测试\\textFile\\";
         private const string File =Folder+ "InspectFolderEncoding.txt";
     }

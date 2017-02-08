@@ -5,38 +5,44 @@ namespace EncodingNormalizerVsx.Model
 {
     public class EncodingScrutatorFile : EncodingScrutatorFolderFile
     {
-        private readonly Encoding _encoding;
+        public Encoding Encoding { set; get; }
 
         public EncodingScrutatorFile(EncodingNormalior.Model.EncodingScrutatorFile encodingScrutatorFile,
             EncodingScrutatorFolder parent) : base(encodingScrutatorFile.Name, parent)
         {
             File = encodingScrutatorFile.File;
-            _encoding = encodingScrutatorFile.Encoding;
-            Encoding = encodingScrutatorFile.Encoding.EncodingName;
+            Encoding = encodingScrutatorFile.Encoding;
+            _encoding = encodingScrutatorFile.Encoding.EncodingName;
         }
 
-        public string Encoding { get; set; }
+        private string _encoding;
 
         public FileInfo File { set; get; }
-
-        public void WriteSitpulationEncoding(Encoding encoding)
-        {
-            if (Encoding == System.Text.Encoding.ASCII.EncodingName)
-                if (Equals(encoding, System.Text.Encoding.UTF8) ||
-                    Equals(encoding, System.Text.Encoding.GetEncoding("GBK")) ||
-                    Equals(encoding, System.Text.Encoding.ASCII))
-                    return;
-
-            string str;
-            using (var stream = new StreamReader(File.OpenRead(), _encoding))
-            {
-                str = stream.ReadToEnd();
-            }
-            using (var stream = new StreamWriter(new FileStream(File.FullName, FileMode.Create), encoding))
-            {
-                stream.Write(str);
-            }
-        }
+        ///// <summary>
+        ///// 重写文件编码
+        ///// </summary>
+        ///// <param name="encoding"></param>
+        //public void WriteSitpulationEncoding(Encoding encoding)
+        //{
+        //    if (_encoding == System.Text.Encoding.ASCII.EncodingName)
+        //    {
+        //        if (Equals(encoding, System.Text.Encoding.UTF8) ||
+        //            Equals(encoding, System.Text.Encoding.GetEncoding("GBK")) ||
+        //            Equals(encoding, System.Text.Encoding.ASCII)) //对 ASCII不写入
+        //        {
+        //            return;
+        //        }
+        //    }
+        //    string str;
+        //    using (var stream = new StreamReader(File.OpenRead(), Encoding))
+        //    {
+        //        str = stream.ReadToEnd();
+        //    }
+        //    using (var stream = new StreamWriter(new FileStream(File.FullName, FileMode.Create), encoding))
+        //    {
+        //        stream.Write(str);
+        //    }
+        //}
 
         /// <summary>
         ///     获取全名称
