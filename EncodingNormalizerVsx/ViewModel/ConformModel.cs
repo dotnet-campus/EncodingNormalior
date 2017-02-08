@@ -340,6 +340,10 @@ namespace EncodingNormalizerVsx.ViewModel
             }, null);
         }
 
+        /// <summary>
+        /// 显示写入失败的文件或文件夹
+        /// </summary>
+        /// <param name="encodingScrutatorFolder"></param>
         private void FailWriteSitpulation(List<IEncodingScrutatorFile> encodingScrutatorFolder)
         {
             for (var i = 0; i < encodingScrutatorFolder.Count; i++)
@@ -347,6 +351,7 @@ namespace EncodingNormalizerVsx.ViewModel
                 var temp = encodingScrutatorFolder[i];
                 if (temp is Model.EncodingScrutatorFile)
                 {
+                    //如果写入成功，转换编码或不需要转换编码，直接移除
                     if (!temp.Check)
                     {
                         encodingScrutatorFolder.RemoveAt(i);
@@ -355,12 +360,18 @@ namespace EncodingNormalizerVsx.ViewModel
                 }
                 else if (temp is Model.EncodingScrutatorFolder)
                 {
+                    //如果不需要转换，直接移除
                     if (!temp.Check)
                     {
                         encodingScrutatorFolder.RemoveAt(i);
                         i--;
                     }
-                    if (temp.Folder != null) FailWriteSitpulation(temp.Folder);
+
+                    if (temp.Folder != null)
+                    {
+                        FailWriteSitpulation(temp.Folder);
+                    }
+                    //如果没有文件了，直接移除
                     if (temp.Folder == null || temp.Folder.Count == 0)
                     {
                         encodingScrutatorFolder.RemoveAt(i);
