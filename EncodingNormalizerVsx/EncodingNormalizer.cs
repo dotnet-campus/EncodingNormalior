@@ -84,7 +84,7 @@ namespace EncodingNormalizerVsx
             var dte = (DTE)ServiceProvider.GetService(typeof(DTE));
             var file = dte.Solution.FullName;
             var project = new List<string>();
-
+            
             if (dte.Solution.Projects.Count > 0)
             {
                 //try
@@ -126,7 +126,13 @@ namespace EncodingNormalizerVsx
         private static int TryParseProject(DTE dte, List<string> project)
         {
             int noLoadProjectCount = 0;
-            foreach (var temp in dte.Solution.Projects)
+
+            //foreach (var temp in dte.Solution.Projects)
+            //{
+                
+            //}
+            
+            foreach (var temp in new Model.Solution(dte.Solution.FullName).Projects)
             {
                 try
                 {
@@ -135,7 +141,7 @@ namespace EncodingNormalizerVsx
                     //{
 
                     //}
-                    var file = ((Project)temp).FullName;
+                    var file = temp.FullName;//((Project)temp).FullName;
 
                     if (!string.IsNullOrEmpty(file))
                     {
