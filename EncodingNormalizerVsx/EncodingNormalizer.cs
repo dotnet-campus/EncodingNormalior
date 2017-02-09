@@ -129,12 +129,6 @@ namespace EncodingNormalizerVsx
         {
             int noLoadProjectCount = 0;
 
-            //foreach (var temp in dte.Solution.Projects)
-            //{
-
-            //}
-            //EnvDTE.Constants.vsProjectKindSolutionItems
-
             foreach (var temp in dte.Solution.Projects)
             {
                 try
@@ -171,7 +165,7 @@ namespace EncodingNormalizerVsx
 
         private static List<Project> GetSolutionFolderProjects(Project solutionFolder)
         {
-            List<Project> list = new List<Project>();
+            List<Project> project = new List<Project>();
             for (var i = 1; i <= solutionFolder.ProjectItems.Count; i++)
             {
                 var subProject = solutionFolder.ProjectItems.Item(i).SubProject;
@@ -183,22 +177,14 @@ namespace EncodingNormalizerVsx
                 // If this is another solution folder, do a recursive call, otherwise add
                 if (subProject.Kind == ProjectKinds.vsProjectKindSolutionFolder)
                 {
-                    list.AddRange(GetSolutionFolderProjects(subProject));
+                    project.AddRange(GetSolutionFolderProjects(subProject));
                 }
                 else
                 {
-                    list.Add(subProject);
+                    project.Add(subProject);
                 }
             }
-
-            //List<string> projectFullname=new List<string>();
-            //foreach (var temp in list)
-            //{
-            //    var file = temp.FullName;
-            //    projectFullname.Add(new FileInfo(file).Directory?.FullName);
-            //}
-            //return projectFullname;
-            return list;
+            return project;
         }
 
         private void ConformWindow(string file, List<string> project)
