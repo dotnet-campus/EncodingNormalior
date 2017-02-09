@@ -8,9 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using EncodingNormalizerVsx.View;
 using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Window = System.Windows.Window;
 
@@ -129,23 +131,24 @@ namespace EncodingNormalizerVsx
 
             //foreach (var temp in dte.Solution.Projects)
             //{
-                
+
             //}
-            
-            foreach (var temp in new Model.Solution(dte.Solution.FullName).Projects)
+            //EnvDTE.Constants.vsProjectKindSolutionItems
+
+            foreach (var temp in dte.Solution.Projects)
             {
                 try
                 {
-                    //file = ((Project)temp).FileName;
-                    //if (file.EndsWith(".csproj"))
-                    //{
-
-                    //}
-                    var file = temp.FullName;//((Project)temp).FullName;
-
-                    if (!string.IsNullOrEmpty(file))
+                    if (temp is Project)
                     {
-                        project.Add(new FileInfo(file).Directory?.FullName);
+                        if (((Project) temp).Kind == ProjectKinds.vsProjectKindSolutionFolder)
+                        {
+                            project.AddRange(GetSolutionFolderProjects((Project) temp).Select(ParseProjectFolder));
+                        }
+                        else
+                        {
+                            project.Add(ParseProjectFolder((Project)temp));
+                        }
                     }
                 }
                 catch (NotImplementedException)
@@ -154,6 +157,48 @@ namespace EncodingNormalizerVsx
                 }
             }
             return noLoadProjectCount;
+        }
+
+        private static string ParseProjectFolder(Project project)
+        {
+            var file = project.FullName;
+            if (!string.IsNullOrEmpty(file))
+            {
+               return new FileInfo(file).Directory?.FullName;
+            }
+            return "";
+        }
+
+        private static List<Project> GetSolutionFolderProjects(Project solutionFolder)
+        {
+            List<Project> list = new List<Project>();
+            for (var i = 1; i <= solutionFolder.ProjectItems.Count; i++)
+            {
+                var subProject = solutionFolder.ProjectItems.Item(i).SubProject;
+                if (subProject == null)
+                {
+                    continue;
+                }
+
+                // If this is another solution folder, do a recursive call, otherwise add
+                if (subProject.Kind == ProjectKinds.vsProjectKindSolutionFolder)
+                {
+                    list.AddRange(GetSolutionFolderProjects(subProject));
+                }
+                else
+                {
+                    list.Add(subProject);
+                }
+            }
+
+            //List<string> projectFullname=new List<string>();
+            //foreach (var temp in list)
+            //{
+            //    var file = temp.FullName;
+            //    projectFullname.Add(new FileInfo(file).Directory?.FullName);
+            //}
+            //return projectFullname;
+            return list;
         }
 
         private void ConformWindow(string file, List<string> project)
