@@ -75,6 +75,7 @@
     <Compile Include="View\ConformPage.xaml.cs">
       <DependentUpon>ConformPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ConvertEncodingStr.cs" />
     <Compile Include="View\DefinitionPage.xaml.cs">
       <DependentUpon>DefinitionPage.xaml</DependentUpon>
     </Compile>

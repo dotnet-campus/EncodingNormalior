@@ -12,10 +12,10 @@ namespace EncodingNormalizerVsx.Model
         {
             File = encodingScrutatorFile.File;
             Encoding = encodingScrutatorFile.Encoding;
-            _encoding = encodingScrutatorFile.Encoding.EncodingName;
+            //_encoding = encodingScrutatorFile.Encoding.EncodingName;
         }
 
-        private string _encoding;
+        //private string _encoding;
 
         public FileInfo File { set; get; }
         ///// <summary>

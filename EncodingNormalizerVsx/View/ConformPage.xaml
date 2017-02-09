@@ -26,6 +26,7 @@
                     Width="{StaticResource EncodingNormalizer.Theme.ProgressSize}"></local:ConvertDashPercent>
             <local:ConvertFractionStr x:Key="ConvertStr"></local:ConvertFractionStr>-->
 
+            <local:ConvertEncodingStr x:Key="ConvertEncoding"></local:ConvertEncodingStr>
 
 
             <HierarchicalDataTemplate x:Key="HierarchicalDataTemplate" DataType="model:EncodingScrutatorFolderFile"
@@ -35,7 +36,7 @@
                         <CheckBox IsChecked="{Binding Check}" HorizontalContentAlignment="Center">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}" />
-                                <TextBlock Margin="10,0,0,0" Text="{Binding Encoding}" />
+                                <TextBlock Margin="10,0,0,0" Text="{Binding Encoding,Converter={StaticResource ConvertEncoding}}" />
                             </StackPanel>
                         </CheckBox>
                     </StackPanel>
@@ -44,6 +45,7 @@
             <Style TargetType="TextBlock">
                 <Setter Property="Foreground" Value="{StaticResource Theme.Brush.Foreground}" />
             </Style>
+
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -83,7 +85,7 @@
                             <DoubleAnimation Storyboard.TargetName="EncodingTextBlock"
                                              Storyboard.TargetProperty="Opacity"
                                              By="1" To="0" From="1" BeginTime="0:0:0" Duration="0:0:1.8">
-                                
+
                             </DoubleAnimation>
                             <DoubleAnimation Storyboard.TargetName="Ctext"
                                              Storyboard.TargetProperty="Opacity"
