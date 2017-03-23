@@ -3,7 +3,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
                  xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="EncodingNormalizerVsx.Company.442f55bf-78ea-4a12-be38-8f3e5fe2147a" Version="1.5" Language="zh-CN"
+    <Identity Id="EncodingNormalizerVsx.Company.442f55bf-78ea-4a12-be38-8f3e5fe2147a" Version="2.5" Language="zh-CN"
               Publisher="lindexi" />
     <DisplayName>编码规范工具</DisplayName>
     <Description xml:space="preserve">编码规范工具
@@ -14,6 +14,9 @@
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Community" />
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Enterprise" />
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Pro" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />

@@ -60,6 +60,7 @@
                        FontSize="{StaticResource EncodingNormalizer.Theme.Font}"
                        Foreground="{StaticResource EncodingNormalizer.Theme.Foreground}"></TextBlock>
                 <TextBlock x:Name="Ctext" Grid.Row="1" Margin="10,10,10,10"
+                           Height="100"
                        Text="{Binding Path=Circular,Mode=OneWay}"
                        TextWrapping="Wrap"></TextBlock>
 
