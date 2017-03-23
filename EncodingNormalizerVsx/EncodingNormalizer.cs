@@ -32,7 +32,7 @@ namespace EncodingNormalizerVsx
         ///     Command menu group (command set GUID).
         /// </summary>
         public static readonly Guid CommandSet = new Guid("0640f5ce-e6bc-43ba-b45e-497d70819a20");
-
+        
         /// <summary>
         ///     VS Package that provides this command, not null.
         /// </summary>
