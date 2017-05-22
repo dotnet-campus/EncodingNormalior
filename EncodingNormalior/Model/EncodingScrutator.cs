@@ -21,9 +21,15 @@ namespace EncodingNormalior.Model
             EncodingScrutatorFile = new EncodingScrutatorFile(file);
         }
 
-        private byte[] CountBuffer { set; get; }
+        private byte[] CountBuffer
+        {
+            set; get;
+        }
 
-        public EncodingScrutatorFile EncodingScrutatorFile { set; get; }
+        public EncodingScrutatorFile EncodingScrutatorFile
+        {
+            set; get;
+        }
 
         /// <summary>
         ///     检测文件编码
@@ -36,11 +42,19 @@ namespace EncodingNormalior.Model
             //打开流
             Stream stream = file.OpenRead();
             _stream = stream;
-            var headByte = ReadFileHeadbyte(stream);
-            stream.Position = 0;
+            var encoding = Encoding.ASCII;
+            try
+            {
+                var headByte = ReadFileHeadbyte(stream);
+                stream.Position = 0;
 
-            //从文件获取编码
-            var encoding = AutoEncoding(headByte);
+                //从文件获取编码
+                encoding = AutoEncoding(headByte);
+            }
+            catch (ArgumentException e)
+            {
+
+            }
 
             //Encoding.UTF8
 
@@ -62,12 +76,12 @@ namespace EncodingNormalior.Model
                     if (countUtf8 > countGbk)
                     {
                         encoding = Encoding.UTF8;
-                        EncodingScrutatorFile.ConfidenceCount = (double) countUtf8/(countUtf8 + countGbk);
+                        EncodingScrutatorFile.ConfidenceCount = (double)countUtf8 / (countUtf8 + countGbk);
                     }
                     else
                     {
                         encoding = Encoding.GetEncoding("GBK");
-                        EncodingScrutatorFile.ConfidenceCount = (double) countGbk/(countUtf8 + countGbk);
+                        EncodingScrutatorFile.ConfidenceCount = (double)countGbk / (countUtf8 + countGbk);
                     }
                 }
             }
@@ -95,7 +109,7 @@ namespace EncodingNormalior.Model
             var length = CountBuffer.Length; //总长度
 
             var buffer = CountBuffer;
-            const char head = (char) 0x80; //小于127 通过 &head==0
+            const char head = (char)0x80; //小于127 通过 &head==0
 
             for (var i = 0; i < length; i++)
             {
@@ -134,8 +148,8 @@ namespace EncodingNormalior.Model
             var length = CountBuffer.Length;
 
 
-            var buffer = CountBuffer; 
-            const char head = (char) 0x80;
+            var buffer = CountBuffer;
+            const char head = (char)0x80;
             //while ((n = stream.Read(buffer, 0, n)) > 0)
             {
                 for (var i = 0; i < length; i++)
@@ -194,7 +208,7 @@ namespace EncodingNormalior.Model
         {
             var stream = _stream;
             stream.Position = 0;
-            var length = (int) stream.Length;
+            var length = (int)stream.Length;
             CountBuffer = new byte[length];
             stream.Read(CountBuffer, 0, length);
         }
@@ -280,7 +294,11 @@ namespace EncodingNormalior.Model
         {
             //var headAmount = 4;
             var buffer = new byte[headAmount];
-            stream.Read(buffer, 0, headAmount);
+            int n = stream.Read(buffer, 0, headAmount);
+            if (n < headAmount)
+            {
+                throw new ArgumentException("读取到的文件长度太小，实际读取长度" + n + "，需要的长度" + headAmount);
+            }
             stream.Position = 0;
             return buffer;
         }
@@ -308,7 +326,8 @@ namespace EncodingNormalior.Model
             if (bom[0] == 0xfe && bom[1] == 0xff)
                 return Encoding.BigEndianUnicode; //UTF-16BE
 
-            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
+            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff)
+                return Encoding.UTF32;
 
             return Encoding.ASCII; //如果返回ASCII可能是GBK 无签名utf8
         }
