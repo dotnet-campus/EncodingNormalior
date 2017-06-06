@@ -20,8 +20,8 @@ namespace EncodingNormalizerVsx.View
             InitializeComponent();
             ViewModel.Closing += (s, e) => Closing?.Invoke(s, e);
             ViewModel.InspectCompleted += InspectCompleted;
-            ProgressVisbilityGrid.Visibility=Visibility.Visible;
-            VisibilityGrid.Visibility=Visibility.Collapsed;
+            ProgressVisbilityGrid.Visibility = Visibility.Visible;
+            VisibilityGrid.Visibility = Visibility.Collapsed;
         }
 
         private void InspectCompleted(object sender, EventArgs s)
@@ -56,8 +56,8 @@ namespace EncodingNormalizerVsx.View
 
         private void ProgressGrid_OnCompleted(object sender, EventArgs e)
         {
-            ProgressVisbilityGrid.Visibility=Visibility.Collapsed;
-            VisibilityGrid.Visibility=Visibility.Visible;
+            ProgressVisbilityGrid.Visibility = Visibility.Collapsed;
+            VisibilityGrid.Visibility = Visibility.Visible;
         }
     }
 }
