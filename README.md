@@ -86,6 +86,8 @@
 
 如果希望开发这个项目，可以去fork我的github库。
 
+如果现在使用的是 visualStudio 2017 企业版，那么把外部程序修改为`C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.exe`
+
 <!-- 
 
 如果本地存在 textFileSuffix.txt 那么读取配置，哪些符合后缀名的文件要判断编码。如果本地不存在，使用默认配置。读取的值放在 IncludeFileSetting.TextFileSuffix 
