@@ -90,6 +90,16 @@
           <ButtonText>Setting</ButtonText>
         </Strings>
       </Button>
+      
+      <Button guid="guidEncodingNormalizerPackageCmdSet" id="EncodingNormalizerId3"
+              priority="0x0102" type="Button">
+        <Parent guid="guidEncodingNormalizerPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="EncodingNormalizerIdSet" id="bmpPic1" />
+        <Strings>
+          <CommandName>cmdid3Command</CommandName>
+          <ButtonText>设置文件编码</ButtonText>
+        </Strings>
+      </Button>
 
     </Buttons>
 
@@ -121,6 +131,7 @@
       <!--添加 EncodingNormalizerMenu ，EncodingNormalizerId2-->
       <IDSymbol name="EncodingNormalizerMenu" value="0x1021" />
       <IDSymbol name="EncodingNormalizerId2" value="0x0101" />
+      <IDSymbol name="EncodingNormalizerId3" value="0x0102" />
       
       <!--<IDSymbol name="EncodingNormalizerIdICO" value="0x0101" />-->
       

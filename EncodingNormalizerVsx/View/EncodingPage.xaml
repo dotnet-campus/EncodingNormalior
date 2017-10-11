@@ -7,6 +7,44 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <Grid Width="300" Height="200">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid>
+                <StackPanel Margin="10,10,10,10" VerticalAlignment="Bottom">
+                    <TextBlock Text="文件路径:"></TextBlock>
+                    <TextBlock Text="{Binding File}"></TextBlock>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="143*"/>
+                    <ColumnDefinition Width="128*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock HorizontalAlignment="Center" Text="文件编码"></TextBlock>
+                        <ComboBox Margin="10,10,10,10" SelectedItem="{Binding QrvudejxqDwtjrfkh}" ItemsSource="{Binding FileEncoding}"></ComboBox>
+                        <Grid Width="100"></Grid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock HorizontalAlignment="Center" Text="转换编码"></TextBlock>
+                        <ComboBox Margin="10,10,10,10" SelectedItem="{Binding MforpsuKcyufbjlp}" ItemsSource="{Binding FileEncoding}"></ComboBox>
+                        <Grid Width="100"></Grid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Button Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" Content="确定" Click="Button_OnClick"></Button>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2"></Grid>
+        </Grid>
+
     </Grid>
 </UserControl>

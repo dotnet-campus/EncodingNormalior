@@ -66,6 +66,10 @@ namespace EncodingNormalizerVsx
                 menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
                 commandService.AddCommand(menuItem);
 
+                menuCommandID = new CommandID(CommandSet, 0x0102);
+                menuItem = new MenuCommand(SaveEncoding, menuCommandID);
+                commandService.AddCommand(menuItem);
+
                 //menuCommandID = new CommandID(CommandSet, 0x0102);
                 //menuItem = new MenuCommand(SaveEncoding, menuCommandID);
                 //commandService.AddCommand(menuItem);
