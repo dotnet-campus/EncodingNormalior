@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodingNormalizerVsx", "En
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodingNormalizer.UnitTest", "EncodingNormalizer.UnitTest\EncodingNormalizer.UnitTest.csproj", "{388DB615-88E4-4306-B941-DC3C81B06194}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodingUtf8AndGBKDifferentiater", "EncodingUtf8AndGBKDifferentiater\EncodingUtf8AndGBKDifferentiater.csproj", "{19184DC4-D745-451E-A3DA-9A827730E16A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +29,15 @@ Global
 		{388DB615-88E4-4306-B941-DC3C81B06194}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{388DB615-88E4-4306-B941-DC3C81B06194}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{388DB615-88E4-4306-B941-DC3C81B06194}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19184DC4-D745-451E-A3DA-9A827730E16A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19184DC4-D745-451E-A3DA-9A827730E16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19184DC4-D745-451E-A3DA-9A827730E16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19184DC4-D745-451E-A3DA-9A827730E16A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F43712C-A455-4B41-80F1-5C4C0E15AC12}
 	EndGlobalSection
 EndGlobal
