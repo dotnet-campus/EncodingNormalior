@@ -5,6 +5,14 @@
     <TargetFrameworks>netcoreapp2.1;net45</TargetFrameworks>
     <ApplicationIcon />
     <StartupObject />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>lindexi.src.EncodingUtf8AndGBKDifferentiater</PackageId>
+    <Authors>lindexi</Authors>
+    <Company>dotnet campus</Company>
   </PropertyGroup>
+
+  <ItemGroup Condition="$(TargetFramework)=='net45'">
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
 
 </Project>
