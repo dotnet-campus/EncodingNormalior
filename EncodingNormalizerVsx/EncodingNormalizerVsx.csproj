@@ -125,6 +125,7 @@
     <Content Include="Resources\Logo.png" />
     <Content Include="Resources\QQ截图20170114120751.png" />
     <Content Include="Resources\QQ截图2017011412075116.png" />
+    <Content Include="Resources\ConvertFileEncoding.png" />
     <Content Include="stylesheet.css" />
   </ItemGroup>
   <ItemGroup>

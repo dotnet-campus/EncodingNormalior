@@ -84,7 +84,7 @@
         <Button guid="guidEncodingNormalizerPackageCmdSet" id="SaveWithEncoding"
         priority="0x0101" type="Button">
             <Parent guid="guidEncodingNormalizerPackageCmdSet" id="MyMenuGroup" />
-            <Icon guid="EncodingNormalizerIdSet" id="bmpPic1" />
+            <Icon guid="ConvertFileEncodingId" id="bmpPic1" />
             <Strings>
                 <CommandName>SaveWithEncoding</CommandName>
                 <ButtonText>Save with Encoding</ButtonText>
@@ -124,7 +124,7 @@
               usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
       <Bitmap guid="EncodingNormalizerIdICO" href="Resources\code_711px_16_easyicon.net.png" usedList="bmpPic1"/>
       <Bitmap guid="EncodingNormalizerIdSet" href="Resources\QQ截图2017011412075116.png" usedList="bmpPic1"/>
-             
+        <Bitmap guid="ConvertFileEncodingId" href="Resources\ConvertFileEncoding.png" usedList="bmpPic1"/>
     </Bitmaps>
   </Commands>
 
@@ -155,6 +155,10 @@
       <IDSymbol name="bmpPic1" value="1" />
     </GuidSymbol>
     <GuidSymbol name="EncodingNormalizerIdSet" value="{26016B16-4576-4B0C-B88B-83819B26114D}">
+      <IDSymbol name="bmpPic1" value="1" />
+    </GuidSymbol>
+      
+     <GuidSymbol name="ConvertFileEncodingId" value="{fb124ccd-4576-4B0C-B88B-83819B26114D}">
       <IDSymbol name="bmpPic1" value="1" />
     </GuidSymbol>
 
