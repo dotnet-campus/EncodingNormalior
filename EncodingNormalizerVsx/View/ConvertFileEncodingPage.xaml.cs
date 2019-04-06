@@ -35,7 +35,7 @@ namespace EncodingNormalizerVsx.View
 
             InitializeComponent();
 
-            CurrentFile.Text = "CurrentFile:" + ViewModel.File.FullName;
+            CurrentFile.Text = "CurrentFile: " + ViewModel.File.FullName;
         }
 
         public ConvertFileEncodingModel ViewModel { get; }
