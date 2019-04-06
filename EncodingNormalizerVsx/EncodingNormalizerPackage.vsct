@@ -81,8 +81,18 @@
         </Strings>
       </Button>
 
+        <Button guid="guidEncodingNormalizerPackageCmdSet" id="SaveWithEncoding"
+        priority="0x0101" type="Button">
+            <Parent guid="guidEncodingNormalizerPackageCmdSet" id="MyMenuGroup" />
+            <Icon guid="EncodingNormalizerIdSet" id="bmpPic1" />
+            <Strings>
+                <CommandName>SaveWithEncoding</CommandName>
+                <ButtonText>Save with Encoding</ButtonText>
+            </Strings>
+        </Button>
+
       <Button guid="guidEncodingNormalizerPackageCmdSet" id="EncodingNormalizerId2"
-              priority="0x0101" type="Button">
+              priority="0x0102" type="Button">
         <Parent guid="guidEncodingNormalizerPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="EncodingNormalizerIdSet" id="bmpPic1" />
         <Strings>
@@ -92,7 +102,7 @@
       </Button>
       
       <Button guid="guidEncodingNormalizerPackageCmdSet" id="EncodingNormalizerId3"
-              priority="0x0102" type="Button">
+              priority="0x0103" type="Button">
         <Parent guid="guidEncodingNormalizerPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="EncodingNormalizerIdSet" id="bmpPic1" />
         <Strings>
@@ -132,7 +142,8 @@
       <IDSymbol name="EncodingNormalizerMenu" value="0x1021" />
       <IDSymbol name="EncodingNormalizerId2" value="0x0101" />
       <IDSymbol name="EncodingNormalizerId3" value="0x0102" />
-      
+        <IDSymbol name="SaveWithEncoding" value="0x103"/>
+        
       <!--<IDSymbol name="EncodingNormalizerIdICO" value="0x0101" />-->
       
 

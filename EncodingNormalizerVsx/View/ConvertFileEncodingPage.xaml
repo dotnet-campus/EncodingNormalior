@@ -1,0 +1,24 @@
+﻿<Window x:Class="EncodingNormalizerVsx.View.ConvertFileEncodingPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EncodingNormalizerVsx.View"
+        mc:Ignorable="d"
+        Title="Save with Encoding" Height="300" Width="600">
+    
+    <Grid>
+        <StackPanel>
+            <TextBlock x:Name="CurrentFile" Margin="10,10,10,10" TextWrapping="Wrap"></TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="10,10,10,10" Text="Current File Encoding:"></TextBlock>
+                <ComboBox x:Name="Encoding" Margin="10,10,10,10" Width="100" ItemsSource="{Binding OptionEncoding}" SelectedItem="{Binding Encoding,Mode=TwoWay}"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="10,10,10,10" Text="Save with Encoding:"></TextBlock>
+                <ComboBox x:Name="ConvertEncoding" Margin="10,10,10,10" Width="100" ItemsSource="{Binding OptionEncoding}" SelectedItem="{Binding ConvertEncoding,Mode=TwoWay}"></ComboBox>
+            </StackPanel>
+            <Button Margin="10,10,10,10" HorizontalAlignment="Right" Content="Convert" Click="ConvertFile_OnClick"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

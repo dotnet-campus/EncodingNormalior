@@ -61,6 +61,9 @@
     <CopyVsixExtensionLocation>E:\</CopyVsixExtensionLocation>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\EncodingUtf8AndGBKDifferentiater\EncodingDifferentiater.cs">
+      <Link>Model\EncodingDifferentiater.cs</Link>
+    </Compile>
     <Compile Include="EncodingNormalizer.cs" />
     <Compile Include="EncodingNormalizerPackage.cs" />
     <Compile Include="GuidStrings.cs" />
@@ -76,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Account.cs" />
     <Compile Include="ViewModel\ConformModel.cs" />
+    <Compile Include="ViewModel\ConvertFileEncodingModel.cs" />
     <Compile Include="ViewModel\DefinitionModel.cs" />
     <Compile Include="ViewModel\NotifyProperty.cs" />
     <Compile Include="Model\WriteFolderEncoding.cs" />
@@ -83,6 +87,9 @@
       <DependentUpon>ConformPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ConvertEncodingStr.cs" />
+    <Compile Include="View\ConvertFileEncodingPage.xaml.cs">
+      <DependentUpon>ConvertFileEncodingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DefinitionPage.xaml.cs">
       <DependentUpon>DefinitionPage.xaml</DependentUpon>
     </Compile>
@@ -230,6 +237,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -263,6 +273,10 @@
     <Page Include="View\ConformPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ConvertFileEncodingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\DefinitionPage.xaml">
       <SubType>Designer</SubType>

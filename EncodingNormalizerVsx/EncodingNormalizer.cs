@@ -4,16 +4,16 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
+using EncodingNormalizerVsx.View;
+using EnvDTE;
+using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using EncodingNormalizerVsx.View;
-using EnvDTE;
-using EnvDTE80;
-using Microsoft.VisualStudio.Shell;
 using Window = System.Windows.Window;
 
 namespace EncodingNormalizerVsx
@@ -32,7 +32,7 @@ namespace EncodingNormalizerVsx
         ///     Command menu group (command set GUID).
         /// </summary>
         public static readonly Guid CommandSet = new Guid("0640f5ce-e6bc-43ba-b45e-497d70819a20");
-        
+
         /// <summary>
         ///     VS Package that provides this command, not null.
         /// </summary>
@@ -55,12 +55,17 @@ namespace EncodingNormalizerVsx
 
             this.package = package;
 
-            var commandService = ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            OleMenuCommandService commandService = ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
-                var menuCommandID = new CommandID(CommandSet, CommandId);
-                var menuItem = new MenuCommand(EncodingNormalizerCallback, menuCommandID);
+                CommandID menuCommandID = new CommandID(CommandSet, CommandId);
+                MenuCommand menuItem = new MenuCommand(EncodingNormalizerCallback, menuCommandID);
                 commandService.AddCommand(menuItem);
+
+                CommandID convertCurrentFileSaveEncodingCommand = new CommandID(CommandSet, 0x0103);
+                MenuCommand convertCurrentEncodingMenuCommand = new MenuCommand(ConvertCurrentFileEncoding, convertCurrentFileSaveEncodingCommand);
+                commandService.AddCommand(convertCurrentEncodingMenuCommand);
+
 
                 menuCommandID = new CommandID(CommandSet, 0x0101);
                 menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
@@ -76,6 +81,16 @@ namespace EncodingNormalizerVsx
             }
         }
 
+        private void ConvertCurrentFileEncoding(object sender, EventArgs e)
+        {
+            // 修改用户打开的文件的编码
+            DTE dte = (DTE) ServiceProvider.GetService(typeof(DTE));
+            Document document = dte.ActiveDocument;
+            string str = document.FullName;
+
+            new ConvertFileEncodingPage(str).Show();
+        }
+
         private void SaveEncoding(object sender, EventArgs e)
         {
             //指定格式保存
@@ -86,12 +101,12 @@ namespace EncodingNormalizerVsx
                 return;
             }
 
-            var dte = (DTE) ServiceProvider.GetService(typeof(DTE));
+            DTE dte = (DTE) ServiceProvider.GetService(typeof(DTE));
 
-            var s = dte.ActiveDocument.FullName;
+            string s = dte.ActiveDocument.FullName;
 
-            var window = new Window();
-            var definitionPage = new EncodingPage();
+            Window window = new Window();
+            EncodingPage definitionPage = new EncodingPage();
             definitionPage.Closing += (_s, _e) =>
             {
                 window.Close();
@@ -125,15 +140,15 @@ namespace EncodingNormalizerVsx
 
         private void EncodingNormalizerCallback(object sender, EventArgs e)
         {
-            var dte = (DTE)ServiceProvider.GetService(typeof(DTE));
-            var file = dte.Solution.FullName;
-            var project = new List<string>();
-            
+            DTE dte = (DTE) ServiceProvider.GetService(typeof(DTE));
+            string file = dte.Solution.FullName;
+            List<string> project = new List<string>();
+
             if (dte.Solution.Projects.Count > 0)
             {
                 //try
                 //{
-                var noLoadProjectCount = TryParseProject(dte, project);
+                int noLoadProjectCount = TryParseProject(dte, project);
                 //}
                 // catch (NotImplementedException)
                 //{
@@ -171,7 +186,7 @@ namespace EncodingNormalizerVsx
         {
             int noLoadProjectCount = 0;
 
-            foreach (var temp in dte.Solution.Projects)
+            foreach (object temp in dte.Solution.Projects)
             {
                 try
                 {
@@ -183,7 +198,7 @@ namespace EncodingNormalizerVsx
                         }
                         else
                         {
-                            project.Add(ParseProjectFolder((Project)temp));
+                            project.Add(ParseProjectFolder((Project) temp));
                         }
                     }
                 }
@@ -197,10 +212,10 @@ namespace EncodingNormalizerVsx
 
         private static string ParseProjectFolder(Project project)
         {
-            var file = project.FullName;
+            string file = project.FullName;
             if (!string.IsNullOrEmpty(file))
             {
-               return new FileInfo(file).Directory?.FullName;
+                return new FileInfo(file).Directory?.FullName;
             }
             return "";
         }
@@ -208,9 +223,9 @@ namespace EncodingNormalizerVsx
         private static List<Project> GetSolutionFolderProjects(Project solutionFolder)
         {
             List<Project> project = new List<Project>();
-            for (var i = 1; i <= solutionFolder.ProjectItems.Count; i++)
+            for (int i = 1; i <= solutionFolder.ProjectItems.Count; i++)
             {
-                var subProject = solutionFolder.ProjectItems.Item(i).SubProject;
+                Project subProject = solutionFolder.ProjectItems.Item(i).SubProject;
                 if (subProject == null)
                 {
                     continue;
@@ -238,17 +253,17 @@ namespace EncodingNormalizerVsx
                 return;
             }
 
-            var folder = "";
+            string folder = "";
             if (!string.IsNullOrEmpty(file))
             {
                 folder = new FileInfo(file).Directory?.FullName;
             }
-            var window = new Window()
+            Window window = new Window()
             {
                 Width = 500,
                 Height = 500
             };
-            var conformPage = new ConformPage();
+            ConformPage conformPage = new ConformPage();
             window.Content = conformPage;
             window.Title = "编码规范工具";
             conformPage.Closing += (_s, _e) =>
@@ -288,8 +303,8 @@ namespace EncodingNormalizerVsx
                 _definitionWindow.Show();
                 return;
             }
-            var window = new Window();
-            var definitionPage = new DefinitionPage();
+            Window window = new Window();
+            DefinitionPage definitionPage = new DefinitionPage();
             definitionPage.Closing += (_s, _e) =>
             {
                 window.Close();
