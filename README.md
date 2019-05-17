@@ -26,19 +26,35 @@
 
 首先是下载插件，插件可以到 [https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a](https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a) 下载，也可以在 [VS 插件网](https://marketplace.visualstudio.com/vs)搜索 `Encoding` 就可以找到我的工具啦。可以说我翻遍了整个插件网，都没有找到我这个功能的插件，但是还是找到了一些有用的插件。
 
-![](http://7xqpl8.com1.z0.glb.clouddn.com/8f464be7-2358-45f4-b6cd-eae32c47a878201727162028.jpg)
+![](http://image.acmx.xyz/8f464be7-2358-45f4-b6cd-eae32c47a878201727162028.jpg)
 
 打开 visual Sutido ，在安装完 [编码规范工具](https://marketplace.visualstudio.com/items?itemName=lindexigd.vs-extension-18109) ，可以看到菜单多了 选项 EncodingNormalizer
 
-![这里写图片描述](http://img.blog.csdn.net/20170117115031647?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://image.acmx.xyz/lindexi%2F2019461567484)
 
 然后来说下我做的功能。
 
+#### 修改当前文件编码
+
+在 2.6 版本新添加的功能是修改当前打开的文件的编码，即使这个文件不在当前的项目里面
+
+因为现在没有一个方法可以知道一个文件是什么编码，所以可以在插件自己手动选当前文件的编码，这样可以解决识别编码错误
+
+选择当前的文件的编码，和需要转换的文件的编码，然后点击 Convert 就可以转换了
+
+<!-- ![](image/VisualStudio 编码规范工具 2.6 修改当前文件编码/VisualStudio 编码规范工具 2.6 修改当前文件编码5.png) -->
+
+![](http://image.acmx.xyz/lindexi%2F201946153140370)
+
+现在能支持的转换的编码是带符号的 Utf-8 和 GBK 编码
+
 #### 设置
 
-点击菜单 EncodingNormailzer ，选择 Setting 。可以看到下面界面
+点击菜单 EncodingNormailzer ，选择 Setting 可以看到下面界面
 
-![这里写图片描述](http://img.blog.csdn.net/20170117115248683?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+<!-- ![](image/VisualStudio 编码规范工具 2.6 修改当前文件编码/VisualStudio 编码规范工具 2.6 修改当前文件编码1.png) -->
+
+![](http://image.acmx.xyz/lindexi%2F201946151729613)
 
 首先是可以忽略一些文件或文件夹，默认是忽略一些不是文本的文件和 bin、obj、git文件夹，注意，千万不要去转换 git 文件夹的代码。
 
@@ -46,9 +62,9 @@
 
 因为 Ascii 的文件，存放为 GBK 和 UTF8不带签名是无法区分的，所以忽略 ASCII 编码文件。
 
-因为对 Unicode-16 的文件是无法使用判断存在'\0'来区分文件是不是文本，所以，对于某些文件还是自己手动添加是否一定检测，对于没有被添加到一定需要检测的文件，先判断他是不是文本，如果是的话，就检测。
+因为对 Unicode-16 的文件是无法使用判断存在 '\0' 来区分文件是不是文本，所以，对于某些文件还是自己手动添加是否一定检测，对于没有被添加到一定需要检测的文件，先判断他是不是文本，如果是的话，就检测。
 
-设置保存在 我的文档\ EncodingNormalizer \ Account.json
+设置保存在 `我的文档\EncodingNormalizer\Account.json` 文件
 
 #### 检查编码
 
@@ -56,17 +72,22 @@
 
 点击 Conform solution encoding ，自动检测方案所有工程的文件编码，如果发现所有的编码都符合规范，那么弹出窗口说所有文件都符合规范。如果有文件不符合规范，那么提示用户是否转换。
 
-![这里写图片描述](http://img.blog.csdn.net/20170117120101255?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
-![这里写图片描述](http://img.blog.csdn.net/20170117142656020?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGluZGV4aV9nZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+<!-- ![](image/VisualStudio 编码规范工具 2.6 修改当前文件编码/VisualStudio 编码规范工具 2.6 修改当前文件编码2.png) -->
 
+![](http://image.acmx.xyz/lindexi%2F201946151823827)
 
+找到所有不符合规范的文件，可以一键点击转换
+
+![](http://image.acmx.xyz/lindexi%2F20194615184676)
+
+<!-- ![](image/VisualStudio 编码规范工具 2.6 修改当前文件编码/VisualStudio 编码规范工具 2.6 修改当前文件编码3.png) -->
 
 ## 和我组队做工具
 
-这个工具相信是大家比较需要的，所以我就做了这个工具。做这个工具最难的地方在于判断文件编码，和如何做vs扩展两个。如果大家也想做一个差不多的东西，可以参见开发过程中使用的技术：[判断文件编码](http://lindexi.oschina.io/lindexi/post/C-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81/)， [扩展开发](http://lindexi.oschina.io/lindexi/post/VisualStudio 扩展开发/)
+这个工具相信是大家比较需要的，所以我就做了这个工具。做这个工具最难的地方在于判断文件编码，和如何做vs扩展两个。如果大家也想做一个差不多的东西，可以参见开发过程中使用的技术：[C＃ 判断文件编码](https://blog.lindexi.com/post/c-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81 )  [VisualStudio 扩展开发](https://blog.lindexi.com/post/visualstudio-%E6%89%A9%E5%B1%95%E5%BC%80%E5%8F%91 )
 
-我把工具放在 github ：https://github.com/lindexi/EncodingNormalior
+我把工具放在 github ： [https://github.com/lindexi/EncodingNormalior](https://github.com/lindexi/EncodingNormalior)
 
 好像我的项目名称 编码规范工具 是 EncodingNormalizer ，写错了，但是不想改。
 
