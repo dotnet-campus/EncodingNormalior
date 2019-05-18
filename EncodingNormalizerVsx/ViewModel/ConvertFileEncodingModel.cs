@@ -5,32 +5,26 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Windows;
 using EncodingUtf8AndGBKDifferentiater;
 
 namespace EncodingNormalizerVsx.ViewModel
 {
     public class ConvertFileEncodingModel : INotifyPropertyChanged
     {
-        private FileInfo _file;
-        private Encoding _encoding;
-        private Encoding _convertEncoding;
-        private string _trace;
-
         /// <inheritdoc />
         public ConvertFileEncodingModel()
         {
-            var optionEncoding = new List<Encoding>()
+            var optionEncoding = new List<Encoding>
             {
-                System.Text.Encoding.UTF8,
-                System.Text.Encoding.GetEncoding("GBK"),
-                System.Text.Encoding.GetEncoding("big5"),
-                System.Text.Encoding.GetEncoding("utf-16"),
-                System.Text.Encoding.BigEndianUnicode,
-                System.Text.Encoding.UTF32
+                Encoding.UTF8,
+                Encoding.GetEncoding("GBK"),
+                Encoding.GetEncoding("big5"),
+                Encoding.GetEncoding("utf-16"),
+                Encoding.BigEndianUnicode,
+                Encoding.UTF32
             };
 
-            foreach (var temp in System.Text.Encoding.GetEncodings().Select(temp => temp.GetEncoding()))
+            foreach (var temp in Encoding.GetEncodings().Select(temp => temp.GetEncoding()))
             {
                 if (optionEncoding.All(encoding => encoding.EncodingName != temp.EncodingName))
                 {
@@ -94,28 +88,6 @@ namespace EncodingNormalizerVsx.ViewModel
             get => _trace;
         }
 
-        private void DifferentiateEncoding()
-        {
-            var (encoding, confidenceCount) = EncodingDifferentiater.DifferentiateEncoding(File);
-
-            if (encoding.BodyName == System.Text.Encoding.UTF8.BodyName)
-            {
-                Encoding = OptionEncoding[0];
-            }
-            else if (encoding.BodyName == System.Text.Encoding.GetEncoding("GBK").BodyName)
-            {
-                Encoding = OptionEncoding[1];
-            }
-            else if (encoding.BodyName == System.Text.Encoding.ASCII.BodyName)
-            {
-                Encoding = Encoding.ASCII;
-            }
-            else
-            {
-                Encoding = encoding;
-            }
-        }
-
         public bool ConvertFile()
         {
             try
@@ -143,6 +115,32 @@ namespace EncodingNormalizerVsx.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private Encoding _convertEncoding;
+        private Encoding _encoding;
+        private FileInfo _file;
+        private string _trace;
+
+        private void DifferentiateEncoding()
+        {
+            var (encoding, confidenceCount) = EncodingDifferentiater.DifferentiateEncoding(File);
+
+            if (encoding.BodyName == Encoding.UTF8.BodyName)
+            {
+                Encoding = OptionEncoding[0];
+            }
+            else if (encoding.BodyName == Encoding.GetEncoding("GBK").BodyName)
+            {
+                Encoding = OptionEncoding[1];
+            }
+            else if (encoding.BodyName == Encoding.ASCII.BodyName)
+            {
+                Encoding = Encoding.ASCII;
+            }
+            else
+            {
+                Encoding = encoding;
+            }
+        }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
