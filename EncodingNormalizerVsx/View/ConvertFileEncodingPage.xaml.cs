@@ -22,7 +22,10 @@ namespace EncodingNormalizerVsx.View
     {
         public ConvertFileEncodingPage(FileInfo file)
         {
-            if (!file.Exists)
+            // 这里不使用 file.Exists 的原因在于，如果一开始创建 FileInfo 不存在这个文件，然后后续才创建文件
+            // 那么通过 file.Exists 拿到的都是文件不存在，或反过来，在创建 FileInfo 的时候存在文件，然后删除文件，拿到 file.Exists 都是存在
+            // 在调用 file.Refresh(); 才会更新当前文件是否存在，但是这个方法需要更新太多属性，所以就直接使用静态方法判断文件存在
+            if (!File.Exists(file.FullName))
             {
                 throw new ArgumentException($"文件{file}找不到");
             }
