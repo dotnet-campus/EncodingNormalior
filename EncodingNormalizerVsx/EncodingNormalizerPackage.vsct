@@ -77,7 +77,7 @@
         <Icon guid="EncodingNormalizerIdICO" id="bmpPic1" />
         <Strings>
           <CommandName>cmdidFirstCommand</CommandName>
-          <ButtonText>Conform solution encoding</ButtonText>
+          <ButtonText>Confirm solution encoding</ButtonText>
         </Strings>
       </Button>
 
