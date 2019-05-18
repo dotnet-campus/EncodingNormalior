@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -19,16 +20,16 @@ namespace EncodingNormalizerVsx.View
     /// </summary>
     public partial class ConvertFileEncodingPage : Window
     {
-        public ConvertFileEncodingPage(string file)
+        public ConvertFileEncodingPage(FileInfo file)
         {
-            if (!System.IO.File.Exists(file))
+            if (!file.Exists)
             {
                 throw new ArgumentException($"文件{file}找不到");
             }
 
             ViewModel = new ConvertFileEncodingModel()
             {
-                File = new FileInfo(file)
+                File = file
             };
 
             DataContext = ViewModel;
@@ -42,7 +43,21 @@ namespace EncodingNormalizerVsx.View
 
         private void ConvertFile_OnClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.ConvertFile();
+            if (ViewModel.ConvertFile())
+            {
+                var storyboard = (Storyboard) FindResource("SuccessStoryboard");
+                storyboard.Completed += async (o, args) =>
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    Close();
+                };
+                storyboard.Begin();
+            }
+            else
+            {
+                var storyboard = (Storyboard) FindResource("FailStoryboard");
+                storyboard.Begin();
+            }
         }
     }
 }

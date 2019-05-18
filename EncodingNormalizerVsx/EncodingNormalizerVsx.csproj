@@ -93,9 +93,6 @@
     <Compile Include="View\DefinitionPage.xaml.cs">
       <DependentUpon>DefinitionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\EncodingPage.xaml.cs">
-      <DependentUpon>EncodingPage.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -280,10 +277,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\DefinitionPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\EncodingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

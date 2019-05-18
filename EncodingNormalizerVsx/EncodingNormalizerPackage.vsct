@@ -101,7 +101,7 @@
         </Strings>
       </Button>
       
-      <Button guid="guidEncodingNormalizerPackageCmdSet" id="EncodingNormalizerId3"
+      <!--<Button guid="guidEncodingNormalizerPackageCmdSet" id="EncodingNormalizerId3"
               priority="0x0103" type="Button">
         <Parent guid="guidEncodingNormalizerPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="EncodingNormalizerIdSet" id="bmpPic1" />
@@ -109,7 +109,7 @@
           <CommandName>cmdid3Command</CommandName>
           <ButtonText>设置文件编码</ButtonText>
         </Strings>
-      </Button>
+      </Button>-->
 
     </Buttons>
 
