@@ -13,7 +13,7 @@ namespace EncodingNormalizerVsx.View
         /// <summary>
         ///     通知窗口关闭
         /// </summary>
-        public EventHandler Closing;
+        public event EventHandler Closing;
 
         public DefinitionPage()
         {
