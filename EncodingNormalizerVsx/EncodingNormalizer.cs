@@ -66,13 +66,8 @@ namespace EncodingNormalizerVsx
                 MenuCommand convertCurrentEncodingMenuCommand = new MenuCommand(ConvertCurrentFileEncoding, convertCurrentFileSaveEncodingCommand);
                 commandService.AddCommand(convertCurrentEncodingMenuCommand);
 
-
                 menuCommandID = new CommandID(CommandSet, 0x0101);
                 menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
-                commandService.AddCommand(menuItem);
-
-                menuCommandID = new CommandID(CommandSet, 0x0102);
-                menuItem = new MenuCommand(SaveEncoding, menuCommandID);
                 commandService.AddCommand(menuItem);
 
                 //menuCommandID = new CommandID(CommandSet, 0x0102);
@@ -88,42 +83,8 @@ namespace EncodingNormalizerVsx
             Document document = dte.ActiveDocument;
             string str = document.FullName;
 
-            new ConvertFileEncodingPage(str).Show();
+            new ConvertFileEncodingPage(new FileInfo(str)).Show();
         }
-
-        private void SaveEncoding(object sender, EventArgs e)
-        {
-            //指定格式保存
-            if (_saveWindow != null)
-            {
-                _saveWindow.Focus();
-                _saveWindow.Show();
-                return;
-            }
-
-            DTE dte = (DTE) ServiceProvider.GetService(typeof(DTE));
-
-            string s = dte.ActiveDocument.FullName;
-
-            Window window = new Window();
-            EncodingPage definitionPage = new EncodingPage();
-            definitionPage.Closing += (_s, _e) =>
-            {
-                window.Close();
-                _definitionWindow = null;
-            };
-            window.Closed += (_s, _e) => { _definitionWindow = null; };
-            window.Title = "指定保存格式";
-            window.Content = definitionPage;
-            window.Show();
-
-            _saveWindow = window;
-        }
-
-        /// <summary>
-        /// 保存编码的窗口
-        /// </summary>
-        private Window _saveWindow;
 
         /// <summary>
         ///     Gets the instance of the command.
