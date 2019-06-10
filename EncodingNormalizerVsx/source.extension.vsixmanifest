@@ -8,15 +8,15 @@
         <DisplayName>编码规范工具</DisplayName>
         <Description xml:space="preserve">编码规范工具
 可以自动检测工程、文件夹内所有文本的编码，并可以规范所有文件编码 </Description>
-        <MoreInfo>https://github.com/lindexi/EncodingNormalior</MoreInfo>
+        <MoreInfo>https://github.com/dotnet-campus/EncodingNormalior</MoreInfo>
         <Icon>Resources\code_711px_1157693_easyicon.net.png</Icon>
         <PreviewImage>Resources\code_711px_1157693_easyicon.net.png</PreviewImage>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />
-        <InstallationTarget Version="[15.0,16.0]" Id="Microsoft.VisualStudio.Community" />
-        <InstallationTarget Version="[15.0,16.0]" Id="Microsoft.VisualStudio.Enterprise" />
-        <InstallationTarget Version="[15.0,16.0]" Id="Microsoft.VisualStudio.Pro" />
+        <InstallationTarget Version="[15.0,17.0]" Id="Microsoft.VisualStudio.Community" />
+        <InstallationTarget Version="[15.0,17.0]" Id="Microsoft.VisualStudio.Enterprise" />
+        <InstallationTarget Version="[15.0,17.0]" Id="Microsoft.VisualStudio.Pro" />
     </Installation>
     <Dependencies>
         <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
