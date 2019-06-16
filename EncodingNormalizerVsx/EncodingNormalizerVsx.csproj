@@ -74,13 +74,16 @@
     <Compile Include="Model\EncodingScrutatorFolder.cs" />
     <Compile Include="Model\EncodingScrutatorFolderFile.cs" />
     <Compile Include="Model\EncodingScrutatorProgress.cs" />
+    <Compile Include="Model\IEncodingConverter.cs" />
     <Compile Include="Model\IEncodingScrutatorFile.cs" />
     <Compile Include="Model\Solution.cs" />
+    <Compile Include="Model\Utf8WithoutBomEncodingConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Account.cs" />
     <Compile Include="ViewModel\ConformModel.cs" />
     <Compile Include="ViewModel\ConvertFileEncodingModel.cs" />
     <Compile Include="ViewModel\DefinitionModel.cs" />
+    <Compile Include="Model\EncodingConverter.cs" />
     <Compile Include="ViewModel\NotifyProperty.cs" />
     <Compile Include="Model\WriteFolderEncoding.cs" />
     <Compile Include="View\ConformPage.xaml.cs">
