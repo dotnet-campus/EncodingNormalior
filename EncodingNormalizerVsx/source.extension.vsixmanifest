@@ -5,8 +5,8 @@
     <Metadata>
         <Identity Id="EncodingNormalizerVsx.Company.442f55bf-78ea-4a12-be38-8f3e5fe2147a" Version="2.7" Language="zh-CN"
                   Publisher="lindexi" />
-        <DisplayName>Encoding tool</DisplayName>
-        <Description xml:space="preserve">Encoding tool can check all files in solution and fix the encoding</Description>
+        <DisplayName>Encoding normalize tool</DisplayName>
+        <Description xml:space="preserve">Encoding tool can check all files in solution and normalize the encoding</Description>
         <MoreInfo>https://github.com/dotnet-campus/EncodingNormalior</MoreInfo>
         <Icon>Resources\code_711px_1157693_easyicon.net.png</Icon>
         <PreviewImage>Resources\code_711px_1157693_easyicon.net.png</PreviewImage>
