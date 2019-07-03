@@ -1,5 +1,7 @@
 # 编码检测和修改工具
 
+[![Build status](https://ci.appveyor.com/api/projects/status/ypcqbbc7bsexnfog?svg=true)](https://ci.appveyor.com/project/lindexi_gd/encodingnormalior)
+
 在开发中经常遇到编码不一致的文件，而如果这些文件包含需要显示的字符串，就会导致在乱码。所以需要一个工具可以自动检测工程、文件夹内所有文本的编码，并可以规范所有文件编码。
 
 工具要求可以设置规定的编码，如果文件的编码不是规定的编码，用户可以选择把文件的编码转换为规定的编码。
