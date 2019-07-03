@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using EncodingNormalizerVsx.Model;
 using EncodingUtf8AndGBKDifferentiater;
 
 namespace EncodingNormalizerVsx.ViewModel
@@ -14,30 +15,31 @@ namespace EncodingNormalizerVsx.ViewModel
         /// <inheritdoc />
         public ConvertFileEncodingModel()
         {
-            var optionEncoding = new List<Encoding>
+            var optionEncoding = new List<IEncodingConverter>
             {
-                Encoding.UTF8,
-                Encoding.GetEncoding("GBK"),
-                Encoding.GetEncoding("big5"),
-                Encoding.GetEncoding("utf-16"),
-                Encoding.BigEndianUnicode,
-                Encoding.UTF32
+                new EncodingConverter(System.Text.Encoding.UTF8),
+                new Utf8WithoutBomEncodingConverter(),
+                new EncodingConverter(System.Text.Encoding.GetEncoding("GBK")),
+                new EncodingConverter(System.Text.Encoding.GetEncoding("big5")),
+                new EncodingConverter(System.Text.Encoding.GetEncoding("utf-16")),
+                new EncodingConverter(System.Text.Encoding.BigEndianUnicode),
+                new EncodingConverter(System.Text.Encoding.UTF32)
             };
 
-            foreach (var temp in Encoding.GetEncodings().Select(temp => temp.GetEncoding()))
+            foreach (var temp in System.Text.Encoding.GetEncodings().Select(temp => temp.GetEncoding()))
             {
                 if (optionEncoding.All(encoding => encoding.EncodingName != temp.EncodingName))
                 {
-                    optionEncoding.Add(temp);
+                    optionEncoding.Add(new EncodingConverter(temp));
                 }
             }
 
             OptionEncoding = optionEncoding;
         }
 
-        public List<Encoding> OptionEncoding { get; }
+        public List<IEncodingConverter> OptionEncoding { get; }
 
-        public Encoding Encoding
+        public IEncodingConverter Encoding
         {
             set
             {
@@ -48,7 +50,7 @@ namespace EncodingNormalizerVsx.ViewModel
             get => _encoding;
         }
 
-        public Encoding ConvertEncoding
+        public IEncodingConverter ConvertEncoding
         {
             get
             {
@@ -92,16 +94,9 @@ namespace EncodingNormalizerVsx.ViewModel
         {
             try
             {
-                string str;
-                using (var stream = new StreamReader(File.OpenRead(), Encoding))
-                {
-                    str = stream.ReadToEnd();
-                }
+                string str = Encoding.Read(File);
 
-                using (var stream = new StreamWriter(File.Open(FileMode.Create), ConvertEncoding))
-                {
-                    stream.Write(str);
-                }
+                ConvertEncoding.Storage(str, File);
 
                 Trace = "Success";
             }
@@ -115,31 +110,40 @@ namespace EncodingNormalizerVsx.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private Encoding _convertEncoding;
-        private Encoding _encoding;
+        private IEncodingConverter _convertEncoding;
+        private IEncodingConverter _encoding;
         private FileInfo _file;
         private string _trace;
 
         private void DifferentiateEncoding()
         {
-            var (encoding, confidenceCount) = EncodingDifferentiater.DifferentiateEncoding(File);
+            var (encoding, _) = EncodingDifferentiater.DifferentiateEncoding(File);
 
-            if (encoding.BodyName == Encoding.UTF8.BodyName)
+            if (encoding.BodyName == System.Text.Encoding.UTF8.BodyName)
             {
-                Encoding = OptionEncoding[0];
+                SetEncoding(System.Text.Encoding.UTF8);
+                return;
             }
-            else if (encoding.BodyName == Encoding.GetEncoding("GBK").BodyName)
+
+            // 其实这些判断是多余的代码，只需要调用 SetEncoding 传入编码名就可以
+            var gbk = System.Text.Encoding.GetEncoding("GBK");
+            if (encoding.BodyName == gbk.BodyName)
             {
-                Encoding = OptionEncoding[1];
+                SetEncoding(gbk);
             }
-            else if (encoding.BodyName == Encoding.ASCII.BodyName)
+            else if (encoding.BodyName == System.Text.Encoding.ASCII.BodyName)
             {
-                Encoding = Encoding.ASCII;
+                SetEncoding(System.Text.Encoding.ASCII);
             }
             else
             {
-                Encoding = encoding;
+                SetEncoding(encoding);
             }
+        }
+
+        private void SetEncoding(Encoding encoding)
+        {
+            Encoding = OptionEncoding.FirstOrDefault(temp => temp.EncodingName == encoding.EncodingName);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -87,11 +87,11 @@
 
 这个工具相信是大家比较需要的，所以我就做了这个工具。做这个工具最难的地方在于判断文件编码，和如何做vs扩展两个。如果大家也想做一个差不多的东西，可以参见开发过程中使用的技术：[C＃ 判断文件编码](https://blog.lindexi.com/post/c-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81 )  [VisualStudio 扩展开发](https://blog.lindexi.com/post/visualstudio-%E6%89%A9%E5%B1%95%E5%BC%80%E5%8F%91 )
 
-我把工具放在 github ： [https://github.com/lindexi/EncodingNormalior](https://github.com/lindexi/EncodingNormalior)
+我把工具放在 github ： [https://github.com/dotnet-campus/EncodingNormalior](https://github.com/dotnet-campus/EncodingNormalior)
 
 好像我的项目名称 编码规范工具 是 EncodingNormalizer ，写错了，但是不想改。
 
-我还把他放在 vs 扩展库，可以到 [https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a](https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a) 下载。
+我还把他放在 vs 扩展库，可以到 [https://marketplace.visualstudio.com/](https://marketplace.visualstudio.com/) 下载。
 
 来说下如何使用我的项目：
 
@@ -108,6 +108,8 @@
 如果希望开发这个项目，可以去fork我的github库。
 
 如果现在使用的是 visualStudio 2017 企业版，那么把外部程序修改为`C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.exe`
+
+现在使用 VisualStudio 2019 社区版，将外部程序修改为 `C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.exe`
 
 <!-- 
 
