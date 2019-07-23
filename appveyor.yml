@@ -1,8 +1,15 @@
-version: 1.0.{build}
 image: Visual Studio 2019
-configuration: Release
-platform: Any CPU
+
+install:
+- ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
+
 before_build:
-- cmd: nuget restore
-build:
-  verbosity: minimal
+  - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
+  #- ps: Vsix-TokenReplacement LocateFolder\source.extension.cs 'Version = "([0-9\\.]+)"' 'Version = "{version}"'
+
+build_script:
+  - nuget restore -Verbosity quiet
+  - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+
+after_test:
+  - ps: Vsix-PushArtifacts | Vsix-PublishToGallery
