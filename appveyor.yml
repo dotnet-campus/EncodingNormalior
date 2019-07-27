@@ -13,4 +13,4 @@ build_script:
 test:
   assemblies:
     only:
-    - EncodingNormalizer.UnitTest.dll
+    - EncodingNormalizer.UnitTest
