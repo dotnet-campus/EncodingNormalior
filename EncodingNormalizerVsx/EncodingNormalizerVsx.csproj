@@ -58,7 +58,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
-    <CopyVsixExtensionLocation>E:\</CopyVsixExtensionLocation>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\EncodingUtf8AndGBKDifferentiater\EncodingDifferentiater.cs">
