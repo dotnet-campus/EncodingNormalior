@@ -10,3 +10,7 @@ before_build:
 build_script:
   - nuget restore -Verbosity quiet
   - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+test:
+  assemblies:
+    only:
+    - EncodingNormalizer.UnitTest.dll
