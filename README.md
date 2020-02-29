@@ -87,7 +87,7 @@
 
 ## 和我组队做工具
 
-这个工具相信是大家比较需要的，所以我就做了这个工具。做这个工具最难的地方在于判断文件编码，和如何做vs扩展两个。如果大家也想做一个差不多的东西，可以参见开发过程中使用的技术：[C＃ 判断文件编码](https://blog.lindexi.com/post/c-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81 )  [VisualStudio 扩展开发](https://blog.lindexi.com/post/visualstudio-%E6%89%A9%E5%B1%95%E5%BC%80%E5%8F%91 )
+这个工具相信是大家比较需要的，所以我就做了这个工具。做这个工具最难的地方在于判断文件编码，和如何做vs扩展两个。如果大家也想做一个差不多的东西，可以参见开发过程中使用的技术：[C＃ 判断文件编码](https://blog.lindexi.com/post/C-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81.html )  [VisualStudio 扩展开发](https://blog.lindexi.com/post/VisualStudio-%E6%89%A9%E5%B1%95%E5%BC%80%E5%8F%91.html )
 
 我把工具放在 github ： [https://github.com/dotnet-campus/EncodingNormalior](https://github.com/dotnet-campus/EncodingNormalior)
 
