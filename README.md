@@ -26,11 +26,11 @@
 
 ### 插件使用
 
-首先是下载插件，插件可以到 [https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a](https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a) 下载，也可以在 [VS 插件网](https://marketplace.visualstudio.com/vs)搜索 `Encoding` 就可以找到我的工具啦。可以说我翻遍了整个插件网，都没有找到我这个功能的插件，但是还是找到了一些有用的插件。
+首先是下载插件，插件可以到 [https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a](https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a) 下载，也可以在 [VS 插件网](https://marketplace.visualstudio.com/vs) 搜索 `Encoding` 就可以找到我的工具啦。可以说我翻遍了整个插件网，都没有找到我这个功能的插件（这句话是在2017年说的），但是还是找到了一些有用的插件。
 
 ![](http://image.acmx.xyz/8f464be7-2358-45f4-b6cd-eae32c47a878201727162028.jpg)
 
-打开 visual Sutido ，在安装完 [编码规范工具](https://marketplace.visualstudio.com/items?itemName=lindexigd.vs-extension-18109) ，可以看到菜单多了 选项 EncodingNormalizer
+打开 Visual Sutido ，在安装完 [编码规范工具](https://marketplace.visualstudio.com/items?itemName=lindexigd.vs-extension-18109) ，可以看到菜单多了 选项 EncodingNormalizer
 
 ![](http://image.acmx.xyz/lindexi%2F2019461567484)
 
@@ -41,6 +41,8 @@
 在 2.6 版本新添加的功能是修改当前打开的文件的编码，即使这个文件不在当前的项目里面
 
 因为现在没有一个方法可以知道一个文件是什么编码，所以可以在插件自己手动选当前文件的编码，这样可以解决识别编码错误
+
+![](http://image.acmx.xyz/lindexi%2F202022911598327.jpg)
 
 选择当前的文件的编码，和需要转换的文件的编码，然后点击 Convert 就可以转换了
 
