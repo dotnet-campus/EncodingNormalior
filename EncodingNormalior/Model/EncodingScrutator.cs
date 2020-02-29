@@ -39,6 +39,14 @@ namespace EncodingNormalior.Model
         public EncodingScrutatorFile InspectFileEncoding() //(FileInfo file)
         {
             var file = EncodingScrutatorFile.File;
+
+            // 如果文件长度太短，那么即使使用算法也无法判断格式
+            if (file.Length < 5)
+            {
+                EncodingScrutatorFile.Encoding = Encoding.ASCII;
+                return EncodingScrutatorFile;
+            }
+
             //打开流
             Stream stream = file.OpenRead();
             _stream = stream;
