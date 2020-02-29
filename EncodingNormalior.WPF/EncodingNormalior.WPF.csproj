@@ -10,22 +10,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\code_711px_1157693_easyicon.net.png" />
-    <None Remove="Resources\code_711px_16_easyicon.net.png" />
-    <None Remove="Resources\ConvertFileEncoding.png" />
-    <None Remove="Resources\EncodingNormalizer.png" />
-    <None Remove="Resources\EncodingNormalizerPackage.ico" />
-    <None Remove="Resources\Icon.ico" />
-    <None Remove="Resources\Logo.png" />
-    <None Remove="Resources\QQ截图20170114120751.png" />
-    <None Remove="Resources\QQ截图2017011412075116.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\EncodingUtf8AndGBKDifferentiater\EncodingDifferentiater.cs" Link="Model\EncodingDifferentiater.cs" />
   </ItemGroup>
 
   <ItemGroup>
+
+   <None Update="Resources\code_711px_1157693_easyicon.net.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\EncodingNormalizer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Icon.ico" >
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+
     <Content Include="Resources\code_711px_1157693_easyicon.net.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
