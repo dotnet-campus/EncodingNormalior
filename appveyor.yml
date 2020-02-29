@@ -8,6 +8,7 @@ before_build:
   #- ps: Vsix-TokenReplacement LocateFolder\source.extension.cs 'Version = "([0-9\\.]+)"' 'Version = "{version}"'
 
 build_script:
+  - dotnet restore "EncodingNormalior\EncodingNormalior.csproj"
   - nuget restore -Verbosity quiet
   - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
 test:

@@ -6,7 +6,6 @@
     <UseWPF>true</UseWPF>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\EncodingNormalizerVsx\Key.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>false</DelaySign>
   </PropertyGroup>
 
   <ItemGroup>

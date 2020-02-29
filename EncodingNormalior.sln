@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncodingNormalizer.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncodingUtf8AndGBKDifferentiater", "EncodingUtf8AndGBKDifferentiater\EncodingUtf8AndGBKDifferentiater.csproj", "{19184DC4-D745-451E-A3DA-9A827730E16A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodingNormalior.WPF", "EncodingNormalior.WPF\EncodingNormalior.WPF.csproj", "{DB0F1F5D-E82F-42A7-963F-4F072CAEBFAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncodingNormalior.WPF", "EncodingNormalior.WPF\EncodingNormalior.WPF.csproj", "{DB0F1F5D-E82F-42A7-963F-4F072CAEBFAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

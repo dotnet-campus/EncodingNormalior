@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>EncodingNormalior</ToolCommandName>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+        <Description>
+            编码规范工具——命令行
+
+            可以用来转换文件夹里面所有文件编码
+        </Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.0" />
+    </ItemGroup>
+</Project>
