@@ -31,7 +31,7 @@ namespace EncodingNormalizerVsx
 
         private void LoadStoryboard_Completed(object sender, EventArgs e)
         {
-            ((Panel) SplashPanel.Parent).Children.Remove(SplashPanel);
+            ((Panel)SplashPanel.Parent).Children.Remove(SplashPanel);
             SplashPanel = null;
             SplashLogo = null;
 

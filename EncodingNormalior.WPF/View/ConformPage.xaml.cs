@@ -43,10 +43,14 @@ namespace EncodingNormalizerVsx.View
 
         public void InspectFolderEncoding()
         {
-            if (Project.Count > 0)
+            if (Project?.Count > 0)
+            {
                 ViewModel.InspectFolderEncoding(Project);
+            }
             else
+            {
                 ViewModel.InspectFolderEncoding(SolutionFolder);
+            }
         }
 
         private void WriteCriterionButton_OnClick(object sender, RoutedEventArgs e)
