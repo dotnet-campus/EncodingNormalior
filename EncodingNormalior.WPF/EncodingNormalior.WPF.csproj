@@ -15,16 +15,6 @@
 
   <ItemGroup>
 
-   <None Update="Resources\code_711px_1157693_easyicon.net.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\EncodingNormalizer.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Icon.ico" >
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-
     <Content Include="Resources\code_711px_1157693_easyicon.net.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -34,15 +24,24 @@
     <Content Include="Resources\Icon.ico" >
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-
-    <Content Include="Resources\code_711px_16_easyicon.net.png" />
-    <Content Include="Resources\ConvertFileEncoding.png" />
+      <Content Include="Resources\code_711px_16_easyicon.net.png" >
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Resources\ConvertFileEncoding.png" >
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     <Content Include="Resources\EncodingNormalizerPackage.ico" />
-    <Resource Include="Resources\Icon.ico" >
-      </Resource>
-    <Content Include="Resources\Logo.png" />
-    <Content Include="Resources\QQ截图20170114120751.png" />
+    <Content Include="Resources\Logo.png" >
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+      <Content Include="Resources\QQ截图20170114120751.png" />
     <Content Include="Resources\QQ截图2017011412075116.png" />
+
+    <Resource Include="Resources\Icon.ico" >
+    </Resource>
+      <Resource Include="Resources\Logo.png" >
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
