@@ -1,4 +1,5 @@
 ﻿.git\
+.vs\
 obj\
 bin\
 packages\
