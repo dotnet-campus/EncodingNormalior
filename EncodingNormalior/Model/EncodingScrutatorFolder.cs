@@ -90,7 +90,7 @@ namespace EncodingNormalior.Model
             //包含文件
             //ReadAccount();
 
-            GetaIncludeRegexFile();
+            GetIncludeRegexFile();
 
             InspectFileEncoding();
 
@@ -159,7 +159,6 @@ namespace EncodingNormalior.Model
         private void InspectFileEncoding()
         {
             foreach (var temp in FaceFolder.GetFiles())
-            //.Select(temp=>new EncodingScrutatorFile(temp)))//.Where(PredicateInclude))
             {
                 //通知扫描到这个文件
                 var file = new EncodingScrutatorFile(temp)
@@ -187,11 +186,10 @@ namespace EncodingNormalior.Model
         /// <summary>
         ///     获取包含文件的规则
         /// </summary>
-        private void GetaIncludeRegexFile()
+        private void GetIncludeRegexFile()
         {
             if (_includeRegexFile == null)
             {
-                //_includeRegexFile = IncludeFileSetting.GetaIncludeRegexFile();
                 _includeRegexFile = new List<Regex>();
                 foreach (var temp in IncludeFileSetting.GetaIncludeRegexFile())
                 {
