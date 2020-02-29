@@ -48,57 +48,60 @@ namespace EncodingNormalior.Model
             }
 
             //打开流
-            Stream stream = file.OpenRead();
-            _stream = stream;
-            var encoding = Encoding.ASCII;
-            try
+            Encoding encoding;
+            using (Stream stream = file.OpenRead())
             {
-                var headByte = ReadFileHeadbyte(stream);
-                stream.Position = 0;
-
-                //从文件获取编码
-                encoding = AutoEncoding(headByte);
-            }
-            catch (ArgumentException e)
-            {
-
-            }
-
-            //Encoding.UTF8
-
-            // uft8无签名
-            if (encoding.Equals(Encoding.ASCII)) //GBK utf8
-            {
-                //如果都是ASCII，那么无法知道编码
-                //如果属于 Utf8的byte数大于 GBK byte数，那么编码是 utf8，否则是GBK
-                //如果两个数相同，那么不知道是哪个
-
-                var countUtf8 = CountUtf8();
-                if (countUtf8 == 0)
+                _stream = stream;
+                encoding = Encoding.ASCII;
+                try
                 {
-                    encoding = Encoding.ASCII;
+                    var headByte = ReadFileHeadbyte(stream);
+                    stream.Position = 0;
+
+                    //从文件获取编码
+                    encoding = AutoEncoding(headByte);
                 }
-                else
+                catch (ArgumentException e)
                 {
-                    var countGbk = CountGbk();
-                    if (countUtf8 > countGbk)
+
+                }
+
+                //Encoding.UTF8
+
+                // uft8无签名
+                if (encoding.Equals(Encoding.ASCII)) //GBK utf8
+                {
+                    //如果都是ASCII，那么无法知道编码
+                    //如果属于 Utf8的byte数大于 GBK byte数，那么编码是 utf8，否则是GBK
+                    //如果两个数相同，那么不知道是哪个
+
+                    var countUtf8 = CountUtf8();
+                    if (countUtf8 == 0)
                     {
-                        encoding = Encoding.UTF8;
-                        EncodingScrutatorFile.ConfidenceCount = (double)countUtf8 / (countUtf8 + countGbk);
+                        encoding = Encoding.ASCII;
                     }
                     else
                     {
-                        encoding = Encoding.GetEncoding("GBK");
-                        EncodingScrutatorFile.ConfidenceCount = (double)countGbk / (countUtf8 + countGbk);
+                        var countGbk = CountGbk();
+                        if (countUtf8 > countGbk)
+                        {
+                            encoding = Encoding.UTF8;
+                            EncodingScrutatorFile.ConfidenceCount = (double)countUtf8 / (countUtf8 + countGbk);
+                        }
+                        else
+                        {
+                            encoding = Encoding.GetEncoding("GBK");
+                            EncodingScrutatorFile.ConfidenceCount = (double)countGbk / (countUtf8 + countGbk);
+                        }
                     }
                 }
+                else
+                {
+                    //EncodingScrutatorFile.Encoding = encoding;//不需要
+                    EncodingScrutatorFile.ConfidenceCount = 1;
+                }
             }
-            else
-            {
-                //EncodingScrutatorFile.Encoding = encoding;//不需要
-                EncodingScrutatorFile.ConfidenceCount = 1;
-            }
-            stream.Dispose();
+
             EncodingScrutatorFile.Encoding = encoding;
             return EncodingScrutatorFile;
         }
