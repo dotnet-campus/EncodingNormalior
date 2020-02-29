@@ -1,0 +1,16 @@
+<Project>
+  <Import Project="build\Version.props" />
+  <PropertyGroup>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)bin\$(Configuration)</PackageOutputPath>
+    <Authors>dotnet-campus</Authors>
+    <Company>dotnet-campus</Company>
+    <LangVersion>latest</LangVersion>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>Copyright (c) 2020 dotnet-campus</Copyright>
+    <PackageProjectUrl>https://github.com/dotnet-campus/EncodingNormalior</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dotnet-campus/EncodingNormalior</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>dotnet;Encoding;dotnet-tool</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+</Project>

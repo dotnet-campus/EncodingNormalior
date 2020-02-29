@@ -83,11 +83,12 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
         private static void ParseCommand(CommandLineArgumentParser arguments)
         {
             ConformCommand(arguments);
-            var folder = arguments.Get(FolderCommand).Next;
+            string folder = arguments.Get(FolderCommand).Next;
             if (string.IsNullOrEmpty(folder))
             {
                 throw new ArgumentCommadnException(NoFolderArgException);
             }
+            folder = Path.GetFullPath(folder);
             if (!Directory.Exists(folder))
             {
                 throw new ArgumentCommadnException("不存在文件夹" + folder);
@@ -182,6 +183,11 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
         {
             try
             {
+#if NETCOREAPP
+                // [dotnet core 使用 GBK 编码](https://blog.lindexi.com/post/dotnet-core-%E4%BD%BF%E7%94%A8-GBK-%E7%BC%96%E7%A0%81.html )
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+#endif
+
                 var arguments = CommandLineArgumentParser.Parse(args);
 
                 try

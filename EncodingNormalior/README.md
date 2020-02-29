@@ -8,7 +8,7 @@
 
 ### 必选命令：
 
-输入要检测的文件夹或*csproj文件
+输入要检测的文件夹或csproj文件
 
 #### 输入格式：
 
@@ -53,7 +53,7 @@
 
 对于 Utf-32 的文件，几乎不存在一个算法可以判断他是文本，除非他带 BOM 。
 
-关于文件编码相关，如果先了解更多，戳此链接[C＃ 判断文件编码](http://lindexi.oschina.io/lindexi/post/C-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81/)
+关于文件编码相关，如果先了解更多，戳此链接[C＃ 判断文件编码](https://blog.lindexi.com/post/C-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81.html)
 
 ### 白名单文件格式
 
@@ -79,7 +79,7 @@
 
 不支持指定文件夹中的文件。如 `obj\\lindexi.txt`。
 
-默认[白名单](./Resource/WhiteList.txt):https://github.com/iip-easi/EncodingNormalior/blob/master/EncodingNormalior/Resource/WhiteList.txt。
+默认[白名单](./Resource/WhiteList.txt):https://github.com/dotnet-campus/EncodingNormalior/blob/master/EncodingNormalior/Resource/WhiteList.txt
 
 ### 包含文件的配置文件格式
 

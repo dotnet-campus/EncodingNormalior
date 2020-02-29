@@ -7,16 +7,9 @@
     <StartupObject />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>lindexi.src.EncodingUtf8AndGBKDifferentiater</PackageId>
-    <Authors>lindexi</Authors>
-    <Company>dotnet campus</Company>
     <Description>判断文件的编码是什么，可以区分 Utf8 和 GBK 可以判断文件的编码可信度
 
 使用方法是调用 EncodingDifferentiater 的 DifferentiateEncoding 方法，可以判断文件是什么编码</Description>
-    <Version>1.0.1</Version>
-    <PackageProjectUrl>https://github.com/dotnet-campus/EncodingNormalior/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/dotnet-campus/EncodingNormalior/tree/master/EncodingUtf8AndGBKDifferentiater</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>Encoding</PackageTags>
   </PropertyGroup>
 
   <ItemGroup Condition="$(TargetFramework)=='net45'">
