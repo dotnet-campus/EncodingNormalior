@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net461</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\EncodingNormalizerVsx\Key.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\code_711px_1157693_easyicon.net.png" />
+    <None Remove="Resources\code_711px_16_easyicon.net.png" />
+    <None Remove="Resources\ConvertFileEncoding.png" />
+    <None Remove="Resources\EncodingNormalizer.png" />
+    <None Remove="Resources\EncodingNormalizerPackage.ico" />
+    <None Remove="Resources\Icon.ico" />
+    <None Remove="Resources\Logo.png" />
+    <None Remove="Resources\QQ截图20170114120751.png" />
+    <None Remove="Resources\QQ截图2017011412075116.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\EncodingUtf8AndGBKDifferentiater\EncodingDifferentiater.cs" Link="Model\EncodingDifferentiater.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\code_711px_1157693_easyicon.net.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\EncodingNormalizer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Icon.ico" >
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+
+    <Content Include="Resources\code_711px_16_easyicon.net.png" />
+    <Content Include="Resources\ConvertFileEncoding.png" />
+    <Content Include="Resources\EncodingNormalizerPackage.ico" />
+    <Resource Include="Resources\Icon.ico" >
+      </Resource>
+    <Content Include="Resources\Logo.png" />
+    <Content Include="Resources\QQ截图20170114120751.png" />
+    <Content Include="Resources\QQ截图2017011412075116.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\EncodingNormalizerVsx\Key.snk" Link="Key.snk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EncodingNormalior\EncodingNormalior.csproj" />
+  </ItemGroup>
+
+
+</Project>

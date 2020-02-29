@@ -60,41 +60,10 @@
     <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\EncodingUtf8AndGBKDifferentiater\EncodingDifferentiater.cs">
-      <Link>Model\EncodingDifferentiater.cs</Link>
-    </Compile>
     <Compile Include="EncodingNormalizer.cs" />
     <Compile Include="EncodingNormalizerPackage.cs" />
     <Compile Include="GuidStrings.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EncodingScrutatorFile.cs" />
-    <Compile Include="Model\EncodingScrutatorFolder.cs" />
-    <Compile Include="Model\EncodingScrutatorFolderFile.cs" />
-    <Compile Include="Model\EncodingScrutatorProgress.cs" />
-    <Compile Include="Model\IEncodingConverter.cs" />
-    <Compile Include="Model\IEncodingScrutatorFile.cs" />
-    <Compile Include="Model\Solution.cs" />
-    <Compile Include="Model\Utf8WithoutBomEncodingConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\Account.cs" />
-    <Compile Include="ViewModel\ConformModel.cs" />
-    <Compile Include="ViewModel\ConvertFileEncodingModel.cs" />
-    <Compile Include="ViewModel\DefinitionModel.cs" />
-    <Compile Include="Model\EncodingConverter.cs" />
-    <Compile Include="ViewModel\NotifyProperty.cs" />
-    <Compile Include="Model\WriteFolderEncoding.cs" />
-    <Compile Include="View\ConformPage.xaml.cs">
-      <DependentUpon>ConformPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ConvertEncodingStr.cs" />
-    <Compile Include="View\ConvertFileEncodingPage.xaml.cs">
-      <DependentUpon>ConvertFileEncodingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DefinitionPage.xaml.cs">
-      <DependentUpon>DefinitionPage.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -252,40 +221,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EncodingNormalior.WPF\EncodingNormalior.WPF.csproj">
+      <Project>{db0f1f5d-e82f-42a7-963f-4f072caebfae}</Project>
+      <Name>EncodingNormalior.WPF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EncodingNormalior\EncodingNormalior.csproj">
       <Project>{b4d74a9c-f593-4dd9-9ce6-ff12259e6337}</Project>
       <Name>EncodingNormalior</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Button.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Color.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\ConformPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ConvertFileEncodingPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\DefinitionPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Icon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
