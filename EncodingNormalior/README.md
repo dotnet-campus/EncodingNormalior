@@ -1,6 +1,16 @@
 # 编码规范工具——命令行
 
+## 安装
 
+通过 dotnet tool 安装
+
+确定 dotnet 版本在 3.1 以上，可从[https://dotnet.microsoft.com/](https://dotnet.microsoft.com/)更新到最新版本
+
+在命令行输入下面命令作为全局工具安装
+
+```csharp
+dotnet install -g dotnetCampus.EncodingNormalior
+```
 
 ## 命令行使用
 
