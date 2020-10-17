@@ -105,7 +105,7 @@ namespace EncodingNormalior.Model
             }
             else
             {
-                whiteList = TextFileSuffix.WhiteList.Split('\n');
+                whiteList = EncodingNormaliorContext.WhiteList.Split('\n');
             }
 
             var fileSuffix = whiteList.Select(temp => temp.Replace("\r", "").Trim());

@@ -104,7 +104,7 @@ namespace EncodingNormalior.Model
             string[] textFileSuffix;
             if (!File.Exists(file))
             {
-                textFileSuffix = Resource.TextFileSuffix.textFileSuffix.Split('\n');
+                textFileSuffix = EncodingNormaliorContext.TextFileSuffix.Split('\n');
             }
             else
             {
