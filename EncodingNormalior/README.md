@@ -32,7 +32,7 @@ EncodingNormalior -f E:\lindexi\EncodingNormalior
  
 #### 输入格式：
     
- - 必须包含的文件    `--IncludeFile 文件路径  ` 
+ - 必须包含的文件    `--IncludeFile 文件路径`
 
  - 文件白名单       `--WhiteList   文件路径`
 
