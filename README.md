@@ -1,6 +1,6 @@
 # 编码检测和修改工具
 
-[![Build status](https://ci.appveyor.com/api/projects/status/ypcqbbc7bsexnfog?svg=true)](https://ci.appveyor.com/project/lindexi_gd/encodingnormalior)
+![](https://github.com/dotnet-campus/EncodingNormalior/workflows/.NET%20Core/badge.svg)
 
 在开发中经常遇到编码不一致的文件，而如果这些文件包含需要显示的字符串，就会导致在乱码。所以需要一个工具可以自动检测工程、文件夹内所有文本的编码，并可以规范所有文件编码。
 
