@@ -81,8 +81,7 @@ namespace EncodingNormalior.Model
                 throw new ArgumentException("文件不存在" + file);
             }
             var whiteList = new List<string>();
-            using (StreamReader stream = new StreamReader(
-                new FileStream(file, FileMode.Open)))
+            using (StreamReader stream = new StreamReader(new FileStream(file, FileMode.Open)))
             {
                 whiteList.AddRange(stream.ReadToEnd().Split('\n').Select(temp => temp.Replace("\r", "").Trim()));
             }
