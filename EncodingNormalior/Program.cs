@@ -88,6 +88,13 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             {
                 throw new ArgumentCommadnException(NoFolderArgException);
             }
+
+            // 如果输入 "E:\lindexi\EncodingNormalior\" 那么命令行将会传入 E:\lindexi\EncodingNormalior\" 字符串
+            if (folder.EndsWith("\""))
+            {
+                folder = folder.Substring(0, folder.Length - 1);
+            }
+
             folder = Path.GetFullPath(folder);
             if (!Directory.Exists(folder))
             {
@@ -137,11 +144,11 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
 
             encodingScrutatorFolder.InspectFolderEncoding();
             Console.WriteLine(PintnoConformEncodingFile(encodingScrutatorFolder));
-            if (_illicitFile.Count > 0)
+            if (IllicitFile.Count > 0)
             {
                 StringBuilder str = new StringBuilder();
-                str.Append($"存在不符合规范文件：  {_illicitFile.Count}\r\n");
-                foreach (var temp in _illicitFile)
+                str.Append($"存在不符合规范文件：  {IllicitFile.Count}\r\n");
+                foreach (var temp in IllicitFile)
                 {
                     str.Append(temp.File.FullName + "\r\n");
                 }
@@ -238,11 +245,11 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                     if (encodingScrutatorFolder.SitpulationEncodingSetting.ConformtotheDefaultEncoding(temp.Encoding))
                     {
                         str.Append("文件符合规范");
-                        _illicitFile.Add(temp);
                     }
                     else
                     {
                         str.Append("文件不符合规范");
+                        IllicitFile.Add(temp);
                     }
                     str.Append("\r\n");
 
@@ -256,8 +263,10 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             return str.ToString();
         }
 
-
-        private static List<EncodingScrutatorFile> _illicitFile = new List<EncodingScrutatorFile>();
+        /// <summary>
+        /// 不符合规范的文件列表
+        /// </summary>
+        private static readonly List<EncodingScrutatorFile> IllicitFile = new List<EncodingScrutatorFile>();
 
         //private static string Print(EncodingScrutatorFolder encodingScrutatorFolder, string white = "", StringBuilder str = null)
         //{

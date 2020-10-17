@@ -20,6 +20,10 @@ dotnet tool install -g dotnetCampus.EncodingNormalior
 
 输入要检测的文件夹或csproj文件
 
+```
+EncodingNormalior -f E:\lindexi\EncodingNormalior
+```
+
 #### 输入格式：
 
 `输入文件夹      -f 文件夹路径`
