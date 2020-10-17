@@ -163,7 +163,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 {
                     str.Append(temp.File.FullName + "\r\n");
                 }
-                throw new Exception(str.ToString());
+                throw new EncodingNormaliorException(str.ToString());
             }
             else
             {
