@@ -36,7 +36,9 @@ EncodingNormalior -f E:\lindexi\EncodingNormalior
 
  - 文件白名单       `--WhiteList   文件路径`
 
- - 规定的编码       `-E            Encoding`
+ - 规定的编码       `-E            Encoding`     默认是 Utf8 编码
+
+ - 是否尝试修复编码  `--TryFix      [true|false]` 设置true将尝试自动修复，默认为不自动修复
 
 注意：    Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
 
