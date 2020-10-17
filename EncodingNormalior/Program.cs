@@ -210,6 +210,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
 
                     var streamWriter = new StreamWriter(fileStream, sitpulationEncoding);
                     streamWriter.Write(text);
+                    streamWriter.Flush();
                 }
             }
 
