@@ -1,6 +1,6 @@
 ﻿namespace EncodingNormalior.Model
 {
-    class EncodingNormaliorContext
+    public class EncodingNormaliorContext
     {
         /// <summary>
         /// 白名单的文件后缀名，这部分的文件忽略文件编码

@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EncodingNormalior.Model;
-using EncodingNormalior.Resource;
 using Newtonsoft.Json;
 
 namespace EncodingNormalizerVsx.ViewModel
@@ -109,7 +108,7 @@ namespace EncodingNormalizerVsx.ViewModel
             catch (Exception)
             {
                 //默认配置
-                var whiteList = TextFileSuffix.WhiteList;
+                var whiteList = EncodingNormaliorContext.WhiteList;
                 var fileInclude = IncludeFileSetting.TextFileSuffix.Aggregate("",
                     (current, temp) => current + temp + "\r\n");
                 //EncodingNormalior.Resource.TextFileSuffix.textFileSuffix;
