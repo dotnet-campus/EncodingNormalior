@@ -18,7 +18,7 @@ namespace EncodingNormalior
         private const string EncodingCommand = "-E";
         private const string FolderCommand = "-f";
         private const string ProjectCommand = "-p";
-
+        private const string TryFixCommand = "--TryFix";
 
         //        private const string Usage =
         //@"usage: EncodingNormalior <command> [args]
@@ -47,7 +47,7 @@ namespace EncodingNormalior
 
         private const string Usage =
 @"usage: EncodingNormalior <command> [args]
-                         [--IncludeFile path] [--WhiteList path] [-E Encoding]
+                         [--IncludeFile path] [--WhiteList path] [-E Encoding] [--TryFix true]
 These are EncodingNormalior commands
   -f      folder
           the folder need to check all the file
@@ -62,7 +62,8 @@ These are EncodingNormalior commands
  输入格式：
     必须包含的文件    --IncludeFile 文件路径   
     文件白名单       --WhiteList   文件路径
-    规定的编码       -E            Encoding
+    规定的编码       -E            Encoding 默认是 Utf8 编码
+    是否尝试修复编码  --TryFix      设置true将尝试自动修复，默认为不自动修复
 
                    
 Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
@@ -88,6 +89,13 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             {
                 throw new ArgumentCommadnException(NoFolderArgException);
             }
+
+            // 如果输入 "E:\lindexi\EncodingNormalior\" 那么命令行将会传入 E:\lindexi\EncodingNormalior\" 字符串
+            if (folder.EndsWith("\""))
+            {
+                folder = folder.Substring(0, folder.Length - 1);
+            }
+
             folder = Path.GetFullPath(folder);
             if (!Directory.Exists(folder))
             {
@@ -104,6 +112,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 IncludeFileSetting includeFileSetting = new IncludeFileSetting(wildCardFile);
                 encodingScrutatorFolder.IncludeFileSetting = includeFileSetting;
             }
+
             if (arguments.Has(EncodingCommand))
             {
                 string encodingCommand = arguments.Get(EncodingCommand).Take();
@@ -124,33 +133,87 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                     default:
                         throw new ArgumentException("输入无法识别编码");
                 }
+
                 encodingScrutatorFolder.SitpulationEncodingSetting = new SitpulationEncodingSetting()
                 {
                     SitpulationEncoding = encoding
                 };
             }
+
             if (arguments.Has(WhiteListCommand))
             {
                 var whiteListFile = arguments.Get(WhiteListCommand).Take();
-                encodingScrutatorFolder.InspectFileWhiteListSetting = InspectFileWhiteListSetting.ReadWhiteListSetting(whiteListFile);
+                encodingScrutatorFolder.InspectFileWhiteListSetting =
+                    InspectFileWhiteListSetting.ReadWhiteListSetting(whiteListFile);
             }
 
             encodingScrutatorFolder.InspectFolderEncoding();
             Console.WriteLine(PintnoConformEncodingFile(encodingScrutatorFolder));
-            if (_illicitFile.Count > 0)
+            if (IllicitFile.Count > 0)
             {
+                if (arguments.Has(TryFixCommand))
+                {
+                    var tryFix = arguments.Get(TryFixCommand).Take();
+                    if (bool.TryParse(tryFix.ToString(), out var value) && value is true)
+                    {
+                        TryFix(encodingScrutatorFolder);
+                        return;
+                    }
+                }
+
                 StringBuilder str = new StringBuilder();
-                str.Append($"存在不符合规范文件：  {_illicitFile.Count}\r\n");
-                foreach (var temp in _illicitFile)
+                str.Append($"存在不符合规范文件：  {IllicitFile.Count}\r\n");
+                foreach (var temp in IllicitFile)
                 {
                     str.Append(temp.File.FullName + "\r\n");
                 }
-                throw new Exception(str.ToString());
+
+                str.Append("可采用如下命令修复文件编码：")
+                    .Append("\r\n") // 强行规定换行
+                    // 下面使用 dotnet tool update 的 update 是预期的，这个命令的意思是在没有安装的时候安装，有安装的时候更新
+                    .Append("dotnet tool update -g dotnetCampus.EncodingNormalior")
+                    .Append("\r\n")
+                    .Append($"EncodingNormalior -f \"{encodingScrutatorFolder.FaceFolder.FullName}\" --TryFix true")
+                    .Append("\r\n")
+                    .Append("或安装编码规范 VS 插件工具：https://marketplace.visualstudio.com/items?itemName=lindexigd.vs-extension-18109")
+                    .Append("\r\n");
+
+                throw new EncodingNormaliorException(str.ToString());
             }
             else
             {
                 Console.WriteLine("恭喜你，没有存在不规范文件\r\n");
             }
+        }
+
+        private static void TryFix(EncodingScrutatorFolder encodingScrutatorFolder)
+        {
+            Console.WriteLine($"存在不符合规范文件：  {IllicitFile.Count}\r\n");
+            var sitpulationEncoding = encodingScrutatorFolder.SitpulationEncodingSetting.SitpulationEncoding;
+            var SitpulationEncodingName = sitpulationEncoding.EncodingName;
+            Console.WriteLine($"开始尝试自动修复格式，输出格式为 {SitpulationEncodingName}");
+
+            foreach (var encodingScrutatorFile in IllicitFile)
+            {
+                Console.WriteLine(
+                    $"开始修复 {encodingScrutatorFile.Name} 从 {encodingScrutatorFile.Encoding.EncodingName} 到 {SitpulationEncodingName} 可信度{encodingScrutatorFile.ConfidenceCount:0.00}");
+
+                using (var fileStream = new FileStream(encodingScrutatorFile.File.FullName, FileMode.Open,
+                    FileAccess.ReadWrite, FileShare.None))
+                {
+                    var streamReader = new StreamReader(fileStream, encodingScrutatorFile.Encoding);
+                    var text = streamReader.ReadToEnd();
+
+                    // 截断长度，相当于重新创建文件。如果没有下面代码，那么在前后文件长度修改时，将会在文件最后加上原先的文件
+                    fileStream.Position = 0;
+                    fileStream.SetLength(0);
+
+                    var streamWriter = new StreamWriter(fileStream, sitpulationEncoding);
+                    streamWriter.Write(text);
+                }
+            }
+
+            Console.WriteLine($"修复完成");
         }
 
         private static void ConformCommand(CommandLineArgumentParser arguments)
@@ -161,10 +224,11 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 WhiteListCommand,
                 EncodingCommand,
                 FolderCommand,
+                TryFixCommand,
             };
 
 
-            foreach (var arg in arguments.GetEnumerator().Where(temp => ((string)temp).StartsWith("-")))
+            foreach (var arg in arguments.GetEnumerator().Where(temp => ((string) temp).StartsWith("-")))
             {
                 if (command.All(temp => !temp.Equals(arg)))
                 {
@@ -205,23 +269,26 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 Console.Error.WriteLine(e.Message);
                 Environment.Exit(-1);
             }
-            Environment.Exit(0);
 
+            Environment.Exit(0);
         }
 
         /// <summary>
         /// 输出不符合规范编码文件
         /// </summary>
-        private static string PintnoConformEncodingFile(EncodingScrutatorFolder encodingScrutatorFolder, string white = "", StringBuilder str = null)
+        private static string PintnoConformEncodingFile(EncodingScrutatorFolder encodingScrutatorFolder,
+            string white = "", StringBuilder str = null)
         {
             if (str == null)
             {
                 str = new StringBuilder();
             }
+
             foreach (var temp in encodingScrutatorFolder.Folder)
             {
                 PintnoConformEncodingFile(temp, white + temp.Name + "/", str);
             }
+
             foreach (var temp in encodingScrutatorFolder.File)
             {
                 //str.Append(white);
@@ -232,18 +299,20 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 }
                 else
                 {
-                    str.Append($"编码　:{temp.Encoding.EncodingName.PadRight(10)} {(temp.Encoding.Equals(Encoding.ASCII) ? "" : $"置信度:{temp.ConfidenceCount}")} \r\n");
+                    str.Append(
+                        $"编码　:{temp.Encoding.EncodingName.PadRight(10)} {(temp.Encoding.Equals(Encoding.ASCII) ? "" : $"置信度:{temp.ConfidenceCount}")} \r\n");
                     //str.Append("编码　:" + temp.Encoding.EncodingName + " 置信度 " + temp.ConfidenceCount + " ");
                     str.Append("状态:");
                     if (encodingScrutatorFolder.SitpulationEncodingSetting.ConformtotheDefaultEncoding(temp.Encoding))
                     {
                         str.Append("文件符合规范");
-                        _illicitFile.Add(temp);
                     }
                     else
                     {
                         str.Append("文件不符合规范");
+                        IllicitFile.Add(temp);
                     }
+
                     str.Append("\r\n");
 
                     //str.Append(
@@ -251,13 +320,17 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                     //        ? "文件符合规范"
                     //        : "文件不符合规范");
                 }
+
                 str.Append("\r\n");
             }
+
             return str.ToString();
         }
 
-
-        private static List<EncodingScrutatorFile> _illicitFile = new List<EncodingScrutatorFile>();
+        /// <summary>
+        /// 不符合规范的文件列表
+        /// </summary>
+        private static readonly List<EncodingScrutatorFile> IllicitFile = new List<EncodingScrutatorFile>();
 
         //private static string Print(EncodingScrutatorFolder encodingScrutatorFolder, string white = "", StringBuilder str = null)
         //{

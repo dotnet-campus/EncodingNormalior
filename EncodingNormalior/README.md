@@ -20,6 +20,10 @@ dotnet tool install -g dotnetCampus.EncodingNormalior
 
 输入要检测的文件夹或csproj文件
 
+```
+EncodingNormalior -f E:\lindexi\EncodingNormalior
+```
+
 #### 输入格式：
 
 `输入文件夹      -f 文件夹路径`
@@ -28,11 +32,13 @@ dotnet tool install -g dotnetCampus.EncodingNormalior
  
 #### 输入格式：
     
- - 必须包含的文件    `--IncludeFile 文件路径  ` 
+ - 必须包含的文件    `--IncludeFile 文件路径`
 
  - 文件白名单       `--WhiteList   文件路径`
 
- - 规定的编码       `-E            Encoding`
+ - 规定的编码       `-E            Encoding`     默认是 Utf8 编码
+
+ - 是否尝试修复编码  `--TryFix      [true|false]` 设置true将尝试自动修复，默认为不自动修复
 
 注意：    Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
 
