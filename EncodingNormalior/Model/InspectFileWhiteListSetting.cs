@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using EncodingNormalior.Annotations;
-using EncodingNormalior.Resource;
 
 namespace EncodingNormalior.Model
 {
@@ -56,13 +55,13 @@ namespace EncodingNormalior.Model
 
         public InspectFileWhiteListSetting([NotNull] List<string> whiteList)
         {
-            foreach (var temp in whiteList.Where(temp=>!string.IsNullOrEmpty(temp)))
+            foreach (var temp in whiteList.Where(temp => !string.IsNullOrEmpty(temp)))
             {
                 Parse(temp);
             }
         }
 
-        private static Regex _folderRegex = new Regex("\\w+[\\\\|/]");
+        private static readonly Regex FolderRegex = new Regex("\\w+[\\\\|/]");
 
         public static List<string> DefaultWhiteList { set; get; }
 
@@ -81,9 +80,9 @@ namespace EncodingNormalior.Model
             {
                 throw new ArgumentException("文件不存在" + file);
             }
+
             var whiteList = new List<string>();
-            using (StreamReader stream = new StreamReader(
-                new FileStream(file, FileMode.Open)))
+            using (StreamReader stream = new StreamReader(new FileStream(file, FileMode.Open)))
             {
                 whiteList.AddRange(stream.ReadToEnd().Split('\n').Select(temp => temp.Replace("\r", "").Trim()));
             }
@@ -97,15 +96,14 @@ namespace EncodingNormalior.Model
             string[] whiteList;
             if (File.Exists(file))
             {
-                using (StreamReader stream = new StreamReader(
-                    new FileStream(file, FileMode.Open)))
+                using (StreamReader stream = new StreamReader(new FileStream(file, FileMode.Open)))
                 {
                     whiteList = stream.ReadToEnd().Split('\n');
                 }
             }
             else
             {
-                whiteList = TextFileSuffix.WhiteList.Split('\n');
+                whiteList = EncodingNormaliorContext.WhiteList.Split('\n');
             }
 
             var fileSuffix = whiteList.Select(temp => temp.Replace("\r", "").Trim());
@@ -119,10 +117,10 @@ namespace EncodingNormalior.Model
 
         public void Remove(string whiteList)
         {
-            var folderWhiteList = ((List<string>)FolderWhiteList);
+            var folderWhiteList = ((List<string>) FolderWhiteList);
 
             Remove(whiteList, folderWhiteList);
-            folderWhiteList = (List<string>)FileWhiteList;
+            folderWhiteList = (List<string>) FileWhiteList;
             Remove(whiteList, folderWhiteList);
         }
 
@@ -147,11 +145,9 @@ namespace EncodingNormalior.Model
 
         private void Parse(string whiteList)
         {
-            _folderRegex = new Regex("\\w+[\\\\|/]$");
-
-            if (_folderRegex.IsMatch(whiteList))
+            if (FolderRegex.IsMatch(whiteList))
             {
-                ((List<string>)FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
+                ((List<string>) FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
             }
             else
             {
@@ -159,8 +155,9 @@ namespace EncodingNormalior.Model
                 {
                     throw new ArgumentException("不支持指定文件夹中的文件\r\n" + whiteList + " 错误");
                 }
-                ((List<string>)FileWhiteList).Add(whiteList);
-                ((List<Regex>)FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList),
+
+                ((List<string>) FileWhiteList).Add(whiteList);
+                ((List<Regex>) FileRegexWhiteList).Add(new Regex(GetWildcardRegexString(whiteList),
                     RegexOptions.IgnoreCase));
             }
         }
@@ -182,6 +179,7 @@ namespace EncodingNormalior.Model
             {
                 return false;
             }
+
             return true;
         }
 
