@@ -51,7 +51,7 @@ namespace EncodingNormalior.Model
         /// <summary>
         ///     当前文件夹
         /// </summary>
-        public DirectoryInfo FaceFolder { get; }
+        internal DirectoryInfo FaceFolder { get; }
 
         /// <summary>
         ///     设置或获取编码规范
