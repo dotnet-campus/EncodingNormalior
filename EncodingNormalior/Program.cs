@@ -168,6 +168,16 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                     str.Append(temp.File.FullName + "\r\n");
                 }
 
+                str.Append("可采用如下命令修复文件编码：")
+                    .Append("\r\n") // 强行规定换行
+                    // 下面使用 dotnet tool update 的 update 是预期的，这个命令的意思是在没有安装的时候安装，有安装的时候更新
+                    .Append("dotnet tool update -g dotnetCampus.EncodingNormalior")
+                    .Append("\r\n")
+                    .Append($"EncodingNormalior -f \"{encodingScrutatorFolder.FaceFolder.FullName}\" --TryFix true")
+                    .Append("\r\n")
+                    .Append("或安装编码规范 VS 插件工具：https://marketplace.visualstudio.com/items?itemName=lindexigd.vs-extension-18109")
+                    .Append("\r\n");
+
                 throw new EncodingNormaliorException(str.ToString());
             }
             else
