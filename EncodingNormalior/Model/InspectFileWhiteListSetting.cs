@@ -61,7 +61,7 @@ namespace EncodingNormalior.Model
             }
         }
 
-        private static Regex _folderRegex = new Regex("\\w+[\\\\|/]");
+        private static readonly Regex FolderRegex = new Regex("\\w+[\\\\|/]");
 
         public static List<string> DefaultWhiteList { set; get; }
 
@@ -145,9 +145,7 @@ namespace EncodingNormalior.Model
 
         private void Parse(string whiteList)
         {
-            _folderRegex = new Regex("\\w+[\\\\|/]$");
-
-            if (_folderRegex.IsMatch(whiteList))
+            if (FolderRegex.IsMatch(whiteList))
             {
                 ((List<string>)FolderWhiteList).Add(whiteList.Substring(0, whiteList.Length - 1));
             }
