@@ -112,6 +112,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 IncludeFileSetting includeFileSetting = new IncludeFileSetting(wildCardFile);
                 encodingScrutatorFolder.IncludeFileSetting = includeFileSetting;
             }
+
             if (arguments.Has(EncodingCommand))
             {
                 string encodingCommand = arguments.Get(EncodingCommand).Take();
@@ -132,15 +133,18 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                     default:
                         throw new ArgumentException("输入无法识别编码");
                 }
+
                 encodingScrutatorFolder.SitpulationEncodingSetting = new SitpulationEncodingSetting()
                 {
                     SitpulationEncoding = encoding
                 };
             }
+
             if (arguments.Has(WhiteListCommand))
             {
                 var whiteListFile = arguments.Get(WhiteListCommand).Take();
-                encodingScrutatorFolder.InspectFileWhiteListSetting = InspectFileWhiteListSetting.ReadWhiteListSetting(whiteListFile);
+                encodingScrutatorFolder.InspectFileWhiteListSetting =
+                    InspectFileWhiteListSetting.ReadWhiteListSetting(whiteListFile);
             }
 
             encodingScrutatorFolder.InspectFolderEncoding();
@@ -150,7 +154,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 if (arguments.Has(TryFixCommand))
                 {
                     var tryFix = arguments.Get(TryFixCommand).Take();
-                    if (bool.TryParse(tryFix.ToString(),out var value) && value is true)
+                    if (bool.TryParse(tryFix.ToString(), out var value) && value is true)
                     {
                         TryFix(encodingScrutatorFolder);
                         return;
@@ -163,6 +167,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 {
                     str.Append(temp.File.FullName + "\r\n");
                 }
+
                 throw new EncodingNormaliorException(str.ToString());
             }
             else
@@ -180,7 +185,8 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
 
             foreach (var encodingScrutatorFile in IllicitFile)
             {
-                Console.WriteLine($"开始修复 {encodingScrutatorFile.Name} 从 {encodingScrutatorFile.Encoding.EncodingName} 到 {SitpulationEncodingName} 可信度{encodingScrutatorFile.ConfidenceCount:0.00}");
+                Console.WriteLine(
+                    $"开始修复 {encodingScrutatorFile.Name} 从 {encodingScrutatorFile.Encoding.EncodingName} 到 {SitpulationEncodingName} 可信度{encodingScrutatorFile.ConfidenceCount:0.00}");
 
                 using (var fileStream = new FileStream(encodingScrutatorFile.File.FullName, FileMode.Open,
                     FileAccess.ReadWrite, FileShare.None))
@@ -212,7 +218,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             };
 
 
-            foreach (var arg in arguments.GetEnumerator().Where(temp => ((string)temp).StartsWith("-")))
+            foreach (var arg in arguments.GetEnumerator().Where(temp => ((string) temp).StartsWith("-")))
             {
                 if (command.All(temp => !temp.Equals(arg)))
                 {
@@ -253,23 +259,26 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 Console.Error.WriteLine(e.Message);
                 Environment.Exit(-1);
             }
-            Environment.Exit(0);
 
+            Environment.Exit(0);
         }
 
         /// <summary>
         /// 输出不符合规范编码文件
         /// </summary>
-        private static string PintnoConformEncodingFile(EncodingScrutatorFolder encodingScrutatorFolder, string white = "", StringBuilder str = null)
+        private static string PintnoConformEncodingFile(EncodingScrutatorFolder encodingScrutatorFolder,
+            string white = "", StringBuilder str = null)
         {
             if (str == null)
             {
                 str = new StringBuilder();
             }
+
             foreach (var temp in encodingScrutatorFolder.Folder)
             {
                 PintnoConformEncodingFile(temp, white + temp.Name + "/", str);
             }
+
             foreach (var temp in encodingScrutatorFolder.File)
             {
                 //str.Append(white);
@@ -280,7 +289,8 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 }
                 else
                 {
-                    str.Append($"编码　:{temp.Encoding.EncodingName.PadRight(10)} {(temp.Encoding.Equals(Encoding.ASCII) ? "" : $"置信度:{temp.ConfidenceCount}")} \r\n");
+                    str.Append(
+                        $"编码　:{temp.Encoding.EncodingName.PadRight(10)} {(temp.Encoding.Equals(Encoding.ASCII) ? "" : $"置信度:{temp.ConfidenceCount}")} \r\n");
                     //str.Append("编码　:" + temp.Encoding.EncodingName + " 置信度 " + temp.ConfidenceCount + " ");
                     str.Append("状态:");
                     if (encodingScrutatorFolder.SitpulationEncodingSetting.ConformtotheDefaultEncoding(temp.Encoding))
@@ -292,6 +302,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                         str.Append("文件不符合规范");
                         IllicitFile.Add(temp);
                     }
+
                     str.Append("\r\n");
 
                     //str.Append(
@@ -299,8 +310,10 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                     //        ? "文件符合规范"
                     //        : "文件不符合规范");
                 }
+
                 str.Append("\r\n");
             }
+
             return str.ToString();
         }
 
