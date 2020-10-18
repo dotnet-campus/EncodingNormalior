@@ -24,6 +24,8 @@ dotnet tool install -g dotnetCampus.EncodingNormalior
 EncodingNormalior -f E:\lindexi\EncodingNormalior
 ```
 
+上面代码的 `E:\lindexi\EncodingNormalior` 为需要修复文本文件的编码规范的文件夹
+
 #### 输入格式：
 
 `输入文件夹      -f 文件夹路径`
