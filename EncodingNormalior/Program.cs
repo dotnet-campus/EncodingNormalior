@@ -151,6 +151,8 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
 
             encodingScrutatorFolder.InspectFolderEncoding();
 
+            var output = PintnoConformEncodingFile(encodingScrutatorFolder);
+
             if (arguments.Has(Quiet) && bool.TryParse(arguments.Get(Quiet).Take(), out var shouldQuiet) &&
                 shouldQuiet is true)
             {
@@ -158,7 +160,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             }
             else
             {
-                Console.WriteLine(PintnoConformEncodingFile(encodingScrutatorFolder));
+                Console.WriteLine(output);
             }
 
             if (IllicitFile.Count > 0)
@@ -238,6 +240,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 EncodingCommand,
                 FolderCommand,
                 TryFixCommand,
+                Quiet,
             };
 
 
