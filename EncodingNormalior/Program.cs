@@ -19,6 +19,7 @@ namespace EncodingNormalior
         private const string FolderCommand = "-f";
         private const string ProjectCommand = "-p";
         private const string TryFixCommand = "--TryFix";
+        private const string Quiet = "--Quiet";
 
         //        private const string Usage =
         //@"usage: EncodingNormalior <command> [args]
@@ -47,7 +48,7 @@ namespace EncodingNormalior
 
         private const string Usage =
 @"usage: EncodingNormalior <command> [args]
-                         [--IncludeFile path] [--WhiteList path] [-E Encoding] [--TryFix true]
+                         [--IncludeFile path] [--WhiteList path] [-E Encoding] [--TryFix true] [--Quiet true]
 These are EncodingNormalior commands
   -f      folder
           the folder need to check all the file
@@ -64,6 +65,7 @@ These are EncodingNormalior commands
     文件白名单       --WhiteList   文件路径
     规定的编码       -E            Encoding 默认是 Utf8 编码
     是否尝试修复编码  --TryFix      设置true将尝试自动修复，默认为不自动修复
+    是否进行静默判断  --Quiet       设置true将只输出结果，不输出中间信息
 
                    
 Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
@@ -148,7 +150,19 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
             }
 
             encodingScrutatorFolder.InspectFolderEncoding();
-            Console.WriteLine(PintnoConformEncodingFile(encodingScrutatorFolder));
+
+            var output = PintnoConformEncodingFile(encodingScrutatorFolder);
+
+            if (arguments.Has(Quiet) && bool.TryParse(arguments.Get(Quiet).Take(), out var shouldQuiet) &&
+                shouldQuiet is true)
+            {
+                // 如果需要静默，那么什么都不输出
+            }
+            else
+            {
+                Console.WriteLine(output);
+            }
+
             if (IllicitFile.Count > 0)
             {
                 if (arguments.Has(TryFixCommand))
@@ -226,6 +240,7 @@ Encoding 包含 utf8、 gbk、 ascii、utf16、BigEndianUnicode
                 EncodingCommand,
                 FolderCommand,
                 TryFixCommand,
+                Quiet,
             };
 
 
