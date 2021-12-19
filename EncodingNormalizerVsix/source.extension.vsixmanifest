@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="EncodingNormalizerVsix.bfd042d4-8c99-4e7c-841f-075d3ca8f992" Version="1.0" Language="en-US" Publisher="lindexi" />
+        <Identity Id="EncodingNormalizerVsx.Company.442f55bf-78ea-4a12-be38-8f3e5fe2147a" Version="1.0" Language="en-US" Publisher="lindexi" />
         <DisplayName>Encoding normalize tool</DisplayName>
         <Description xml:space="preserve">Encoding tool can check all files in solution and normalize the encoding</Description>
         <MoreInfo>https://github.com/dotnet-campus/EncodingNormalior</MoreInfo>
