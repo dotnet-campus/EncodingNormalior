@@ -79,12 +79,12 @@ internal sealed class EncodingNormalizer
     {
         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
         // 修改用户打开的文件的编码
-        DTE dte = (DTE)await ServiceProvider.GetServiceAsync(typeof(DTE));
+        DTE dte = (DTE) await ServiceProvider.GetServiceAsync(typeof(DTE));
         Document document = dte.ActiveDocument;
 
         if (document is null)
         {
-            IServiceProvider serviceProvider = (IServiceProvider)ServiceProvider;
+            IServiceProvider serviceProvider = (IServiceProvider) ServiceProvider;
             VsShellUtilities.ShowMessageBox(serviceProvider, "没有找到打开的文档", "修改用户打开的文件的编码失败", OLEMSGICON.OLEMSGICON_WARNING, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
             return;
         }
@@ -116,20 +116,13 @@ internal sealed class EncodingNormalizer
     private async void EncodingNormalizerCallback(object sender, EventArgs e)
     {
         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(_package.DisposalToken);
-        DTE dte = (DTE)await ServiceProvider.GetServiceAsync(typeof(DTE));
+        DTE dte = (DTE) await ServiceProvider.GetServiceAsync(typeof(DTE));
         string file = dte.Solution.FullName;
         List<string> project = new List<string>();
         if (dte.Solution.Projects.Count > 0)
         {
-            //try
-            //{
             int noLoadProjectCount = TryParseProject(dte, project);
-            //}
-            // catch (NotImplementedException)
-            //{
-            //    MessageBox.Show("The project not loaded.", "项目还没有加载完成");
-            //    return;
-            //}
+
             if (noLoadProjectCount > 0)
             {
                 if (project.Count == 0)
@@ -168,13 +161,13 @@ internal sealed class EncodingNormalizer
             {
                 if (temp is Project)
                 {
-                    if (((Project)temp).Kind == ProjectKinds.vsProjectKindSolutionFolder)
+                    if (((Project) temp).Kind == ProjectKinds.vsProjectKindSolutionFolder)
                     {
-                        project.AddRange(GetSolutionFolderProjects((Project)temp).Select(ParseProjectFolder));
+                        project.AddRange(GetSolutionFolderProjects((Project) temp).Select(ParseProjectFolder));
                     }
                     else
                     {
-                        project.Add(ParseProjectFolder((Project)temp));
+                        project.Add(ParseProjectFolder((Project) temp));
                     }
                 }
             }
