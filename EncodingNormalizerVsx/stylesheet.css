@@ -1,0 +1,127 @@
+body {
+    border: 0;
+    color: #1E1E1E;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.45;
+    margin: 0;
+    padding: 0;
+    word-wrap: break-word;
+}
+
+/* General & 'Reset' Stuff */
+
+
+.container {
+    margin: 0 auto;
+    width: 980px;
+}
+
+section {
+    display: block;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 { margin: 0; }
+
+/* Header, <header>
+   header   - container
+   h1       - project name
+   h2       - project description
+*/
+
+#header {
+    background: #68217a;
+    color: #FFF;
+    position: relative;
+}
+
+#hangcloud {
+    background: url("../images/bannerart03.png");
+    height: 160px;
+    position: absolute;
+    right: -30px;
+    top: 0;
+    width: 190px;
+}
+
+h1, h2 {
+    font-family: "Segoe UI Light", "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1;
+    margin: 0 18px;
+    padding: 0;
+}
+
+#header h1 {
+    font-size: 3.4em;
+    font-weight: normal;
+    margin-left: 15px;
+    padding-top: 18px;
+}
+
+#header h2 {
+    font-size: 1.5em;
+    font-weight: normal;
+    margin-top: 10px;
+    padding-bottom: 18px;
+}
+
+
+#main_content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+h1, h2, h3, h4, h5, h6 { font-weight: bolder; }
+
+#main_content h1 {
+    font-size: 1.8em;
+    margin-top: 34px;
+}
+
+#main_content h1:first-child { margin-top: 30px; }
+
+#main_content h2 {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+p, ul { margin: 11px 18px; }
+
+#main_content a {
+    color: #06C;
+    text-decoration: none;
+}
+
+ul {
+    margin-left: 18px;
+    margin-top: 13px;
+    padding-left: 0;
+}
+
+ul li {
+    margin-left: 18px;
+    padding-left: 0;
+}
+
+#lpanel {
+    float: left;
+    width: 620px;
+}
+
+#rpanel ul {
+    list-style-type: none;
+    width: 300px;
+}
+
+#rpanel ul li { line-height: 1.8em; }
+
+#rpanel {
+    background: #e7e7e7;
+    float: right;
+    width: 360px;
+}
+
+#rpanel div { width: 300px; }
