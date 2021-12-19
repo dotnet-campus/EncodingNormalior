@@ -85,7 +85,7 @@ internal sealed class EncodingNormalizer
         if (document is null)
         {
             IServiceProvider serviceProvider = (IServiceProvider) ServiceProvider;
-            VsShellUtilities.ShowMessageBox(serviceProvider, "没有找到打开的文档", "修改用户打开的文件的编码失败", OLEMSGICON.OLEMSGICON_WARNING, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            VsShellUtilities.ShowMessageBox(serviceProvider, "Can not find any file opened", "Fail to convert current file encoding", OLEMSGICON.OLEMSGICON_WARNING, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
             return;
         }
         string str = document.FullName;
