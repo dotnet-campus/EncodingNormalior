@@ -8,7 +8,7 @@
 
 在命令行输入下面命令作为全局工具安装
 
-```csharp
+```
 dotnet tool install -g dotnetCampus.EncodingNormalior
 ```
 
