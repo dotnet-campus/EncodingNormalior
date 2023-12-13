@@ -7,7 +7,7 @@
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>EncodingNormalior</ToolCommandName>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-
+        <RollForward>Major</RollForward>
         <Description>
             编码规范工具——命令行
 
