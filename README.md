@@ -33,13 +33,13 @@
 
 ### 插件使用
 
-首先是下载插件，插件可以到 [https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a](https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a) 下载，也可以在 [VS 插件网](https://marketplace.visualstudio.com/vs) 搜索 `Encoding` 就可以找到我的工具啦。可以说我翻遍了整个插件网，都没有找到我这个功能的插件（这句话是在2017年说的），但是还是找到了一些有用的插件。
+首先是下载插件，插件可以到 [https://visualstudiogallery.msdn.microsoft.com/a5f50c64-1b75-4f7a-97fd-9545747c506a](https://marketplace.visualstudio.com/items?itemName=lindexigd.vs-extension-18109) 下载，也可以在 [VS 插件网](https://marketplace.visualstudio.com/vs) 搜索 `Encoding` 就可以找到我的工具啦。可以说我翻遍了整个插件网，都没有找到我这个功能的插件（这句话是在2017年说的），但是还是找到了一些有用的插件。
 
-![](http://image.acmx.xyz/8f464be7-2358-45f4-b6cd-eae32c47a878201727162028.jpg)
+![](http://cdn.lindexi.site/8f464be7-2358-45f4-b6cd-eae32c47a878201727162028.jpg)
 
 打开 Visual Sutido ，在安装完 [编码规范工具](https://marketplace.visualstudio.com/items?itemName=lindexigd.vs-extension-18109) ，可以看到菜单多了 选项 EncodingNormalizer
 
-![](http://image.acmx.xyz/lindexi%2F2019461567484)
+![](http://cdn.lindexi.site/lindexi%2F2019461567484)
 
 然后来说下我做的功能。
 
@@ -49,13 +49,13 @@
 
 因为现在没有一个方法可以知道一个文件是什么编码，所以可以在插件自己手动选当前文件的编码，这样可以解决识别编码错误
 
-![](http://image.acmx.xyz/lindexi%2F202022911598327.jpg)
+![](http://cdn.lindexi.site/lindexi%2F202022911598327.jpg)
 
 选择当前的文件的编码，和需要转换的文件的编码，然后点击 Convert 就可以转换了
 
 <!-- ![](image/VisualStudio 编码规范工具 2.6 修改当前文件编码/VisualStudio 编码规范工具 2.6 修改当前文件编码5.png) -->
 
-![](http://image.acmx.xyz/lindexi%2F201946153140370)
+![](http://cdn.lindexi.site/lindexi%2F201946153140370)
 
 现在能支持的转换的编码是带符号的 Utf-8 和 GBK 编码
 
@@ -65,7 +65,7 @@
 
 <!-- ![](image/VisualStudio 编码规范工具 2.6 修改当前文件编码/VisualStudio 编码规范工具 2.6 修改当前文件编码1.png) -->
 
-![](http://image.acmx.xyz/lindexi%2F201946151729613)
+![](http://cdn.lindexi.site/lindexi%2F201946151729613)
 
 首先是可以忽略一些文件或文件夹，默认是忽略一些不是文本的文件和 bin、obj、git文件夹，注意，千万不要去转换 git 文件夹的代码。
 
@@ -86,11 +86,11 @@
 
 <!-- ![](image/VisualStudio 编码规范工具 2.6 修改当前文件编码/VisualStudio 编码规范工具 2.6 修改当前文件编码2.png) -->
 
-![](http://image.acmx.xyz/lindexi%2F201946151823827)
+![](http://cdn.lindexi.site/lindexi%2F201946151823827)
 
 找到所有不符合规范的文件，可以一键点击转换
 
-![](http://image.acmx.xyz/lindexi%2F20194615184676)
+![](http://cdn.lindexi.site/lindexi%2F20194615184676)
 
 <!-- ![](image/VisualStudio 编码规范工具 2.6 修改当前文件编码/VisualStudio 编码规范工具 2.6 修改当前文件编码3.png) -->
 
